@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{24260993-E077-42BE-92B2-4DC2BC43746D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerspectiveCorrection", "PerspectiveCorrection\PerspectiveCorrection.csproj", "{48C46E9D-1124-4378-BF60-6E252EE9A548}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{24260993-E077-42BE-92B2-4DC2BC43746D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24260993-E077-42BE-92B2-4DC2BC43746D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24260993-E077-42BE-92B2-4DC2BC43746D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48C46E9D-1124-4378-BF60-6E252EE9A548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48C46E9D-1124-4378-BF60-6E252EE9A548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48C46E9D-1124-4378-BF60-6E252EE9A548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48C46E9D-1124-4378-BF60-6E252EE9A548}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
