@@ -12,18 +12,23 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
 
+using VisualTools;
+
 namespace PerspectiveCorrection {
     public partial class Form1 : Form {
 
         private Capture _cap;
         private Image<Bgr, Byte> _frame;
         private Rectangle _rectPreview = new Rectangle();
-        private List<Point> _polygon = new List<Point>();
+        private PointF[] _referencePoints;
         private const int _rectPreviewSize = 25;
         private bool captureInProgress;
+        private PolygonTools _polyTool;
 
         public Form1() {
             InitializeComponent();
+            _polyTool = new PolygonTools(pictureBox_display);
+            _polyTool.ReturnPolygon += OnPolygonReturned;
             _rectPreview.Size = new Size(_rectPreviewSize, _rectPreviewSize);
         }
 
@@ -31,6 +36,12 @@ namespace PerspectiveCorrection {
             _frame = _cap.RetrieveBgrFrame().Clone().Resize(pictureBox_display.Width, pictureBox_display.Height, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC, true);
             //_frame = _frame.Flip(Emgu.CV.CvEnum.FLIP.HORIZONTAL);
 
+            if (_referencePoints != null) {
+                if (checkBox_perspectivecorrect.Checked) {
+                    pictureBox_display.Image = CorrectPerspective(_frame, _referencePoints).ToBitmap();
+                    return;
+                }
+            }
             pictureBox_display.Image = _frame.ToBitmap();
         }
 
@@ -74,7 +85,7 @@ namespace PerspectiveCorrection {
                     pos.Y = pos.Y - (_rectPreview.Size.Height / 2);
                     _rectPreview.Location = pos;
                     try {
-                        pictureBox_zoomPreview.Image = _frame.Copy(_rectPreview).Resize(pictureBox_zoomPreview.Width, pictureBox_zoomPreview.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR).ToBitmap();
+                        pictureBox_zoomPreview.Image = _frame.Copy(_rectPreview).Resize(pictureBox_zoomPreview.Width, pictureBox_zoomPreview.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN).ToBitmap();
                     } catch {
                         return;
                     }
@@ -86,22 +97,8 @@ namespace PerspectiveCorrection {
         // También se dibuja el poligono dibujado (puntos y lineas)
         private void pictureBox_display_Paint(object sender, PaintEventArgs e) {
             Brush _previewBrush = new SolidBrush(Color.FromArgb(128, 72, 145, 220));
-            
             // Draw preview Box
             e.Graphics.FillRectangle(_previewBrush, _rectPreview);
-
-            _previewBrush = new SolidBrush(Color.FromArgb(100, 200, 20, 200));
-            // Draw Points
-            Point POLYPOINT_SIZE = new Point(5, 5);
-            foreach (Point p in _polygon) {
-                e.Graphics.FillEllipse(_previewBrush, p.X - (POLYPOINT_SIZE.X / 2), p.Y - (POLYPOINT_SIZE.Y / 2), POLYPOINT_SIZE.X, POLYPOINT_SIZE.Y);
-            }
-            // Draw Lines
-            if (_polygon.Count > 1) {
-                Pen pen = new Pen(_previewBrush);
-                pen.Width = 2;
-                e.Graphics.DrawPolygon(pen, _polygon.ToArray());
-            }
         }
 
         // Se pinta una "mirilla", en el área de preview, para calcular el centro de lo apuntado
@@ -117,14 +114,71 @@ namespace PerspectiveCorrection {
             e.Graphics.DrawLine(pen, new Point(rect.X + (rect.Width / 2), rect.Y - 3), new Point(rect.X + (rect.Width / 2), rect.Y + rect.Height + 3));
         }
 
-        // Al hacer click izquierdo, añadimos un punto al polygon
-        // Con click derecho borramos el último punto añadido
-        private void pictureBox_display_Click(object sender, EventArgs e) {
-            MouseEventArgs eM = (MouseEventArgs)e;
-            if (eM.Button == MouseButtons.Left)
-                _polygon.Add(eM.Location);
-            else if ((eM.Button == MouseButtons.Right) && (_polygon.Count >= 1))
-                _polygon.RemoveAt(_polygon.Count - 1);
+        private PointF GetMassCenter(List<Point> i_polygon) {
+            PointF center = new PointF(0f, 0f);
+            foreach (Point p in i_polygon) {
+                center.X += p.X;
+                center.Y += p.Y;
+            }
+            center.X *= (1f / i_polygon.Count);
+            center.Y *= (1f / i_polygon.Count);
+
+            return center;
+        }
+
+        /// <summary>
+        /// Organiza los cuatro vértices de un rectángulo, para que
+        /// su format(orden en la lista) sea el correcto para su uso.
+        /// </summary>
+        /// <param name="i_corners">Lista de puntos a ordenar</param>
+        /// <returns></returns>
+        private PointF[] SortCorners(List<Point> i_corners) {
+            PointF massCenter = GetMassCenter(i_corners);
+            Point[] top = new Point[2];
+            Point[] bott = new Point[2];
+            int top_pos = 0;
+            int bott_pos = 0;
+
+            if (i_corners.Count != 4)
+                throw new ArgumentException("Four corners expected", "i_corners");
+
+            foreach (Point c in i_corners) {
+                if (c.Y < massCenter.Y)
+                    top[top_pos++] = c;
+                else
+                    bott[bott_pos++] = c;
+            }
+
+            PointF[] result = new PointF[4];
+            result[0] = top[0].X > top[1].X ? top[1] : top[0];  // Top-Left
+            result[1] = top[0].X > top[1].X ? top[0] : top[1];  // Top-Right
+            result[2] = bott[0].X > bott[1].X ? bott[0] : bott[1];  // Bottom-Right
+            result[3] = bott[0].X > bott[1].X ? bott[1] : bott[0];  // Bottom-Left
+
+            return result;
+        }
+
+        private Image<Bgr, Byte> CorrectPerspective(Image<Bgr, Byte> i_img, PointF[] i_corners) {
+            Image<Bgr, Byte> result = new Image<Bgr, byte>(pictureBox_display.Width, pictureBox_display.Height);
+            PointF[] dest_corners = new PointF[4];
+            dest_corners[0] = new PointF(0f, 0f);
+            dest_corners[1] = new PointF(result.Cols, 0f);
+            dest_corners[2] = new PointF(result.Cols, result.Rows);
+            dest_corners[3] = new PointF(0f, result.Rows);
+
+            HomographyMatrix transform_matrix = CameraCalibration.GetPerspectiveTransform(i_corners, dest_corners);
+
+            result = i_img.WarpPerspective(transform_matrix, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Aqua));
+
+            return result;
+        }
+
+        private void checkBox_drawRefPoints_CheckedChanged(object sender, EventArgs e) {
+            _polyTool.Enabled = checkBox_drawRefPoints.Checked;
+        }
+
+        private void OnPolygonReturned(List<Point> i_poly) {
+            _referencePoints = SortCorners(i_poly);
         }
     }
 }

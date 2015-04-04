@@ -26,9 +26,11 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox_display = new System.Windows.Forms.PictureBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.label_position = new System.Windows.Forms.Label();
+            this.checkBox_perspectivecorrect = new System.Windows.Forms.CheckBox();
             this.button_start = new System.Windows.Forms.Button();
+            this.label_position = new System.Windows.Forms.Label();
             this.pictureBox_zoomPreview = new System.Windows.Forms.PictureBox();
+            this.checkBox_drawRefPoints = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,7 +68,6 @@
             this.pictureBox_display.Size = new System.Drawing.Size(782, 588);
             this.pictureBox_display.TabIndex = 0;
             this.pictureBox_display.TabStop = false;
-            this.pictureBox_display.Click += new System.EventHandler(this.pictureBox_display_Click);
             this.pictureBox_display.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_display_Paint);
             this.pictureBox_display.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_display_MouseMove);
             // 
@@ -79,6 +80,8 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.checkBox_drawRefPoints);
+            this.splitContainer2.Panel1.Controls.Add(this.checkBox_perspectivecorrect);
             this.splitContainer2.Panel1.Controls.Add(this.button_start);
             // 
             // splitContainer2.Panel2
@@ -88,6 +91,26 @@
             this.splitContainer2.Size = new System.Drawing.Size(166, 588);
             this.splitContainer2.SplitterDistance = 441;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // checkBox_perspectivecorrect
+            // 
+            this.checkBox_perspectivecorrect.AutoSize = true;
+            this.checkBox_perspectivecorrect.Location = new System.Drawing.Point(16, 130);
+            this.checkBox_perspectivecorrect.Name = "checkBox_perspectivecorrect";
+            this.checkBox_perspectivecorrect.Size = new System.Drawing.Size(118, 17);
+            this.checkBox_perspectivecorrect.TabIndex = 1;
+            this.checkBox_perspectivecorrect.Text = "Correct perspective";
+            this.checkBox_perspectivecorrect.UseVisualStyleBackColor = true;
+            // 
+            // button_start
+            // 
+            this.button_start.Location = new System.Drawing.Point(52, 12);
+            this.button_start.Name = "button_start";
+            this.button_start.Size = new System.Drawing.Size(75, 48);
+            this.button_start.TabIndex = 0;
+            this.button_start.Text = "&Start";
+            this.button_start.UseVisualStyleBackColor = true;
+            this.button_start.Click += new System.EventHandler(this.button_start_Click_1);
             // 
             // label_position
             // 
@@ -100,16 +123,6 @@
             this.label_position.TabIndex = 1;
             this.label_position.Text = "xx, yy";
             // 
-            // button_start
-            // 
-            this.button_start.Location = new System.Drawing.Point(52, 12);
-            this.button_start.Name = "button_start";
-            this.button_start.Size = new System.Drawing.Size(75, 48);
-            this.button_start.TabIndex = 0;
-            this.button_start.Text = "&Start";
-            this.button_start.UseVisualStyleBackColor = true;
-            this.button_start.Click += new System.EventHandler(this.button_start_Click_1);
-            // 
             // pictureBox_zoomPreview
             // 
             this.pictureBox_zoomPreview.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -119,6 +132,17 @@
             this.pictureBox_zoomPreview.TabIndex = 0;
             this.pictureBox_zoomPreview.TabStop = false;
             this.pictureBox_zoomPreview.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_zoomPreview_Paint);
+            // 
+            // checkBox_drawRefPoints
+            // 
+            this.checkBox_drawRefPoints.AutoSize = true;
+            this.checkBox_drawRefPoints.Location = new System.Drawing.Point(16, 107);
+            this.checkBox_drawRefPoints.Name = "checkBox_drawRefPoints";
+            this.checkBox_drawRefPoints.Size = new System.Drawing.Size(130, 17);
+            this.checkBox_drawRefPoints.TabIndex = 2;
+            this.checkBox_drawRefPoints.Text = "Draw reference points";
+            this.checkBox_drawRefPoints.UseVisualStyleBackColor = true;
+            this.checkBox_drawRefPoints.CheckedChanged += new System.EventHandler(this.checkBox_drawRefPoints_CheckedChanged);
             // 
             // Form1
             // 
@@ -134,6 +158,7 @@
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_display)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -151,6 +176,8 @@
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.PictureBox pictureBox_zoomPreview;
         private System.Windows.Forms.Label label_position;
+        private System.Windows.Forms.CheckBox checkBox_perspectivecorrect;
+        private System.Windows.Forms.CheckBox checkBox_drawRefPoints;
     }
 }
 
