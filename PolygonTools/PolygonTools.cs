@@ -6,14 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Emgu.CV.UI;
+
 namespace VisualTools {
 
     public delegate void GetPolygon(List<Point> poly);
 
-    public class PolygonTools {
+    public class PolygonDrawingTool {
         #region Atributes
         private List<Point> _points = new List<Point>();
-        private PictureBox _pictBox;
+        private ImageBox _imgBox;
         private Color _brushColor = Color.FromArgb(128, 72, 145, 220);
         private Brush _brush;
         private Point _pointDrawSize = new Point(5, 5);
@@ -27,9 +29,9 @@ namespace VisualTools {
             }
         }
 
-        public PictureBox PictureBox {
+        public ImageBox PictureBox {
             set {
-                _pictBox = value;
+                _imgBox = value;
             }
         }
 
@@ -66,9 +68,9 @@ namespace VisualTools {
         #endregion
 
         #region Public Methods
-        public PolygonTools(PictureBox i_picBox) {
+        public PolygonDrawingTool(ImageBox i_picBox) {
             _brush = new SolidBrush(_brushColor);
-            _pictBox = i_picBox;
+            _imgBox = i_picBox;
         }
         #endregion
 
@@ -120,9 +122,9 @@ namespace VisualTools {
         /// Establece "listeneres" para los eventos, del PictureBoxm, necesarios.
         /// </summary>
         private void AttachEvents() {
-            if (_pictBox != null) {
-                _pictBox.Click += OnClick;
-                _pictBox.Paint += OnPaint;
+            if (_imgBox != null) {
+                _imgBox.Click += OnClick;
+                _imgBox.Paint += OnPaint;
             }
         }
 
@@ -131,9 +133,9 @@ namespace VisualTools {
         /// dejando de este modo, esta herramienta, deshabilitada
         /// </summary>
         private void DeattachEvents() {
-            if (_pictBox != null) {
-                _pictBox.Click -= OnClick;
-                _pictBox.Paint -= OnPaint;
+            if (_imgBox != null) {
+                _imgBox.Click -= OnClick;
+                _imgBox.Paint -= OnPaint;
             }
         }
         #endregion

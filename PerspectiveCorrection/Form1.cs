@@ -23,12 +23,12 @@ namespace PerspectiveCorrection {
         private PointF[] _referencePoints;
         private const int _rectPreviewSize = 25;
         private bool captureInProgress;
-        private PolygonTools _polyTool;
+        private PolygonDrawingTool _polyDrawTool;
 
         public Form1() {
             InitializeComponent();
-            _polyTool = new PolygonTools(pictureBox_display);
-            _polyTool.ReturnPolygon += OnPolygonReturned;
+            _polyDrawTool = new PolygonDrawingTool(pictureBox_display);
+            _polyDrawTool.ReturnPolygon += OnPolygonReturned;
             _rectPreview.Size = new Size(_rectPreviewSize, _rectPreviewSize);
         }
 
@@ -174,7 +174,7 @@ namespace PerspectiveCorrection {
         }
 
         private void checkBox_drawRefPoints_CheckedChanged(object sender, EventArgs e) {
-            _polyTool.Enabled = checkBox_drawRefPoints.Checked;
+            _polyDrawTool.Enabled = checkBox_drawRefPoints.Checked;
         }
 
         private void OnPolygonReturned(List<Point> i_poly) {
