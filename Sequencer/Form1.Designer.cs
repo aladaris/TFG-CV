@@ -25,25 +25,27 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.splitContainer_Base = new System.Windows.Forms.SplitContainer();
+            this.splitContainer_LeftSideBase = new System.Windows.Forms.SplitContainer();
+            this.imageBox_mainDisplay = new Emgu.CV.UI.ImageBox();
+            this.flowLayoutPanel_CamStuff = new System.Windows.Forms.FlowLayoutPanel();
+            this.comboBox_CameraList = new System.Windows.Forms.ComboBox();
+            this.button_startCamera = new System.Windows.Forms.Button();
             this.tabControl_Modes = new System.Windows.Forms.TabControl();
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.splitContainer_LeftSideBase = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
-            this.flowLayoutPanel_CamStuff = new System.Windows.Forms.FlowLayoutPanel();
-            this.comboBox_CameraList = new System.Windows.Forms.ComboBox();
-            this.imageBox_mainDisplay = new Emgu.CV.UI.ImageBox();
+            this.checkBox_perspectRectangle = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
             this.splitContainer_Base.SuspendLayout();
-            this.tabControl_Modes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_LeftSideBase)).BeginInit();
             this.splitContainer_LeftSideBase.Panel1.SuspendLayout();
             this.splitContainer_LeftSideBase.Panel2.SuspendLayout();
             this.splitContainer_LeftSideBase.SuspendLayout();
-            this.flowLayoutPanel_CamStuff.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_mainDisplay)).BeginInit();
+            this.flowLayoutPanel_CamStuff.SuspendLayout();
+            this.tabControl_Modes.SuspendLayout();
+            this.tabPage_Calibration.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer_Base
@@ -62,37 +64,6 @@
             this.splitContainer_Base.Size = new System.Drawing.Size(1159, 636);
             this.splitContainer_Base.SplitterDistance = 861;
             this.splitContainer_Base.TabIndex = 0;
-            // 
-            // tabControl_Modes
-            // 
-            this.tabControl_Modes.Controls.Add(this.tabPage_Calibration);
-            this.tabControl_Modes.Controls.Add(this.tabPage2);
-            this.tabControl_Modes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl_Modes.Location = new System.Drawing.Point(0, 0);
-            this.tabControl_Modes.Name = "tabControl_Modes";
-            this.tabControl_Modes.SelectedIndex = 0;
-            this.tabControl_Modes.Size = new System.Drawing.Size(294, 636);
-            this.tabControl_Modes.TabIndex = 0;
-            // 
-            // tabPage_Calibration
-            // 
-            this.tabPage_Calibration.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_Calibration.Name = "tabPage_Calibration";
-            this.tabPage_Calibration.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Calibration.Size = new System.Drawing.Size(286, 610);
-            this.tabPage_Calibration.TabIndex = 0;
-            this.tabPage_Calibration.Text = "Calibration";
-            this.tabPage_Calibration.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(286, 610);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // splitContainer_LeftSideBase
             // 
@@ -114,19 +85,21 @@
             this.splitContainer_LeftSideBase.SplitterDistance = 539;
             this.splitContainer_LeftSideBase.TabIndex = 0;
             // 
-            // button1
+            // imageBox_mainDisplay
             // 
-            this.button1.Location = new System.Drawing.Point(205, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 42);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Start Camera";
-            this.button1.UseVisualStyleBackColor = true;
+            this.imageBox_mainDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageBox_mainDisplay.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
+            this.imageBox_mainDisplay.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            this.imageBox_mainDisplay.Location = new System.Drawing.Point(0, 0);
+            this.imageBox_mainDisplay.Name = "imageBox_mainDisplay";
+            this.imageBox_mainDisplay.Size = new System.Drawing.Size(861, 539);
+            this.imageBox_mainDisplay.TabIndex = 2;
+            this.imageBox_mainDisplay.TabStop = false;
             // 
             // flowLayoutPanel_CamStuff
             // 
             this.flowLayoutPanel_CamStuff.Controls.Add(this.comboBox_CameraList);
-            this.flowLayoutPanel_CamStuff.Controls.Add(this.button1);
+            this.flowLayoutPanel_CamStuff.Controls.Add(this.button_startCamera);
             this.flowLayoutPanel_CamStuff.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel_CamStuff.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel_CamStuff.Name = "flowLayoutPanel_CamStuff";
@@ -143,16 +116,59 @@
             this.comboBox_CameraList.Size = new System.Drawing.Size(191, 21);
             this.comboBox_CameraList.TabIndex = 1;
             // 
-            // imageBox_mainDisplay
+            // button_startCamera
             // 
-            this.imageBox_mainDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageBox_mainDisplay.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-            this.imageBox_mainDisplay.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            this.imageBox_mainDisplay.Location = new System.Drawing.Point(0, 0);
-            this.imageBox_mainDisplay.Name = "imageBox_mainDisplay";
-            this.imageBox_mainDisplay.Size = new System.Drawing.Size(861, 539);
-            this.imageBox_mainDisplay.TabIndex = 2;
-            this.imageBox_mainDisplay.TabStop = false;
+            this.button_startCamera.Location = new System.Drawing.Point(205, 8);
+            this.button_startCamera.Name = "button_startCamera";
+            this.button_startCamera.Size = new System.Drawing.Size(75, 42);
+            this.button_startCamera.TabIndex = 0;
+            this.button_startCamera.Text = "Start Camera";
+            this.button_startCamera.UseVisualStyleBackColor = true;
+            this.button_startCamera.Click += new System.EventHandler(this.button_startCamera_Click);
+            // 
+            // tabControl_Modes
+            // 
+            this.tabControl_Modes.Controls.Add(this.tabPage_Calibration);
+            this.tabControl_Modes.Controls.Add(this.tabPage2);
+            this.tabControl_Modes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl_Modes.Location = new System.Drawing.Point(0, 0);
+            this.tabControl_Modes.Name = "tabControl_Modes";
+            this.tabControl_Modes.SelectedIndex = 0;
+            this.tabControl_Modes.Size = new System.Drawing.Size(294, 636);
+            this.tabControl_Modes.TabIndex = 0;
+            // 
+            // tabPage_Calibration
+            // 
+            this.tabPage_Calibration.Controls.Add(this.checkBox_perspectRectangle);
+            this.tabPage_Calibration.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_Calibration.Name = "tabPage_Calibration";
+            this.tabPage_Calibration.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_Calibration.Size = new System.Drawing.Size(286, 610);
+            this.tabPage_Calibration.TabIndex = 0;
+            this.tabPage_Calibration.Text = "Calibration";
+            this.tabPage_Calibration.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(286, 610);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_perspectRectangle
+            // 
+            this.checkBox_perspectRectangle.AutoSize = true;
+            this.checkBox_perspectRectangle.Enabled = false;
+            this.checkBox_perspectRectangle.Location = new System.Drawing.Point(6, 6);
+            this.checkBox_perspectRectangle.Name = "checkBox_perspectRectangle";
+            this.checkBox_perspectRectangle.Size = new System.Drawing.Size(190, 17);
+            this.checkBox_perspectRectangle.TabIndex = 0;
+            this.checkBox_perspectRectangle.Text = "Set perspective correction polygon";
+            this.checkBox_perspectRectangle.UseVisualStyleBackColor = true;
+            this.checkBox_perspectRectangle.CheckedChanged += new System.EventHandler(this.checkBox_perspectRectangle_CheckedChanged);
             // 
             // Form1
             // 
@@ -162,17 +178,21 @@
             this.Controls.Add(this.splitContainer_Base);
             this.Name = "Form1";
             this.Text = "Sequencer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer_Base.Panel1.ResumeLayout(false);
             this.splitContainer_Base.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).EndInit();
             this.splitContainer_Base.ResumeLayout(false);
-            this.tabControl_Modes.ResumeLayout(false);
             this.splitContainer_LeftSideBase.Panel1.ResumeLayout(false);
             this.splitContainer_LeftSideBase.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_LeftSideBase)).EndInit();
             this.splitContainer_LeftSideBase.ResumeLayout(false);
-            this.flowLayoutPanel_CamStuff.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_mainDisplay)).EndInit();
+            this.flowLayoutPanel_CamStuff.ResumeLayout(false);
+            this.tabControl_Modes.ResumeLayout(false);
+            this.tabPage_Calibration.ResumeLayout(false);
+            this.tabPage_Calibration.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -186,8 +206,9 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_CamStuff;
         private System.Windows.Forms.ComboBox comboBox_CameraList;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_startCamera;
         private Emgu.CV.UI.ImageBox imageBox_mainDisplay;
+        private System.Windows.Forms.CheckBox checkBox_perspectRectangle;
     }
 }
 

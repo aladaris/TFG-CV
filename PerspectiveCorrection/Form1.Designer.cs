@@ -23,24 +23,25 @@
         /// el contenido del método con el editor de código.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pictureBox_display = new System.Windows.Forms.PictureBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.checkBox_drawRefPoints = new System.Windows.Forms.CheckBox();
             this.checkBox_perspectivecorrect = new System.Windows.Forms.CheckBox();
             this.button_start = new System.Windows.Forms.Button();
             this.label_position = new System.Windows.Forms.Label();
             this.pictureBox_zoomPreview = new System.Windows.Forms.PictureBox();
-            this.checkBox_drawRefPoints = new System.Windows.Forms.CheckBox();
+            this.imageBox_display = new Emgu.CV.UI.ImageBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_display)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_zoomPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox_display)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -51,7 +52,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox_display);
+            this.splitContainer1.Panel1.Controls.Add(this.imageBox_display);
             // 
             // splitContainer1.Panel2
             // 
@@ -59,17 +60,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(952, 588);
             this.splitContainer1.SplitterDistance = 782;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // pictureBox_display
-            // 
-            this.pictureBox_display.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox_display.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_display.Name = "pictureBox_display";
-            this.pictureBox_display.Size = new System.Drawing.Size(782, 588);
-            this.pictureBox_display.TabIndex = 0;
-            this.pictureBox_display.TabStop = false;
-            this.pictureBox_display.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_display_Paint);
-            this.pictureBox_display.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_display_MouseMove);
             // 
             // splitContainer2
             // 
@@ -91,6 +81,17 @@
             this.splitContainer2.Size = new System.Drawing.Size(166, 588);
             this.splitContainer2.SplitterDistance = 441;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // checkBox_drawRefPoints
+            // 
+            this.checkBox_drawRefPoints.AutoSize = true;
+            this.checkBox_drawRefPoints.Location = new System.Drawing.Point(16, 107);
+            this.checkBox_drawRefPoints.Name = "checkBox_drawRefPoints";
+            this.checkBox_drawRefPoints.Size = new System.Drawing.Size(130, 17);
+            this.checkBox_drawRefPoints.TabIndex = 2;
+            this.checkBox_drawRefPoints.Text = "Draw reference points";
+            this.checkBox_drawRefPoints.UseVisualStyleBackColor = true;
+            this.checkBox_drawRefPoints.CheckedChanged += new System.EventHandler(this.checkBox_drawRefPoints_CheckedChanged);
             // 
             // checkBox_perspectivecorrect
             // 
@@ -133,16 +134,14 @@
             this.pictureBox_zoomPreview.TabStop = false;
             this.pictureBox_zoomPreview.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_zoomPreview_Paint);
             // 
-            // checkBox_drawRefPoints
+            // imageBox_display
             // 
-            this.checkBox_drawRefPoints.AutoSize = true;
-            this.checkBox_drawRefPoints.Location = new System.Drawing.Point(16, 107);
-            this.checkBox_drawRefPoints.Name = "checkBox_drawRefPoints";
-            this.checkBox_drawRefPoints.Size = new System.Drawing.Size(130, 17);
-            this.checkBox_drawRefPoints.TabIndex = 2;
-            this.checkBox_drawRefPoints.Text = "Draw reference points";
-            this.checkBox_drawRefPoints.UseVisualStyleBackColor = true;
-            this.checkBox_drawRefPoints.CheckedChanged += new System.EventHandler(this.checkBox_drawRefPoints_CheckedChanged);
+            this.imageBox_display.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageBox_display.Location = new System.Drawing.Point(0, 0);
+            this.imageBox_display.Name = "imageBox_display";
+            this.imageBox_display.Size = new System.Drawing.Size(782, 588);
+            this.imageBox_display.TabIndex = 2;
+            this.imageBox_display.TabStop = false;
             // 
             // Form1
             // 
@@ -156,7 +155,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_display)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -164,6 +162,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_zoomPreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox_display)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -171,13 +170,13 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PictureBox pictureBox_display;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.PictureBox pictureBox_zoomPreview;
         private System.Windows.Forms.Label label_position;
         private System.Windows.Forms.CheckBox checkBox_perspectivecorrect;
         private System.Windows.Forms.CheckBox checkBox_drawRefPoints;
+        private Emgu.CV.UI.ImageBox imageBox_display;
     }
 }
 

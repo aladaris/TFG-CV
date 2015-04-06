@@ -27,22 +27,22 @@ namespace PerspectiveCorrection {
 
         public Form1() {
             InitializeComponent();
-            _polyDrawTool = new PolygonDrawingTool(pictureBox_display);
+            _polyDrawTool = new PolygonDrawingTool(imageBox_display);
             _polyDrawTool.ReturnPolygon += OnPolygonReturned;
             _rectPreview.Size = new Size(_rectPreviewSize, _rectPreviewSize);
         }
 
         private void ProcessFrame(object sender, EventArgs arg) {
-            _frame = _cap.RetrieveBgrFrame().Clone().Resize(pictureBox_display.Width, pictureBox_display.Height, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC, true);
+            _frame = _cap.RetrieveBgrFrame().Clone().Resize(imageBox_display.Width, imageBox_display.Height, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC, true);
             //_frame = _frame.Flip(Emgu.CV.CvEnum.FLIP.HORIZONTAL);
 
             if (_referencePoints != null) {
                 if (checkBox_perspectivecorrect.Checked) {
-                    pictureBox_display.Image = CorrectPerspective(_frame, _referencePoints).ToBitmap();
+                    imageBox_display.Image = CorrectPerspective(_frame, _referencePoints);
                     return;
                 }
             }
-            pictureBox_display.Image = _frame.ToBitmap();
+            imageBox_display.Image = _frame;
         }
 
         private void ReleaseData() {
@@ -159,7 +159,7 @@ namespace PerspectiveCorrection {
         }
 
         private Image<Bgr, Byte> CorrectPerspective(Image<Bgr, Byte> i_img, PointF[] i_corners) {
-            Image<Bgr, Byte> result = new Image<Bgr, byte>(pictureBox_display.Width, pictureBox_display.Height);
+            Image<Bgr, Byte> result = new Image<Bgr, byte>(imageBox_display.Width, imageBox_display.Height);
             PointF[] dest_corners = new PointF[4];
             dest_corners[0] = new PointF(0f, 0f);
             dest_corners[1] = new PointF(result.Cols, 0f);
