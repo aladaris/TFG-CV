@@ -32,8 +32,8 @@
             this.button_startCamera = new System.Windows.Forms.Button();
             this.tabControl_Modes = new System.Windows.Forms.TabControl();
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.checkBox_perspectRectangle = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -148,6 +148,19 @@
             this.tabPage_Calibration.Text = "Calibration";
             this.tabPage_Calibration.UseVisualStyleBackColor = true;
             // 
+            // checkBox_perspectRectangle
+            // 
+            this.checkBox_perspectRectangle.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox_perspectRectangle.AutoSize = true;
+            this.checkBox_perspectRectangle.Enabled = false;
+            this.checkBox_perspectRectangle.Location = new System.Drawing.Point(6, 6);
+            this.checkBox_perspectRectangle.Name = "checkBox_perspectRectangle";
+            this.checkBox_perspectRectangle.Size = new System.Drawing.Size(181, 23);
+            this.checkBox_perspectRectangle.TabIndex = 0;
+            this.checkBox_perspectRectangle.Text = "Set perspective correction polygon";
+            this.checkBox_perspectRectangle.UseVisualStyleBackColor = true;
+            this.checkBox_perspectRectangle.CheckedChanged += new System.EventHandler(this.checkBox_perspectRectangle_CheckedChanged);
+            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -157,18 +170,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_perspectRectangle
-            // 
-            this.checkBox_perspectRectangle.AutoSize = true;
-            this.checkBox_perspectRectangle.Enabled = false;
-            this.checkBox_perspectRectangle.Location = new System.Drawing.Point(6, 6);
-            this.checkBox_perspectRectangle.Name = "checkBox_perspectRectangle";
-            this.checkBox_perspectRectangle.Size = new System.Drawing.Size(190, 17);
-            this.checkBox_perspectRectangle.TabIndex = 0;
-            this.checkBox_perspectRectangle.Text = "Set perspective correction polygon";
-            this.checkBox_perspectRectangle.UseVisualStyleBackColor = true;
-            this.checkBox_perspectRectangle.CheckedChanged += new System.EventHandler(this.checkBox_perspectRectangle_CheckedChanged);
             // 
             // Form1
             // 

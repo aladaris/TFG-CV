@@ -19,13 +19,6 @@ namespace Sequencer {
         private bool _validCalibMatrix = false;
         private bool _correctingPerspect = false;
         private Image<Bgr, Byte> _frame;  // This frame will be allways "perspective corrected".
-        private ImageBox _display;  // Reference to the display imageBox
-        #endregion
-        #region Events
-        /// <summary>
-        /// Event generated on every perspective correctec to a frame.
-        /// </summary>
-        public event GeneratedImage<Bgr, Byte> PerspectiveCorrectedFrame;
         #endregion
 
         #region Properties
@@ -38,14 +31,21 @@ namespace Sequencer {
             get { return _calibMatrix; }
         }
 
+        public bool PerspectiveCalibrated {
+            get { return _validCalibMatrix; }
+        }
+
+        public Image<Bgr, Byte> Frame {
+            get { return _frame; }
+            set { _frame = value; }
+        }
+
         #endregion
 
         #region Public Methods
 
         public Board(Capture i_cam, ImageBox i_display) {
             _steps = new SortedList<ushort, Step>();
-            _display = i_display;
-            i_cam.ImageGrabbed += OnImageGrabbed;
         }
 
         /// <summary>
@@ -68,13 +68,13 @@ namespace Sequencer {
         /// used on the perspective correction of each frame.
         /// </summary>
         /// <param name="i_poly">List of points. Expected from a "PolygonDrawingTool".</param>
-        public void SetPerspectiveCalibration(List<Point> i_poly) {
-            Size destSize = _display.Size;
+        public void SetPerspectiveCalibration(List<Point> i_poly, Size i_destSize) {
+            //Size destSize = _display.Size;
             PointF[] dest_corners = new PointF[4];
             dest_corners[0] = new PointF(0f, 0f);
-            dest_corners[1] = new PointF(destSize.Width, 0f);
-            dest_corners[2] = new PointF(destSize.Width, destSize.Height);
-            dest_corners[3] = new PointF(0f, destSize.Height);
+            dest_corners[1] = new PointF(i_destSize.Width, 0f);
+            dest_corners[2] = new PointF(i_destSize.Width, i_destSize.Height);
+            dest_corners[3] = new PointF(0f, i_destSize.Height);
 
             PointF[] sorted_corners = PolygonHandling.SortCorners(i_poly);
 
@@ -86,21 +86,6 @@ namespace Sequencer {
             _validCalibMatrix = false;
         }
 
-        #endregion
-
-        #region Private Methods
-        #region Handlers
-        private void OnImageGrabbed(object sender, EventArgs e) {
-            Capture cam = (Capture)sender;
-            if ((_validCalibMatrix) && (!_correctingPerspect)) {
-                Image<Bgr, Byte> nframe = cam.RetrieveBgrFrame().Clone().Resize(_display.Size.Width, _display.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4);
-                _correctingPerspect = true;
-                _frame = nframe.WarpPerspective(_calibMatrix, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
-                PerspectiveCorrectedFrame(_frame, e);  // Generamos el evento con el frame corregido
-                _correctingPerspect = false;
-            }
-        }
-        #endregion
         #endregion
     }
 }
