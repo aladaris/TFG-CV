@@ -34,6 +34,7 @@
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
             this.checkBox_perspectRectangle = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBox_addSteps = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -139,6 +140,7 @@
             // 
             // tabPage_Calibration
             // 
+            this.tabPage_Calibration.Controls.Add(this.checkBox_addSteps);
             this.tabPage_Calibration.Controls.Add(this.checkBox_perspectRectangle);
             this.tabPage_Calibration.Location = new System.Drawing.Point(4, 22);
             this.tabPage_Calibration.Name = "tabPage_Calibration";
@@ -170,6 +172,19 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_addSteps
+            // 
+            this.checkBox_addSteps.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox_addSteps.AutoSize = true;
+            this.checkBox_addSteps.Enabled = false;
+            this.checkBox_addSteps.Location = new System.Drawing.Point(6, 35);
+            this.checkBox_addSteps.Name = "checkBox_addSteps";
+            this.checkBox_addSteps.Size = new System.Drawing.Size(66, 23);
+            this.checkBox_addSteps.TabIndex = 1;
+            this.checkBox_addSteps.Text = "Add Steps";
+            this.checkBox_addSteps.UseVisualStyleBackColor = true;
+            this.checkBox_addSteps.CheckedChanged += new System.EventHandler(this.checkBox_addSteps_CheckedChanged);
             // 
             // Form1
             // 
@@ -210,6 +225,7 @@
         private System.Windows.Forms.Button button_startCamera;
         private Emgu.CV.UI.ImageBox imageBox_mainDisplay;
         private System.Windows.Forms.CheckBox checkBox_perspectRectangle;
+        private System.Windows.Forms.CheckBox checkBox_addSteps;
     }
 }
 

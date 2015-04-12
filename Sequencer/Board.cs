@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -14,78 +15,45 @@ namespace Sequencer {
     class Board {
 
         #region Atributes
-        private SortedList<ushort, Step> _steps;
-        private HomographyMatrix _calibMatrix;
-        private bool _validCalibMatrix = false;
-        private bool _correctingPerspect = false;
-        private Image<Bgr, Byte> _frame;  // This frame will be allways "perspective corrected".
+        private List<Step> _steps;
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Matrix used on the image perspective correction
-        /// done on each frame from the camera.
-        /// </summary>
-        public HomographyMatrix CalibrationMatrix {
-            get { return _calibMatrix; }
+        public int StepsCount {
+            get { return _steps.Count; }
         }
-
-        public bool PerspectiveCalibrated {
-            get { return _validCalibMatrix; }
-        }
-
-        public Image<Bgr, Byte> Frame {
-            get { return _frame; }
-            set { _frame = value; }
-        }
-
         #endregion
 
         #region Public Methods
 
-        public Board(Capture i_cam, ImageBox i_display) {
-            _steps = new SortedList<ushort, Step>();
+        public Board(Capture i_cam) {
+            _steps = new List<Step>();
+        }
+
+        public Step GetStep(int i_sId) {
+            try {
+                return _steps.Single(step => step.Id == i_sId);
+            } catch {
+                return null;
+            }
+        }
+
+        public void DrawSteps(PaintEventArgs e) {
+            foreach (Step s in _steps){
+                s.Draw(e);
+            }
         }
 
         /// <summary>
         /// Add a step to the sequencer board.
         /// </summary>
         /// <param name="i_step">Step to be added</param>
-        /// <returns>"true" if the step was added; "false" if not.</returns>
-        public bool AddStep(Step i_step){
-            try {
-                _steps.Add(i_step.Id, i_step);
-            } catch (ArgumentException) {
-                DataLogging.ErrorLog("ArgumentException", "Board._steps", "Se ha intentado añadir un paso con ID ya existente.");
-                return false;
+        public void AddStep(Step i_step){
+            if (i_step.Id < 0) {
+                i_step.Id = _steps.Count > 0 ? _steps[_steps.Count - 1].Id + 1 : 0;
             }
-            return true;
+            _steps.Add(i_step);
         }
-
-        /// <summary>
-        /// Calculates the perspective transformation matrix,
-        /// used on the perspective correction of each frame.
-        /// </summary>
-        /// <param name="i_poly">List of points. Expected from a "PolygonDrawingTool".</param>
-        public void SetPerspectiveCalibration(List<Point> i_poly, Size i_destSize) {
-            //Size destSize = _display.Size;
-            PointF[] dest_corners = new PointF[4];
-            dest_corners[0] = new PointF(0f, 0f);
-            dest_corners[1] = new PointF(i_destSize.Width, 0f);
-            dest_corners[2] = new PointF(i_destSize.Width, i_destSize.Height);
-            dest_corners[3] = new PointF(0f, i_destSize.Height);
-
-            PointF[] sorted_corners = PolygonHandling.SortCorners(i_poly);
-
-            _calibMatrix = CameraCalibration.GetPerspectiveTransform(sorted_corners, dest_corners);
-            _validCalibMatrix = true;
-        }
-
-        public void ResetPerspectiveCalibration() {
-            _validCalibMatrix = false;
-        }
-
         #endregion
     }
 }
