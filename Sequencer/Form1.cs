@@ -18,20 +18,6 @@ using Stateless;
 using VisualTools;
 
 namespace Sequencer {
-
-    /// <summary>
-    /// Estados en los que se puede encontrar el sistema (aplicación).
-    ///     INIT: Estado de inicialización del sistema. Por defecto el
-    ///           sistema comienza en este estado
-    ///     PERS_CALIB: La cámara (objeto Capture) ha sido inicializada.
-    ///                 Se espera que el usuario introduzca un rectángulo
-    ///                 de referencia para realizar la correción de perspectiva.
-    ///                 En este estado se muestra, en el display principal, la
-    ///                 imagen RAW obtenida con la cámara.
-    ///     BOARD_SETUP: La cámara (objeto Capture) ha sido inicializada.
-    ///                  Se están recibiendo frames con la perspectiva corregida.
-    ///                  Se espera que el usuario establezca los pasos del secuenciador
-    /// </summary>
     public enum State { Init, Configuration, PersCalib, Idle, BoardSetup, AddSteps };
     public enum Trigger { Initialize, StartPersCalib, StopPersCalib, NewSteps, StopCVEdition };
 

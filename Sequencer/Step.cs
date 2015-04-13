@@ -11,36 +11,61 @@ using Emgu.CV.UI;
 namespace Sequencer {
     class Step {
         private int _id;
-        private List<Point> _poly;
+        private Point[] _poly;
+        private PointF _center;
         // Drawing stuff
-        private Color _brushColor = Color.FromArgb(53, 35, 93, 220);
-        private Brush _brush;
-        private Point _pointDrawSize = new Point(7, 7);
+        private Color _pointColor = Color.FromArgb(200, 255, 107, 107);
+        private Brush _pointBrush;
+        private Color _polygonColor = Color.FromArgb(150, 78, 205, 196);
+        private Brush _polygonBrush;
+        private Color _centerColor = Color.FromArgb(220, 85, 98, 112);
+        private Brush _centerBrush;
+        private int _pointRadius = 7;
+        private bool _showCenter = true;
 
         #region Properties
         public int Id {
             get { return _id; }
             set { _id = value; }
         }
+        public int PointRadius {
+            get { return _pointRadius;  }
+            set {
+                if (value >= 0) {
+                    _pointRadius = value;
+                } else
+                    throw new ArgumentOutOfRangeException("PointRadius", "Radius must be greater than zero (0).");
+            }
+        }
+        public bool ShowCenter {
+            get { return _showCenter; }
+            set { _showCenter = value; }
+        }
         #endregion
 
         #region Public Methods
         public Step(List<Point> i_poly, int i_id = -1) {
             _id = i_id;
-            _poly = i_poly.ToList();
-            _brush = new SolidBrush(_brushColor);
+            _poly = i_poly.ToArray();
+            _pointBrush = new SolidBrush(_pointColor);
+            _polygonBrush = new SolidBrush(_polygonColor);
+            _centerBrush = new SolidBrush(_centerColor);
+            _center = PolygonHandling.GetMassCenter(i_poly);
         }
 
         public void Draw(PaintEventArgs e) {
-            // Draw Points
-            foreach (Point p in _poly)
-                e.Graphics.FillEllipse(_brush, p.X - (_pointDrawSize.X / 2), p.Y - (_pointDrawSize.Y / 2), _pointDrawSize.X, _pointDrawSize.Y);
-            // Draw Lines
-            if (_poly.Count > 1) {
-//                Pen pen = new Pen(_brush);
-//                pen.Width = 2;
-                e.Graphics.FillPolygon(_brush, _poly.ToArray());
+            // Draw Polygon
+            if (_poly.Length > 1) {
+                e.Graphics.FillPolygon(_polygonBrush, _poly.ToArray());
             }
+            // Draw Points
+            for (int i = 0; i < _poly.Length; i++) {
+                Point p = _poly[i];
+                e.Graphics.FillEllipse(_pointBrush, p.X - _pointRadius / 2, p.Y - _pointRadius / 2, _pointRadius, _pointRadius);
+            }
+            // Draw Center
+            if (_showCenter)
+                e.Graphics.FillEllipse(_centerBrush, _center.X - 2, _center.Y - 2, 4, 4);
         }
         #endregion
     }
