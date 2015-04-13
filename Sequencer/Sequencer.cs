@@ -66,9 +66,10 @@ namespace Sequencer {
         public bool DrawSteps {
             get { return _drawSteps; }
             set {
-                if (value == true)
+                if (value == true) {
+                    _mainDisplay.Paint -= PaintBoard;  // Eliminamos cualquier posible subscripción anterior
                     _mainDisplay.Paint += PaintBoard;
-                else
+                } else
                     _mainDisplay.Paint -= PaintBoard;
                 _drawSteps = value;
             }

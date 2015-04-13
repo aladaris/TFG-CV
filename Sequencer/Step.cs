@@ -21,6 +21,7 @@ namespace Sequencer {
         private Color _centerColor = Color.FromArgb(220, 85, 98, 112);
         private Brush _centerBrush;
         private int _pointRadius = 7;
+        private int _centerRadius = 4;
         private bool _showCenter = true;
 
         #region Properties
@@ -35,6 +36,15 @@ namespace Sequencer {
                     _pointRadius = value;
                 } else
                     throw new ArgumentOutOfRangeException("PointRadius", "Radius must be greater than zero (0).");
+            }
+        }
+        public int CenterRadius {
+            get { return _centerRadius; }
+            set {
+                if (value >= 0) {
+                    _centerRadius = value;
+                } else
+                    throw new ArgumentOutOfRangeException("CenterRadius", "Radius must be greater than zero (0).");
             }
         }
         public bool ShowCenter {
@@ -56,7 +66,7 @@ namespace Sequencer {
         public void Draw(PaintEventArgs e) {
             // Draw Polygon
             if (_poly.Length > 1) {
-                e.Graphics.FillPolygon(_polygonBrush, _poly.ToArray());
+                e.Graphics.FillPolygon(_polygonBrush, _poly);
             }
             // Draw Points
             for (int i = 0; i < _poly.Length; i++) {
@@ -65,7 +75,7 @@ namespace Sequencer {
             }
             // Draw Center
             if (_showCenter)
-                e.Graphics.FillEllipse(_centerBrush, _center.X - 2, _center.Y - 2, 4, 4);
+                e.Graphics.FillEllipse(_centerBrush, _center.X - _centerRadius / 2, _center.Y - _centerRadius / 2, _centerRadius, _centerRadius);
         }
         #endregion
     }
