@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Xml.Linq;
+using System.IO;
 
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -118,7 +119,7 @@ namespace Sequencer {
                 dest_corners[2] = new PointF(_mainDisplay.Size.Width, _mainDisplay.Size.Height);
                 dest_corners[3] = new PointF(0f, _mainDisplay.Size.Height);
 
-                PointF[] sorted_corners = Polygon.SortCorners(i_poly);
+                PointF[] sorted_corners = Polygon.SortRectangleCorners(i_poly);
 
                 _calibMatrix = CameraCalibration.GetPerspectiveTransform(sorted_corners, dest_corners);
                 _validCalibMatrix = true;
@@ -148,8 +149,35 @@ namespace Sequencer {
             #endregion
 
         public void Save() {
-            _configFile = XDocument.Load(_configFilePath);
-            // Save the Board and its steps
+            // Intentamos abrir el fichero, sino existe creamos uno con la estructura xml básica.
+            try {
+                _configFile = XDocument.Load(_configFilePath);
+            } catch (IOException) {
+                _configFile = new XDocument(
+                    new XDeclaration("1.0", Encoding.UTF8.HeaderName, String.Empty),
+                    new XComment("Sequencer configuration file"),
+                    new XElement("sequencer",
+                        new XElement("board", new XAttribute("size", _board.StepsCount))
+                        )
+                    );
+            }
+            // Tests
+            XElement boardXml = _configFile.Descendants("board").First();
+            boardXml.RemoveNodes();  // Reset del contenido del Board
+            boardXml.Add(
+                new XElement("step", new XAttribute("id", 0),
+                    new XElement("polygon",
+                        new XElement("point", new XAttribute("x", 0), new XAttribute("y", 0)),
+                        new XElement("point", new XAttribute("x", 0), new XAttribute("y", 6)),
+                        new XElement("point", new XAttribute("x", 6), new XAttribute("y", 6)),
+                        new XElement("point", new XAttribute("x", 6), new XAttribute("y", 0)),
+                        new XElement("center", new XAttribute("x", 0.5), new XAttribute("y", 0f))
+                        )
+                    )
+                );
+            boardXml.SetAttributeValue("size", 1);
+
+            _configFile.Save(_configFilePath);
         }
 
         public void Dispose() {

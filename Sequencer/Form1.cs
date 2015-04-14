@@ -33,6 +33,7 @@ namespace Sequencer {
         public Form1() {
             InitializeComponent();
             _sequencer = new Sequencer(imageBox_mainDisplay);
+            _sequencer.Save();  // DEBUG
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
         }
 
