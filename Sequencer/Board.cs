@@ -22,6 +22,9 @@ namespace Sequencer {
         public int StepsCount {
             get { return _steps.Count; }
         }
+        public IReadOnlyList<Step> Steps {
+            get { return _steps.AsReadOnly(); }
+        }
         #endregion
 
         #region Public Methods

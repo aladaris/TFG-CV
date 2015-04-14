@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Xml.Linq;
 
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -14,14 +15,20 @@ namespace Sequencer {
 
     class Sequencer : IDisposable{
         private Board _board;
+        // Capture and display
         private Capture _camera;
         private bool _capturing = false;
+        private Image<Bgr, Byte> _frame;  // This frame will be allways "perspective corrected".
         private ImageBox _mainDisplay;  // Main display, on the form, for showing the frames
+        // Calibration
         private HomographyMatrix _calibMatrix;
         private bool _validCalibMatrix = false;
         private bool _correctingPerspect = false;
-        private Image<Bgr, Byte> _frame;  // This frame will be allways "perspective corrected".
+        // Options
         private bool _drawSteps = false;
+        // XML
+        private string _configFilePath = "sequencer.config.xml";
+        private XDocument _configFile;
 
         public Sequencer(ImageBox i_disp) {
             if (i_disp != null) {
@@ -111,7 +118,7 @@ namespace Sequencer {
                 dest_corners[2] = new PointF(_mainDisplay.Size.Width, _mainDisplay.Size.Height);
                 dest_corners[3] = new PointF(0f, _mainDisplay.Size.Height);
 
-                PointF[] sorted_corners = PolygonHandling.SortCorners(i_poly);
+                PointF[] sorted_corners = Polygon.SortCorners(i_poly);
 
                 _calibMatrix = CameraCalibration.GetPerspectiveTransform(sorted_corners, dest_corners);
                 _validCalibMatrix = true;
@@ -140,6 +147,10 @@ namespace Sequencer {
         }
             #endregion
 
+        public void Save() {
+            _configFile = XDocument.Load(_configFilePath);
+            // Save the Board and its steps
+        }
 
         public void Dispose() {
             _camera.Stop();
