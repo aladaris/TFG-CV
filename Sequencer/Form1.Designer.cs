@@ -32,9 +32,11 @@
             this.button_startCamera = new System.Windows.Forms.Button();
             this.tabControl_Modes = new System.Windows.Forms.TabControl();
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
+            this.checkBox_addSteps = new System.Windows.Forms.CheckBox();
             this.checkBox_perspectRectangle = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.checkBox_addSteps = new System.Windows.Forms.CheckBox();
+            this.button_saveSteps = new System.Windows.Forms.Button();
+            this.button_loadSteps = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -140,6 +142,8 @@
             // 
             // tabPage_Calibration
             // 
+            this.tabPage_Calibration.Controls.Add(this.button_loadSteps);
+            this.tabPage_Calibration.Controls.Add(this.button_saveSteps);
             this.tabPage_Calibration.Controls.Add(this.checkBox_addSteps);
             this.tabPage_Calibration.Controls.Add(this.checkBox_perspectRectangle);
             this.tabPage_Calibration.Location = new System.Drawing.Point(4, 22);
@@ -149,6 +153,19 @@
             this.tabPage_Calibration.TabIndex = 0;
             this.tabPage_Calibration.Text = "Calibration";
             this.tabPage_Calibration.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_addSteps
+            // 
+            this.checkBox_addSteps.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox_addSteps.AutoSize = true;
+            this.checkBox_addSteps.Enabled = false;
+            this.checkBox_addSteps.Location = new System.Drawing.Point(6, 35);
+            this.checkBox_addSteps.Name = "checkBox_addSteps";
+            this.checkBox_addSteps.Size = new System.Drawing.Size(66, 23);
+            this.checkBox_addSteps.TabIndex = 1;
+            this.checkBox_addSteps.Text = "Add Steps";
+            this.checkBox_addSteps.UseVisualStyleBackColor = true;
+            this.checkBox_addSteps.CheckedChanged += new System.EventHandler(this.checkBox_addSteps_CheckedChanged);
             // 
             // checkBox_perspectRectangle
             // 
@@ -173,18 +190,27 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // checkBox_addSteps
+            // button_saveSteps
             // 
-            this.checkBox_addSteps.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox_addSteps.AutoSize = true;
-            this.checkBox_addSteps.Enabled = false;
-            this.checkBox_addSteps.Location = new System.Drawing.Point(6, 35);
-            this.checkBox_addSteps.Name = "checkBox_addSteps";
-            this.checkBox_addSteps.Size = new System.Drawing.Size(66, 23);
-            this.checkBox_addSteps.TabIndex = 1;
-            this.checkBox_addSteps.Text = "Add Steps";
-            this.checkBox_addSteps.UseVisualStyleBackColor = true;
-            this.checkBox_addSteps.CheckedChanged += new System.EventHandler(this.checkBox_addSteps_CheckedChanged);
+            this.button_saveSteps.Enabled = false;
+            this.button_saveSteps.Location = new System.Drawing.Point(87, 64);
+            this.button_saveSteps.Name = "button_saveSteps";
+            this.button_saveSteps.Size = new System.Drawing.Size(75, 23);
+            this.button_saveSteps.TabIndex = 2;
+            this.button_saveSteps.Text = "Save Steps";
+            this.button_saveSteps.UseVisualStyleBackColor = true;
+            this.button_saveSteps.Click += new System.EventHandler(this.button_saveSteps_Click);
+            // 
+            // button_loadSteps
+            // 
+            this.button_loadSteps.Enabled = false;
+            this.button_loadSteps.Location = new System.Drawing.Point(6, 64);
+            this.button_loadSteps.Name = "button_loadSteps";
+            this.button_loadSteps.Size = new System.Drawing.Size(75, 23);
+            this.button_loadSteps.TabIndex = 3;
+            this.button_loadSteps.Text = "Load Steps";
+            this.button_loadSteps.UseVisualStyleBackColor = true;
+            this.button_loadSteps.Click += new System.EventHandler(this.button_loadSteps_Click);
             // 
             // Form1
             // 
@@ -226,6 +252,8 @@
         private Emgu.CV.UI.ImageBox imageBox_mainDisplay;
         private System.Windows.Forms.CheckBox checkBox_perspectRectangle;
         private System.Windows.Forms.CheckBox checkBox_addSteps;
+        private System.Windows.Forms.Button button_saveSteps;
+        private System.Windows.Forms.Button button_loadSteps;
     }
 }
 

@@ -18,8 +18,23 @@ using Stateless;
 using VisualTools;
 
 namespace Sequencer {
-    public enum State { Init, Configuration, PersCalib, Idle, BoardSetup, AddSteps };
-    public enum Trigger { Initialize, StartPersCalib, StopPersCalib, NewSteps, StopCVEdition };
+    public enum State {
+        Init,
+        Configuration,
+            PersCalib,
+            BoardSetup,
+                AddSteps,
+        Idle,
+            IdleInit,
+            IdleCalibrated,
+            IdleWithBoard
+    };
+    public enum Trigger {
+        Initialize, Initialized,
+        StartPersCalib, CancelPersCalib, FinishPersCalib,
+        NewSteps, CancelCVEdition, FinishCVEdition,
+        FinishSequencerLoading
+    };
 
 
     public partial class Form1 : Form {
@@ -33,7 +48,6 @@ namespace Sequencer {
         public Form1() {
             InitializeComponent();
             _sequencer = new Sequencer(imageBox_mainDisplay);
-            _sequencer.Save();  // DEBUG
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
         }
 
@@ -72,7 +86,7 @@ namespace Sequencer {
             if (_stmachine.IsInState(State.PersCalib)) {
                 if (i_corners.Count == 4) {
                     _sequencer.SetPerspectiveCalibration(i_corners);
-                    _stmachine.Fire(Trigger.StopPersCalib);
+                    _stmachine.Fire(Trigger.FinishPersCalib);
                 } else {
                     MessageBox.Show("We need exactly four (4) Points for the calibration", "INFO");
                 }
@@ -112,7 +126,7 @@ namespace Sequencer {
             if (cb.Checked) {
                 _stmachine.Fire(Trigger.StartPersCalib);
             } else {
-                _stmachine.Fire(Trigger.StopPersCalib);
+                _stmachine.Fire(Trigger.FinishPersCalib);
             }
         }
         /// <summary>
@@ -123,7 +137,21 @@ namespace Sequencer {
             if (cb.Checked)
                 _stmachine.Fire(Trigger.NewSteps);
             else
-                _stmachine.Fire(Trigger.StopCVEdition);
+                _stmachine.Fire(Trigger.FinishCVEdition);
+        }
+
+        private void button_saveSteps_Click(object sender, EventArgs e) {
+            if (_sequencer != null)
+                if (_stmachine.IsInState(State.IdleWithBoard))
+                    _sequencer.Save();
+        }
+
+        private void button_loadSteps_Click(object sender, EventArgs e) {
+            if (_sequencer != null)
+                if (_stmachine.IsInState(State.IdleCalibrated)) {
+                    _sequencer.Load();
+                    _stmachine.Fire(Trigger.FinishSequencerLoading);
+                }
         }
         #endregion
 
@@ -136,19 +164,16 @@ namespace Sequencer {
             _stmachine.Configure(State.Init)
                 .PermitReentry(Trigger.Initialize)
                 .OnEntry(() => Initialize())
+                .Permit(Trigger.Initialized, State.IdleInit)
                 .PermitIf(Trigger.StartPersCalib, State.PersCalib, () => IsInitialized());
             // PERSPECTIVE CALIBRATION
             _stmachine.Configure(State.PersCalib)
                 .SubstateOf(State.Configuration)
                 .OnEntry(() => ResetPerspectiveCalibration())
                 .OnExit(() => EndPerspectiveCalibration())
-                .Permit(Trigger.StopPersCalib, State.Idle)
+                .Permit(Trigger.CancelPersCalib, State.IdleInit)
+                .Permit(Trigger.FinishPersCalib, State.IdleCalibrated)
                 .PermitIf(Trigger.NewSteps, State.BoardSetup, () => _sequencer.PerspectiveCalibrated);
-            // IDLE
-            _stmachine.Configure(State.Idle)
-                .OnEntry(() => EnterIdle())
-                .Permit(Trigger.StartPersCalib, State.PersCalib)
-                .PermitIf(Trigger.NewSteps, State.AddSteps, () => _sequencer.PerspectiveCalibrated);
             // BOARD SETUP
             _stmachine.Configure(State.BoardSetup)
                 .SubstateOf(State.Configuration)
@@ -158,7 +183,25 @@ namespace Sequencer {
                 .SubstateOf(State.BoardSetup)
                 .OnEntry(() => StartAddSteps())
                 .OnExit(() => StopAddSteps())
-                .Permit(Trigger.StopCVEdition, State.Idle);
+                .Permit(Trigger.CancelCVEdition, State.IdleCalibrated)
+                .Permit(Trigger.FinishCVEdition, State.IdleWithBoard);
+            // IDLE
+            _stmachine.Configure(State.Idle)
+                .Permit(Trigger.StartPersCalib, State.PersCalib)
+                .PermitIf(Trigger.NewSteps, State.AddSteps, () => _sequencer.PerspectiveCalibrated);
+            // IDLE INIT
+            _stmachine.Configure(State.IdleInit)
+                .SubstateOf(State.Idle)
+                .OnEntry(() => EnterIdleInit());
+            // IDLE CALIBRATED
+            _stmachine.Configure(State.IdleCalibrated)
+                .SubstateOf(State.Idle)
+                .OnEntry(() => EnterIdleCalibrated())
+                .Permit(Trigger.FinishSequencerLoading, State.IdleWithBoard);
+            // IDLE WITH BOARD
+            _stmachine.Configure(State.IdleWithBoard)
+                .SubstateOf(State.Idle)
+                .OnEntry(() => EnterIdleWithBoard());
         }
 
             #region Init State
@@ -203,27 +246,42 @@ namespace Sequencer {
         }
             #endregion
 
-            #region Idle State
-        private void EnterIdle() {
-            if (_sequencer.PerspectiveCalibrated) {
-                _sequencer.Camera.ImageGrabbed -= OnImageGrabbed;
-                // GUI
-                checkBox_perspectRectangle.Text = "Reset perspective correction polygon";
-                checkBox_addSteps.Enabled = true;
-            } else {
-                _sequencer.Camera.ImageGrabbed += OnImageGrabbed;
-                _sequencer.DrawSteps = false;
-                // GUI
-                checkBox_perspectRectangle.Text = "Set perspective correction polygon";
-                checkBox_addSteps.Enabled = false;
-            }
-            checkBox_perspectRectangle.Enabled = true;
-            this.Text = "Sequencer - IDLE";  // DEBUG ?
+            #region Idle States
 
+        private void EnterIdleInit() {
+            _sequencer.Camera.ImageGrabbed += OnImageGrabbed;  // TODO: No debería ir aquí ....
+            _sequencer.DrawSteps = false;
+            // GUI
+            checkBox_perspectRectangle.Text = "Set perspective correction polygon";
+            checkBox_addSteps.Enabled = false;
+            checkBox_perspectRectangle.Enabled = true;
+            button_loadSteps.Enabled = false;
+            button_saveSteps.Enabled = false;
+            this.Text = "Sequencer - IDLE INIT";  // DEBUG ?
+        }
+
+        private void EnterIdleCalibrated() {
+            _sequencer.Camera.ImageGrabbed -= OnImageGrabbed;  // TODO: No debería ir aquí ....
+            // GUI
+            checkBox_perspectRectangle.Text = "Reset perspective correction polygon";
+            checkBox_addSteps.Enabled = true;
+            checkBox_perspectRectangle.Enabled = true;
+            button_loadSteps.Enabled = true;
+            this.Text = "Sequencer - IDLE CALIBRATED";  // DEBUG ?
+        }
+
+        private void EnterIdleWithBoard() {
+            _sequencer.DrawSteps = true;
+            // GUI
+            checkBox_perspectRectangle.Text = "Reset perspective correction polygon";
+            checkBox_addSteps.Enabled = true;
+            checkBox_perspectRectangle.Enabled = true;
+            button_saveSteps.Enabled = true;
+            this.Text = "Sequencer - IDLE WITH BOARD";  // DEBUG ?
         }
             #endregion
 
-            #region AddSteps State
+        #region AddSteps State
         private void StartAddSteps() {
             // Polygon handling
             _polyDrawTool.Enabled = true;
@@ -241,7 +299,6 @@ namespace Sequencer {
             _polyDrawTool.ReturnPolygon -= OnStepPolygon;
         }
             #endregion
-
 
         #endregion
 

@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Sequencer {
 
-    class Polygon {
+    public class Polygon {
         #region Atributes
-        private Point[] _poly;
-        private PointF _center;
+        protected Point[] _poly;
+        protected PointF _center;
         // Drawing stuff
         private Color _pointColor = Color.FromArgb(200, 255, 107, 107);
         private Brush _pointBrush;
@@ -47,23 +49,28 @@ namespace Sequencer {
             get { return _showCenter; }
             set { _showCenter = value; }
         }
+        public IReadOnlyList<Point> Vertices {
+            get { return _poly.ToList().AsReadOnly(); }
+        }
         #endregion
 
-        /*
         public Polygon() {
-            _poly = new Point[8];  // TODO: Magic Number
             _pointBrush = new SolidBrush(_pointColor);
             _polygonBrush = new SolidBrush(_polygonColor);
             _centerBrush = new SolidBrush(_centerColor);
             _center = new PointF(0f, 0f);
         }
-        */
-        public Polygon(List<Point> i_poly) {
-            _poly = i_poly.ToArray();
+
+        public Polygon(Point[] i_poly) {
+            _poly = (Point[])i_poly.Clone();
             _pointBrush = new SolidBrush(_pointColor);
             _polygonBrush = new SolidBrush(_polygonColor);
             _centerBrush = new SolidBrush(_centerColor);
             _center = GetMassCenter(i_poly);
+        }
+
+        public Polygon(List<Point> i_poly)
+            : this(i_poly.ToArray()) {
         }
 
         public void Draw(PaintEventArgs e) {
@@ -83,18 +90,48 @@ namespace Sequencer {
 
         #region Class Methods
         /// <summary>
+        /// Serialize a polygon as an XElement.
+        /// </summary>
+        /// <param name="i_poly">Polygon to serialize.</param>
+        /// <returns>XElement with a child per vertex.</returns>
+        public static XElement SerializeAsXElement(Polygon i_poly) {
+            if (i_poly != null) {
+                XElement polyXml = new XElement("polygon", new XAttribute("vertices", i_poly._poly.Length));
+                for (int i = 0; i < i_poly._poly.Length; i++)
+                    polyXml.Add(new XElement("vertex", new XAttribute("x", i_poly._poly[i].X), new XAttribute("y", i_poly._poly[i].Y)));
+                polyXml.Add(
+                    new XElement("center", new XAttribute("x", i_poly._center.X), new XAttribute("y", i_poly._center.Y))
+                    );
+                return polyXml;
+            }
+            return null;
+        }
+
+        public static Polygon DeserializeFromXElement(XElement i_xpolygon) {
+            IEnumerable<Point> vertices = i_xpolygon.Descendants("vertex").Select(
+                x => new Point {
+                    X = Int32.Parse(x.Attribute("x").Value),
+                    Y = Int32.Parse(x.Attribute("y").Value)
+                });
+            Polygon p = new Polygon(vertices.ToArray());
+            p._center = new PointF(float.Parse(i_xpolygon.Element("center").Attribute("x").Value), float.Parse(i_xpolygon.Element("center").Attribute("y").Value));
+            // TODO: No se está cargando el center of mass
+            return p;
+        }
+
+        /// <summary>
         /// Gets the, aproximate, mass center of a give Polygon.
         /// </summary>
         /// <param name="i_polygon">List of points, wich represents the polygon.</param>
         /// <returns>A point with floating point precision.</returns>
-        public static PointF GetMassCenter(List<Point> i_polygon) {
+        public static PointF GetMassCenter(Point[] i_polygon) {
             PointF center = new PointF(0f, 0f);
-            foreach (Point p in i_polygon) {
-                center.X += p.X;
-                center.Y += p.Y;
+            for (int i = 0; i < i_polygon.Length; i++ ) {
+                center.X += i_polygon[i].X;
+                center.Y += i_polygon[i].Y;
             }
-            center.X *= (1f / i_polygon.Count);
-            center.Y *= (1f / i_polygon.Count);
+            center.X *= (1f / i_polygon.Length);
+            center.Y *= (1f / i_polygon.Length);
             return center;
         }
 
@@ -105,7 +142,7 @@ namespace Sequencer {
         /// <param name="i_corners">List with the four vertices</param>
         /// <returns></returns>
         public static PointF[] SortRectangleCorners(List<Point> i_corners) {
-            PointF massCenter = GetMassCenter(i_corners);
+            PointF massCenter = GetMassCenter(i_corners.ToArray());
             Point[] top = new Point[2];
             Point[] bott = new Point[2];
             int top_pos = 0;
