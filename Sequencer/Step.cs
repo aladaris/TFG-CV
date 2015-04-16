@@ -20,7 +20,8 @@ namespace Sequencer {
         public Step() :base() {
             _id = -1;
         }
-        public Step(List<Point> i_poly, int i_id = -1) : base(i_poly) {
+        public Step(IEnumerable<Point> i_poly, int i_id = -1)
+            : base(i_poly) {
             _id = i_id;
         }
         #endregion
@@ -40,6 +41,11 @@ namespace Sequencer {
             return null;
         }
 
+        /// <summary>
+        /// Deserialize an XElement into a Step object.
+        /// </summary>
+        /// <param name="i_xstep">XElemnt with the Step data.</param>
+        /// <returns>A new Step with the deserialized data.</returns>
         public static Step DeserializeFromXElement(XElement i_xstep) {
             Step s = Step.FromPolygon(Polygon.DeserializeFromXElement(i_xstep.Element("polygon")));
             s._id = Int32.Parse(i_xstep.Attribute("id").Value);
@@ -47,13 +53,19 @@ namespace Sequencer {
             return s;
         }
 
-        public static Step FromPolygon(Polygon i_poly) {
+        /// <summary>
+        /// Creates a Step object from a Polygon (parent class) one.
+        /// </summary>
+        /// <param name="i_poly">Polygon to use as the base.</param>
+        /// <param name="i_id">ID of the new Step (-1 by default).</param>
+        /// <returns>A step with the data from the polygon.</returns>
+        public static Step FromPolygon(Polygon i_poly, int i_id = -1) {
             Step s = new Step();
             s._poly = new Point[i_poly.VerticesCount];
             for (int i = 0; i < i_poly.VerticesCount; i++) {
                 s._poly[i] = i_poly.Vertices[i];
             }
-            s._id = -1;
+            s._id = i_id;
             return s;
         }
         #endregion

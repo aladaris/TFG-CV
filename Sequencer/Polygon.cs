@@ -69,7 +69,7 @@ namespace Sequencer {
             _center = GetMassCenter(i_poly);
         }
 
-        public Polygon(List<Point> i_poly)
+        public Polygon(IEnumerable<Point> i_poly)
             : this(i_poly.ToArray()) {
         }
 
@@ -107,13 +107,18 @@ namespace Sequencer {
             return null;
         }
 
+        /// <summary>
+        /// Deserialize an XElement into a Polygon object.
+        /// </summary>
+        /// <param name="i_xpolygon">XElemnt with the Polygon data.</param>
+        /// <returns>A new Polygon with the deserialized data.</returns>
         public static Polygon DeserializeFromXElement(XElement i_xpolygon) {
             IEnumerable<Point> vertices = i_xpolygon.Descendants("vertex").Select(
                 x => new Point {
                     X = Int32.Parse(x.Attribute("x").Value),
                     Y = Int32.Parse(x.Attribute("y").Value)
                 });
-            Polygon p = new Polygon(vertices.ToArray());
+            Polygon p = new Polygon(vertices);
             p._center = new PointF(float.Parse(i_xpolygon.Element("center").Attribute("x").Value), float.Parse(i_xpolygon.Element("center").Attribute("y").Value));
             // TODO: No se está cargando el center of mass
             return p;

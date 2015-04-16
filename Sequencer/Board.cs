@@ -32,7 +32,7 @@ namespace Sequencer {
             _steps = new List<Step>();
         }
 
-        public Board(List<Step> i_steps) {
+        public Board(IEnumerable<Step> i_steps) {
             _steps = i_steps.ToList();
         }
 
@@ -78,11 +78,16 @@ namespace Sequencer {
             return null;
         }
 
+        /// <summary>
+        /// Deserialize an XElement into a Board object.
+        /// </summary>
+        /// <param name="i_xboard">XElemnt with the Board data.</param>
+        /// <returns>A new Board with the deserialized data.</returns>
         public static Board DeserializeFromXElement(XElement i_xboard) {
             IEnumerable<Step> steps = i_xboard.Descendants("step").Select(
                     x => Step.DeserializeFromXElement(x)
                 );
-            Board b = new Board(steps.ToList());
+            Board b = new Board(steps);
             return b;
         }
         #endregion

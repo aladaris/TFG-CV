@@ -152,48 +152,33 @@ namespace Sequencer {
         /// to the xml configuration file.
         /// </summary>
         public void Save() {
-            XDocument _configFile;
+            XDocument configFile;
             // Intentamos abrir el fichero, sino existe creamos uno con la estructura xml básica.
             try {
-                _configFile = XDocument.Load(_configFilePath);
+                configFile = XDocument.Load(_configFilePath);
             } catch (IOException) {
-                _configFile = new XDocument(
+                configFile = new XDocument(
                     new XDeclaration("1.0", Encoding.UTF8.HeaderName, "yes"),
                     new XComment("Sequencer configuration file"),
                     new XElement("sequencer")
                     );
             }
-            // Tests
-            /*
-            List<Step> pasos = new List<Step>() { 
-                new Step(new List<Point>() { 
-                    new Point(0, 0), new Point(0, 6), new Point(6, 6), new Point(6, 0) 
-                }),
-                new Step(new List<Point>() { 
-                    new Point(6, 6), new Point(6, 12), new Point(12, 12), new Point(12, 6) 
-                })
-            };
-            Board tabla = new Board();
-            foreach (Step s in pasos)
-                tabla.AddStep(s);
-            */
-            // TODO: A partir de aquí sería el método final (para serializar y guardar el sequencer), cambiando las cosas de Test por las reales
-            XElement sequencerXml = _configFile.Descendants("sequencer").First();
+            XElement sequencerXml = configFile.Descendants("sequencer").First();
             sequencerXml.RemoveNodes();
             sequencerXml.Add(Board.SerializeAsXElement(_board));
-            _configFile.Save(_configFilePath);
+            configFile.Save(_configFilePath);
         }
 
         public void Load() {
-            XDocument _configFile;
+            XDocument configFile;
             // Intentamos abrir el fichero, sino existe creamos uno con la estructura xml básica.
             try {
-                _configFile = XDocument.Load(_configFilePath);
+                configFile = XDocument.Load(_configFilePath);
             } catch (IOException) {
                 MessageBox.Show("Can't open the sequencer definition file", "IO error");
                 return;
             }
-            XElement boardXml = _configFile.Element("sequencer").Element("board");
+            XElement boardXml = configFile.Element("sequencer").Element("board");
             _board = Board.DeserializeFromXElement(boardXml);
         }
 
