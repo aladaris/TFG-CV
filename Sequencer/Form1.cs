@@ -299,6 +299,9 @@ namespace Sequencer {
             _sequencer.DrawSteps = true;
             // GUI
             button_addSteps.Text = "Save Steps";
+            button_setPersCalib.Enabled = false;
+            button_saveBoard.Enabled = false;
+            button_loadBoard.Enabled = false;
             toolStripStatusLabel_state.Text = "State: Add Steps";  // DEBUG ?
         }
 
@@ -307,6 +310,9 @@ namespace Sequencer {
             _polyDrawTool.Enabled = false;
             _polyDrawTool.ReturnPolygon -= OnStepPolygon;
             // GUI
+            button_setPersCalib.Enabled = true;
+            button_saveBoard.Enabled = true;
+            button_loadBoard.Enabled = true;
             button_addSteps.Text = "Add Steps";
         }
             #endregion
