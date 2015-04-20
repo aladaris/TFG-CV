@@ -14,7 +14,7 @@ using Emgu.Util;
 using Emgu.CV.UI;
 
 using Stateless;
-
+using Aladaris;
 using VisualTools;
 
 namespace Sequencer {
@@ -40,6 +40,7 @@ namespace Sequencer {
     public partial class Form1 : Form {
         #region Atributes
         private PolygonDrawingTool _polyDrawTool;
+        private SelectionRectangle _selectionRect;
         private Sequencer _sequencer;
         private StateMachine<State, Trigger> _stmachine = new StateMachine<State, Trigger>(State.Init);
         #endregion
@@ -49,6 +50,7 @@ namespace Sequencer {
             InitializeComponent();
             _sequencer = new Sequencer(imageBox_mainDisplay);
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
+            _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -100,6 +102,17 @@ namespace Sequencer {
                     _sequencer.AddStep(i_vertices);
                 }
             }
+        }
+
+        private void OnSample(Image<Bgr, Byte> i_sample) {
+            // TODO: Impleméntame!
+            CvInvoke.cvShowImage("Sample", i_sample.Ptr);  // DEBUG
+            CvInvoke.cvWaitKey(0);  // DEBUG
+            CvInvoke.cvDestroyWindow("Sample");  // DEBUG
+        }
+
+        private void OnSampleList(IEnumerable<Image<Bgr, Byte>> i_samples) {
+            // TODO: Impleméntame!
         }
         #endregion
 
@@ -160,6 +173,19 @@ namespace Sequencer {
                     _sequencer.Load();
                     _stmachine.Fire(Trigger.FinishSequencerLoading);
                 }
+        }
+
+        private void button_setColor_Click(object sender, EventArgs e) {
+            // TODO: La lógica de la máquina de estados
+            if (!_selectionRect.Enabled) {
+                _selectionRect.Enabled = true;
+                _selectionRect.AcquiredSample += OnSample;
+                _selectionRect.AcquiredSampleList += OnSampleList;
+            } else {
+                _selectionRect.Enabled = false;
+                _selectionRect.AcquiredSample -= OnSample;
+                _selectionRect.AcquiredSampleList -= OnSampleList;
+            }
         }
         #endregion
 
@@ -316,6 +342,7 @@ namespace Sequencer {
             button_addSteps.Text = "Add Steps";
         }
             #endregion
+
         #endregion
 
 

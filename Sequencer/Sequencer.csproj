@@ -98,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lib.SelectionRectangle\Lib.SelectionRectangle.csproj">
+      <Project>{15c1984e-dcc6-4722-9780-0f217a6b506e}</Project>
+      <Name>Lib.SelectionRectangle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PolygonTools\VisualTools.csproj">
       <Project>{9b18019d-83a7-4fb5-a52d-9c898113c871}</Project>
       <Name>VisualTools</Name>

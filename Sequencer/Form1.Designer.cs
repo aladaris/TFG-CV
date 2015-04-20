@@ -39,6 +39,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
+            this.button_setColor = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -145,6 +146,7 @@
             // 
             // tabPage_Calibration
             // 
+            this.tabPage_Calibration.Controls.Add(this.button_setColor);
             this.tabPage_Calibration.Controls.Add(this.button_addSteps);
             this.tabPage_Calibration.Controls.Add(this.button_setPersCalib);
             this.tabPage_Calibration.Controls.Add(this.button_loadBoard);
@@ -227,6 +229,16 @@
             this.toolStripStatusLabel_state.Size = new System.Drawing.Size(56, 17);
             this.toolStripStatusLabel_state.Text = "State: Init";
             // 
+            // button_setColor
+            // 
+            this.button_setColor.Location = new System.Drawing.Point(6, 134);
+            this.button_setColor.Name = "button_setColor";
+            this.button_setColor.Size = new System.Drawing.Size(75, 23);
+            this.button_setColor.TabIndex = 6;
+            this.button_setColor.Text = "Set Color";
+            this.button_setColor.UseVisualStyleBackColor = true;
+            this.button_setColor.Click += new System.EventHandler(this.button_setColor_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -274,6 +286,7 @@
         private System.Windows.Forms.Button button_addSteps;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_state;
+        private System.Windows.Forms.Button button_setColor;
     }
 }
 
