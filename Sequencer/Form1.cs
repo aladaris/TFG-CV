@@ -332,6 +332,7 @@ namespace Sequencer {
             #region Color Sample Selection State
         private void StartColorSampling() {
             _colorSampled = false;
+            _sequencer.DrawSteps = false;
             _selectionRect.Enabled = true;
             _selectionRect.AcquiredSample += OnSample;
             _selectionRect.AcquiredSampleList += OnSampleList;
@@ -341,6 +342,7 @@ namespace Sequencer {
         }
         private void StopColorSampling() {
             _colorSampled = true;
+            _sequencer.DrawSteps = true;
             _selectionRect.Enabled = false;
             _selectionRect.AcquiredSample -= OnSample;
             _selectionRect.AcquiredSampleList -= OnSampleList;
@@ -385,8 +387,6 @@ namespace Sequencer {
         }
 
         private void EnterIdleColorSampled() {
-            if (_sequencer.StepCount > 0)
-                _sequencer.DrawSteps = true;
             // GUI
             toolStripStatusLabel_state.Text = "State: Idle Color Sampled";  // DEBUG ?
         }
