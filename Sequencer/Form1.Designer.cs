@@ -32,6 +32,7 @@
             this.button_startCamera = new System.Windows.Forms.Button();
             this.tabControl_Modes = new System.Windows.Forms.TabControl();
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
+            this.button_setColor = new System.Windows.Forms.Button();
             this.button_addSteps = new System.Windows.Forms.Button();
             this.button_setPersCalib = new System.Windows.Forms.Button();
             this.button_loadBoard = new System.Windows.Forms.Button();
@@ -39,7 +40,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button_setColor = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -159,6 +159,17 @@
             this.tabPage_Calibration.Text = "Calibration";
             this.tabPage_Calibration.UseVisualStyleBackColor = true;
             // 
+            // button_setColor
+            // 
+            this.button_setColor.Enabled = false;
+            this.button_setColor.Location = new System.Drawing.Point(6, 134);
+            this.button_setColor.Name = "button_setColor";
+            this.button_setColor.Size = new System.Drawing.Size(75, 23);
+            this.button_setColor.TabIndex = 6;
+            this.button_setColor.Text = "Set color";
+            this.button_setColor.UseVisualStyleBackColor = true;
+            this.button_setColor.Click += new System.EventHandler(this.button_setColor_Click);
+            // 
             // button_addSteps
             // 
             this.button_addSteps.Enabled = false;
@@ -166,7 +177,7 @@
             this.button_addSteps.Name = "button_addSteps";
             this.button_addSteps.Size = new System.Drawing.Size(75, 23);
             this.button_addSteps.TabIndex = 5;
-            this.button_addSteps.Text = "Add Steps";
+            this.button_addSteps.Text = "Add steps";
             this.button_addSteps.UseVisualStyleBackColor = true;
             this.button_addSteps.Click += new System.EventHandler(this.button_addSteps_Click);
             // 
@@ -228,16 +239,6 @@
             this.toolStripStatusLabel_state.Name = "toolStripStatusLabel_state";
             this.toolStripStatusLabel_state.Size = new System.Drawing.Size(56, 17);
             this.toolStripStatusLabel_state.Text = "State: Init";
-            // 
-            // button_setColor
-            // 
-            this.button_setColor.Location = new System.Drawing.Point(6, 134);
-            this.button_setColor.Name = "button_setColor";
-            this.button_setColor.Size = new System.Drawing.Size(75, 23);
-            this.button_setColor.TabIndex = 6;
-            this.button_setColor.Text = "Set Color";
-            this.button_setColor.UseVisualStyleBackColor = true;
-            this.button_setColor.Click += new System.EventHandler(this.button_setColor_Click);
             // 
             // Form1
             // 

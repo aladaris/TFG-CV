@@ -24,15 +24,20 @@ namespace Sequencer {
             PersCalib,
             BoardSetup,
                 AddSteps,
+            CVSetup,
+                CVColorSampleSelection,
         Idle,
             IdleInit,
             IdleCalibrated,
-                IdleWithBoard
+                IdleWithBoard,
+                IdleColorSampled,
     };
     public enum Trigger {
         Initialize, Initialized,
         StartPersCalib, CancelPersCalib, FinishPersCalib,
-        NewSteps, CancelCVEdition, FinishCVEdition,
+        NewSteps,
+        CancelCVEdition, FinishCVEdition,
+        StartCVColorSampling,
         FinishSequencerLoading
     };
 
@@ -43,6 +48,7 @@ namespace Sequencer {
         private SelectionRectangle _selectionRect;
         private Sequencer _sequencer;
         private StateMachine<State, Trigger> _stmachine = new StateMachine<State, Trigger>(State.Init);
+        private bool _colorSampled = false;  // Indica si se ha seleccionado la muestra necesaria para el filtrado de color
         #endregion
 
         #region Form Manage
@@ -105,14 +111,20 @@ namespace Sequencer {
         }
 
         private void OnSample(Image<Bgr, Byte> i_sample) {
-            // TODO: Impleméntame!
+            // TODO: Que hacer con el Sample
+            if (_stmachine.State == State.CVColorSampleSelection)
+                _stmachine.Fire(Trigger.FinishCVEdition);
+           // DEBUGGGGG
             CvInvoke.cvShowImage("Sample", i_sample.Ptr);  // DEBUG
             CvInvoke.cvWaitKey(0);  // DEBUG
             CvInvoke.cvDestroyWindow("Sample");  // DEBUG
         }
 
         private void OnSampleList(IEnumerable<Image<Bgr, Byte>> i_samples) {
-            // TODO: Impleméntame!
+            // TODO: Que hacer con la list de samples
+            if (_stmachine.State == State.CVColorSampleSelection)
+                _stmachine.Fire(Trigger.FinishCVEdition);
+            
         }
         #endregion
 
@@ -176,16 +188,8 @@ namespace Sequencer {
         }
 
         private void button_setColor_Click(object sender, EventArgs e) {
-            // TODO: La lógica de la máquina de estados
-            if (!_selectionRect.Enabled) {
-                _selectionRect.Enabled = true;
-                _selectionRect.AcquiredSample += OnSample;
-                _selectionRect.AcquiredSampleList += OnSampleList;
-            } else {
-                _selectionRect.Enabled = false;
-                _selectionRect.AcquiredSample -= OnSample;
-                _selectionRect.AcquiredSampleList -= OnSampleList;
-            }
+            if (_stmachine.IsInState(State.IdleCalibrated))
+                _stmachine.Fire(Trigger.StartCVColorSampling);
         }
         #endregion
 
@@ -206,7 +210,8 @@ namespace Sequencer {
                 .OnExit(() => EndPerspectiveCalibration())
                 .Permit(Trigger.CancelPersCalib, State.IdleInit)
                 .PermitIf(Trigger.FinishPersCalib, State.IdleCalibrated, () => _sequencer.StepCount == 0)
-                .PermitIf(Trigger.FinishPersCalib, State.IdleWithBoard, () => _sequencer.StepCount > 0);
+                .PermitIf(Trigger.FinishPersCalib, State.IdleWithBoard, () => (_sequencer.StepCount > 0 && !_colorSampled))
+                .PermitIf(Trigger.FinishPersCalib, State.IdleColorSampled, () => (_sequencer.StepCount > 0 && _colorSampled));
             // BOARD SETUP
             _stmachine.Configure(State.BoardSetup)
                 .SubstateOf(State.Configuration)
@@ -217,7 +222,15 @@ namespace Sequencer {
                 .OnEntry(() => StartAddSteps())
                 .OnExit(() => StopAddSteps())
                 .Permit(Trigger.CancelCVEdition, State.IdleCalibrated)
-                .Permit(Trigger.FinishCVEdition, State.IdleWithBoard);
+                .PermitIf(Trigger.FinishCVEdition, State.IdleCalibrated, () => _sequencer.StepCount == 0)
+                .PermitIf(Trigger.FinishCVEdition, State.IdleWithBoard, () => (_sequencer.StepCount > 0 && !_colorSampled))
+                .PermitIf(Trigger.FinishCVEdition, State.IdleColorSampled, () => (_sequencer.StepCount > 0 && _colorSampled));
+            // CV COLOR SAMPLE SELECTION
+            _stmachine.Configure(State.CVColorSampleSelection)
+                .SubstateOf(State.CVSetup)
+                .OnEntry(() => StartColorSampling())
+                .OnExit(() => StopColorSampling())
+                .Permit(Trigger.FinishCVEdition, State.IdleColorSampled);
             // IDLE
             _stmachine.Configure(State.Idle)
                 .PermitIf(Trigger.StartPersCalib, State.PersCalib, () => IsInitialized())
@@ -230,11 +243,17 @@ namespace Sequencer {
             _stmachine.Configure(State.IdleCalibrated)
                 .SubstateOf(State.Idle)
                 .OnEntry(() => EnterIdleCalibrated())
-                .Permit(Trigger.FinishSequencerLoading, State.IdleWithBoard);
+                .OnExit(() => ExitIdleCalibrated())
+                .Permit(Trigger.FinishSequencerLoading, State.IdleWithBoard)
+                .Permit(Trigger.StartCVColorSampling, State.CVColorSampleSelection);
             // IDLE WITH BOARD
             _stmachine.Configure(State.IdleWithBoard)
                 .SubstateOf(State.IdleCalibrated)  // Aquí ya estamos mostrando la imagen con la perspectiva corregida
                 .OnEntry(() => EnterIdleWithBoard());
+            // IDLE COLOR SAMPLED
+            _stmachine.Configure(State.IdleColorSampled)
+                .SubstateOf(State.IdleCalibrated)
+                .OnEntry(() => EnterIdleColorSampled());  // TODO: Sólo se usa para escribir en el toolStrip
         }
 
             #region Init State
@@ -288,7 +307,49 @@ namespace Sequencer {
         }
             #endregion
 
-            #region Idle States
+            #region AddSteps State
+        private void StartAddSteps() {
+            // Polygon handling
+            _polyDrawTool.Enabled = true;
+            _polyDrawTool.ReturnPolygon += OnStepPolygon;
+            // Board Handling
+            _sequencer.DrawSteps = true;
+            // GUI
+            button_addSteps.Text = "Save steps";
+            button_addSteps.Enabled = true;  // El estado padre 'IdleCalibrated', lo desactiva al entrar
+            toolStripStatusLabel_state.Text = "State: Add Steps";  // DEBUG ?
+        }
+
+        private void StopAddSteps() {
+            // Polygon handling
+            _polyDrawTool.Enabled = false;
+            _polyDrawTool.ReturnPolygon -= OnStepPolygon;
+            // GUI
+            button_addSteps.Text = "Add steps";
+        }
+            #endregion
+
+            #region Color Sample Selection State
+        private void StartColorSampling() {
+            _colorSampled = false;
+            _selectionRect.Enabled = true;
+            _selectionRect.AcquiredSample += OnSample;
+            _selectionRect.AcquiredSampleList += OnSampleList;
+            // GUI
+            button_setColor.Text = "Sampling";
+            toolStripStatusLabel_state.Text = "State: Color Sample Selection";  // DEBUG ?
+        }
+        private void StopColorSampling() {
+            _colorSampled = true;
+            _selectionRect.Enabled = false;
+            _selectionRect.AcquiredSample -= OnSample;
+            _selectionRect.AcquiredSampleList -= OnSampleList;
+            // GUI
+            button_setColor.Text = "Set color";
+        }
+            #endregion
+
+        #region Idle States
 
         private void EnterIdleInit() {
             _sequencer.Camera.ImageGrabbed += OnImageGrabbed;
@@ -302,46 +363,35 @@ namespace Sequencer {
 
         private void EnterIdleCalibrated() {
             // GUI
+            button_setPersCalib.Enabled = true;
             button_addSteps.Enabled = true;
             button_loadBoard.Enabled = true;
+            button_setColor.Enabled = true;
             toolStripStatusLabel_state.Text = "State: Idle Calibrated";  // DEBUG ?
+        }
+
+        private void ExitIdleCalibrated() {
+            // GUI
+            button_setPersCalib.Enabled = false;
+            button_addSteps.Enabled = false;
+            button_loadBoard.Enabled = false;
+            button_setColor.Enabled = false;
         }
 
         private void EnterIdleWithBoard() {
             _sequencer.DrawSteps = true;
             // GUI
-            button_addSteps.Enabled = true;
-            button_saveBoard.Enabled = true;
             toolStripStatusLabel_state.Text = "State: Idle with Board";  // DEBUG ?
         }
-            #endregion
 
-        #region AddSteps State
-        private void StartAddSteps() {
-            // Polygon handling
-            _polyDrawTool.Enabled = true;
-            _polyDrawTool.ReturnPolygon += OnStepPolygon;
-            // Board Handling
-            _sequencer.DrawSteps = true;
+        private void EnterIdleColorSampled() {
+            if (_sequencer.StepCount > 0)
+                _sequencer.DrawSteps = true;
             // GUI
-            button_addSteps.Text = "Save Steps";
-            button_setPersCalib.Enabled = false;
-            button_saveBoard.Enabled = false;
-            button_loadBoard.Enabled = false;
-            toolStripStatusLabel_state.Text = "State: Add Steps";  // DEBUG ?
-        }
-
-        private void StopAddSteps() {
-            // Polygon handling
-            _polyDrawTool.Enabled = false;
-            _polyDrawTool.ReturnPolygon -= OnStepPolygon;
-            // GUI
-            button_setPersCalib.Enabled = true;
-            button_saveBoard.Enabled = true;
-            button_loadBoard.Enabled = true;
-            button_addSteps.Text = "Add Steps";
+            toolStripStatusLabel_state.Text = "State: Idle Color Sampled";  // DEBUG ?
         }
             #endregion
+
 
         #endregion
 

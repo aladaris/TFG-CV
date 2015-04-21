@@ -42,12 +42,12 @@ namespace Aladaris {
         private Brush _selBrush = new SolidBrush(_brushColor);
         private ImageBox _control;
         private bool _enabled;
-        #region MultiSelection
+            #region MultiSelection
         private List<Rectangle> _rectangles = new List<Rectangle>();
         private static Color _brushColorMulti = Color.FromArgb(128, 220, 72, 105);
         private Brush _selBrushMulti = new SolidBrush(_brushColorMulti);
-        #endregion
-        #region Events
+            #endregion
+            #region Events
         /// <summary>
         /// Evento generado cada vez que se obtiene una muestra.
         /// </summary>
@@ -56,7 +56,7 @@ namespace Aladaris {
         /// Evento generado cada vez que se genera un listado de muestras.
         /// </summary>
         public event GeneratedSampleList<Bgr, Byte> AcquiredSampleList;
-        #endregion
+            #endregion
         #endregion
 
         #region Properties
@@ -82,6 +82,7 @@ namespace Aladaris {
 
         #endregion
 
+        #region Public Methods
         /// <summary>
         /// Constructor
         /// </summary>
@@ -90,6 +91,7 @@ namespace Aladaris {
             _control = i_imBox;
             Enabled = i_enabled;
         }
+        #endregion
 
         #region Private Methods
         /// <summary>
@@ -137,7 +139,7 @@ namespace Aladaris {
             return result;
         }
 
-        #region Support Methods
+            #region Support Methods
         /// <summary>
         /// Attach this object to the ImageBox control
         /// </summary>
@@ -157,11 +159,9 @@ namespace Aladaris {
             _control.MouseMove -= this.MouseMove;
             _control.Paint -= this.Paint;
         }
-        #endregion
+            #endregion
 
-        #endregion
-
-        #region EventHandlers
+            #region EventHandlers
         private void MouseDown(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Left){
                 _startPoint = e.Location;
@@ -220,6 +220,7 @@ namespace Aladaris {
                     AcquiredSampleList(samples);
             }
         }
+            #endregion
         #endregion
     }
 }
