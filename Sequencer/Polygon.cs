@@ -36,6 +36,9 @@ namespace Sequencer {
                     throw new ArgumentOutOfRangeException("PointRadius", "Radius must be greater than zero (0).");
             }
         }
+        public PointF Center {
+            get { return _center; }
+        }
         public int CenterRadius {
             get { return _centerRadius; }
             set {
@@ -119,8 +122,7 @@ namespace Sequencer {
                     Y = Int32.Parse(x.Attribute("y").Value)
                 });
             Polygon p = new Polygon(vertices);
-            p._center = new PointF(float.Parse(i_xpolygon.Element("center").Attribute("x").Value), float.Parse(i_xpolygon.Element("center").Attribute("y").Value));
-            // TODO: No se está cargando el center of mass
+            p._center = new PointF(float.Parse(i_xpolygon.Element("center").Attribute("x").Value, System.Globalization.CultureInfo.InvariantCulture), float.Parse(i_xpolygon.Element("center").Attribute("y").Value, System.Globalization.CultureInfo.InvariantCulture));
             return p;
         }
 

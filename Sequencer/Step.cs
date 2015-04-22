@@ -46,7 +46,8 @@ namespace Sequencer {
         /// </summary>
         /// <param name="i_xstep">XElemnt with the Step data.</param>
         /// <returns>A new Step with the deserialized data.</returns>
-        public static Step DeserializeFromXElement(XElement i_xstep) {
+        // NOTA: 'new' es utilizado para hacer el override del método al 100% correcto, ocultando el método de la clase base (y sin lanzar warning)
+        public static new Step DeserializeFromXElement(XElement i_xstep) {
             Step s = Step.FromPolygon(Polygon.DeserializeFromXElement(i_xstep.Element("polygon")));
             s._id = Int32.Parse(i_xstep.Attribute("id").Value);
             
@@ -66,6 +67,7 @@ namespace Sequencer {
                 s._poly[i] = i_poly.Vertices[i];
             }
             s._id = i_id;
+            s._center = i_poly.Center;
             return s;
         }
         #endregion
