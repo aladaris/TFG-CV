@@ -29,6 +29,8 @@ namespace Sequencer {
         private bool _drawSteps = false;
         // XML
         private string _configFilePath = "sequencer.config.xml";
+        // Events
+        public event GeneratedImage<Bgr, Byte> PerspectiveCorrectedFrame;
 
         public Sequencer(ImageBox i_disp) {
             if (i_disp != null) {
@@ -145,6 +147,10 @@ namespace Sequencer {
             Step s = new Step(i_points);
             _board.AddStep(s);
         }
+
+        public void ClearSteps() {
+            _board.ClearSteps();
+        }
             #endregion
 
         /// <summary>
@@ -201,8 +207,9 @@ namespace Sequencer {
                 _correctingPerspect = true;
                 Image<Bgr, Byte> nframe = cam.RetrieveBgrFrame().Clone().Resize(_mainDisplay.Size.Width, _mainDisplay.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4);
                 _frame = nframe.WarpPerspective(_calibMatrix, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
+                if (PerspectiveCorrectedFrame != null)
+                    PerspectiveCorrectedFrame(_frame, e);
                 _correctingPerspect = false;
-                _mainDisplay.Image = _frame;
             }
         }
 

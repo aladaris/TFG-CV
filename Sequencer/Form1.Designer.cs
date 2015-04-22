@@ -30,10 +30,10 @@
             this.flowLayoutPanel_CamStuff = new System.Windows.Forms.FlowLayoutPanel();
             this.comboBox_CameraList = new System.Windows.Forms.ComboBox();
             this.button_startCamera = new System.Windows.Forms.Button();
+            this.button_setPersCalib = new System.Windows.Forms.Button();
             this.tabControl_Modes = new System.Windows.Forms.TabControl();
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button_setPersCalib = new System.Windows.Forms.Button();
             this.button_setColor = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button_addSteps = new System.Windows.Forms.Button();
@@ -42,6 +42,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
+            this.button_clearSteps = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -140,6 +141,17 @@
             this.button_startCamera.UseVisualStyleBackColor = true;
             this.button_startCamera.Click += new System.EventHandler(this.button_startCamera_Click);
             // 
+            // button_setPersCalib
+            // 
+            this.button_setPersCalib.Enabled = false;
+            this.button_setPersCalib.Location = new System.Drawing.Point(286, 8);
+            this.button_setPersCalib.Name = "button_setPersCalib";
+            this.button_setPersCalib.Size = new System.Drawing.Size(75, 60);
+            this.button_setPersCalib.TabIndex = 4;
+            this.button_setPersCalib.Text = "Set perspective correction rectangle";
+            this.button_setPersCalib.UseVisualStyleBackColor = true;
+            this.button_setPersCalib.Click += new System.EventHandler(this.button_setPersCalib_Click);
+            // 
             // tabControl_Modes
             // 
             this.tabControl_Modes.Controls.Add(this.tabPage_Calibration);
@@ -173,17 +185,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Image setup";
             // 
-            // button_setPersCalib
-            // 
-            this.button_setPersCalib.Enabled = false;
-            this.button_setPersCalib.Location = new System.Drawing.Point(286, 8);
-            this.button_setPersCalib.Name = "button_setPersCalib";
-            this.button_setPersCalib.Size = new System.Drawing.Size(75, 60);
-            this.button_setPersCalib.TabIndex = 4;
-            this.button_setPersCalib.Text = "Set perspective correction rectangle";
-            this.button_setPersCalib.UseVisualStyleBackColor = true;
-            this.button_setPersCalib.Click += new System.EventHandler(this.button_setPersCalib_Click);
-            // 
             // button_setColor
             // 
             this.button_setColor.Enabled = false;
@@ -197,6 +198,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button_clearSteps);
             this.groupBox1.Controls.Add(this.button_addSteps);
             this.groupBox1.Controls.Add(this.button_saveBoard);
             this.groupBox1.Controls.Add(this.button_loadBoard);
@@ -267,6 +269,17 @@
             this.toolStripStatusLabel_state.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel_state.Text = "State: None";
             // 
+            // button_clearSteps
+            // 
+            this.button_clearSteps.Enabled = false;
+            this.button_clearSteps.Location = new System.Drawing.Point(87, 19);
+            this.button_clearSteps.Name = "button_clearSteps";
+            this.button_clearSteps.Size = new System.Drawing.Size(75, 23);
+            this.button_clearSteps.TabIndex = 6;
+            this.button_clearSteps.Text = "Clear steps";
+            this.button_clearSteps.UseVisualStyleBackColor = true;
+            this.button_clearSteps.Click += new System.EventHandler(this.button_clearSteps_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,6 +334,7 @@
         private System.Windows.Forms.Button button_setColor;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button_clearSteps;
     }
 }
 

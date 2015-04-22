@@ -59,6 +59,10 @@ namespace Sequencer {
             }
             _steps.Add(i_step);
         }
+
+        public void ClearSteps() {
+            _steps.Clear();
+        }
         #endregion
 
         #region Class Methods
