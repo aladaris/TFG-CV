@@ -40,6 +40,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -53,6 +55,8 @@
             this.tabControl_Modes.SuspendLayout();
             this.tabPage_Calibration.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer_Base
@@ -146,11 +150,8 @@
             // 
             // tabPage_Calibration
             // 
-            this.tabPage_Calibration.Controls.Add(this.button_setColor);
-            this.tabPage_Calibration.Controls.Add(this.button_addSteps);
-            this.tabPage_Calibration.Controls.Add(this.button_setPersCalib);
-            this.tabPage_Calibration.Controls.Add(this.button_loadBoard);
-            this.tabPage_Calibration.Controls.Add(this.button_saveBoard);
+            this.tabPage_Calibration.Controls.Add(this.groupBox2);
+            this.tabPage_Calibration.Controls.Add(this.groupBox1);
             this.tabPage_Calibration.Location = new System.Drawing.Point(4, 22);
             this.tabPage_Calibration.Name = "tabPage_Calibration";
             this.tabPage_Calibration.Padding = new System.Windows.Forms.Padding(3);
@@ -162,7 +163,7 @@
             // button_setColor
             // 
             this.button_setColor.Enabled = false;
-            this.button_setColor.Location = new System.Drawing.Point(6, 134);
+            this.button_setColor.Location = new System.Drawing.Point(87, 62);
             this.button_setColor.Name = "button_setColor";
             this.button_setColor.Size = new System.Drawing.Size(75, 23);
             this.button_setColor.TabIndex = 6;
@@ -173,7 +174,7 @@
             // button_addSteps
             // 
             this.button_addSteps.Enabled = false;
-            this.button_addSteps.Location = new System.Drawing.Point(6, 35);
+            this.button_addSteps.Location = new System.Drawing.Point(6, 19);
             this.button_addSteps.Name = "button_addSteps";
             this.button_addSteps.Size = new System.Drawing.Size(75, 23);
             this.button_addSteps.TabIndex = 5;
@@ -184,9 +185,9 @@
             // button_setPersCalib
             // 
             this.button_setPersCalib.Enabled = false;
-            this.button_setPersCalib.Location = new System.Drawing.Point(6, 6);
+            this.button_setPersCalib.Location = new System.Drawing.Point(6, 25);
             this.button_setPersCalib.Name = "button_setPersCalib";
-            this.button_setPersCalib.Size = new System.Drawing.Size(191, 23);
+            this.button_setPersCalib.Size = new System.Drawing.Size(75, 60);
             this.button_setPersCalib.TabIndex = 4;
             this.button_setPersCalib.Text = "Set perspective correction rectangle";
             this.button_setPersCalib.UseVisualStyleBackColor = true;
@@ -195,7 +196,7 @@
             // button_loadBoard
             // 
             this.button_loadBoard.Enabled = false;
-            this.button_loadBoard.Location = new System.Drawing.Point(6, 64);
+            this.button_loadBoard.Location = new System.Drawing.Point(110, 78);
             this.button_loadBoard.Name = "button_loadBoard";
             this.button_loadBoard.Size = new System.Drawing.Size(75, 23);
             this.button_loadBoard.TabIndex = 3;
@@ -206,7 +207,7 @@
             // button_saveBoard
             // 
             this.button_saveBoard.Enabled = false;
-            this.button_saveBoard.Location = new System.Drawing.Point(87, 64);
+            this.button_saveBoard.Location = new System.Drawing.Point(191, 78);
             this.button_saveBoard.Name = "button_saveBoard";
             this.button_saveBoard.Size = new System.Drawing.Size(75, 23);
             this.button_saveBoard.TabIndex = 2;
@@ -240,6 +241,29 @@
             this.toolStripStatusLabel_state.Size = new System.Drawing.Size(56, 17);
             this.toolStripStatusLabel_state.Text = "State: Init";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button_addSteps);
+            this.groupBox1.Controls.Add(this.button_saveBoard);
+            this.groupBox1.Controls.Add(this.button_loadBoard);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(272, 107);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Board setup";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.button_setPersCalib);
+            this.groupBox2.Controls.Add(this.button_setColor);
+            this.groupBox2.Location = new System.Drawing.Point(6, 119);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(272, 91);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Image setup";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,6 +289,8 @@
             this.tabPage_Calibration.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,6 +314,8 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_state;
         private System.Windows.Forms.Button button_setColor;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

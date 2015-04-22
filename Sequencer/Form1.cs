@@ -253,7 +253,7 @@ namespace Sequencer {
             // IDLE COLOR SAMPLED
             _stmachine.Configure(State.IdleColorSampled)
                 .SubstateOf(State.IdleCalibrated)
-                .OnEntry(() => EnterIdleColorSampled());  // TODO: Sólo se usa para escribir en el toolStrip
+                .OnEntry(() => EnterIdleColorSampled());
         }
 
             #region Init State
@@ -342,7 +342,6 @@ namespace Sequencer {
         }
         private void StopColorSampling() {
             _colorSampled = true;
-            _sequencer.DrawSteps = true;
             _selectionRect.Enabled = false;
             _selectionRect.AcquiredSample -= OnSample;
             _selectionRect.AcquiredSampleList -= OnSampleList;
@@ -368,6 +367,8 @@ namespace Sequencer {
             button_setPersCalib.Enabled = true;
             button_addSteps.Enabled = true;
             button_loadBoard.Enabled = true;
+            if (_sequencer.StepCount > 0)
+                button_saveBoard.Enabled = true;
             button_setColor.Enabled = true;
             toolStripStatusLabel_state.Text = "State: Idle Calibrated";  // DEBUG ?
         }
@@ -377,6 +378,7 @@ namespace Sequencer {
             button_setPersCalib.Enabled = false;
             button_addSteps.Enabled = false;
             button_loadBoard.Enabled = false;
+            button_saveBoard.Enabled = false;
             button_setColor.Enabled = false;
         }
 
@@ -387,6 +389,7 @@ namespace Sequencer {
         }
 
         private void EnterIdleColorSampled() {
+            _sequencer.DrawSteps = true;
             // GUI
             toolStripStatusLabel_state.Text = "State: Idle Color Sampled";  // DEBUG ?
         }
