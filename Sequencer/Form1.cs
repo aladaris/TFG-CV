@@ -93,19 +93,19 @@ namespace Sequencer {
         }
 
         private void OnSample(Image<Bgr, Byte> i_sample) {
-            // TODO: Que hacer con el Sample
             if (_stmachine.State == State.CVColorSampleSelection)
                 _stmachine.Fire(Trigger.FinishCVEdition);
+            _sequencer.SetFilterColor(i_sample);
            // DEBUGGGGG
-            CvInvoke.cvShowImage("Sample", i_sample.Ptr);  // DEBUG
-            CvInvoke.cvWaitKey(0);  // DEBUG
-            CvInvoke.cvDestroyWindow("Sample");  // DEBUG
+            //CvInvoke.cvShowImage("Sample", i_sample.Ptr);  // DEBUG
+            //CvInvoke.cvWaitKey(0);  // DEBUG
+            //CvInvoke.cvDestroyWindow("Sample");  // DEBUG
         }
 
         private void OnSampleList(IEnumerable<Image<Bgr, Byte>> i_samples) {
-            // TODO: Que hacer con la list de samples
             if (_stmachine.State == State.CVColorSampleSelection)
                 _stmachine.Fire(Trigger.FinishCVEdition);
+            _sequencer.SetFilterColor(i_samples);
             
         }
         #endregion

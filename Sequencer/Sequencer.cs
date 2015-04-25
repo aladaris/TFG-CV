@@ -12,6 +12,8 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
 
+using Aladaris;
+
 namespace Sequencer {
 
     class Sequencer : IDisposable{
@@ -25,6 +27,8 @@ namespace Sequencer {
         private HomographyMatrix _calibMatrix;
         private bool _validCalibMatrix = false;
         private bool _correctingPerspect = false;
+        // Computer Vision
+        private ProbabilisticImageFiltering _colorFilter;
         // Options
         private bool _drawSteps = false;
         // XML
@@ -37,8 +41,9 @@ namespace Sequencer {
                 _mainDisplay = i_disp;
                 _camera = new Capture();  // TODO: Selección de cámara
                 _board = new Board();
+                _colorFilter = new ProbabilisticImageFiltering();
             } else {
-                throw new NullReferenceException("An ImageBox is needed.");
+                throw new NullReferenceException("An ImageBox is required.");
             }
         }
 
@@ -136,6 +141,33 @@ namespace Sequencer {
             _validCalibMatrix = false;
             _camera.ImageGrabbed -= CalibrateIncomingFrame;
         }
+
+        public void SetFilterColor(Object i_sample) {
+            if (i_sample != null) {
+                _colorFilter.SetDistributionValues<Bgr>(i_sample);
+                // Si ya está corregida la perspectiva, comienzamos con el filtrado de color
+                if (PerspectiveCalibrated) {
+                    this.PerspectiveCorrectedFrame += FilterImage;
+                    _colorFilter.ImageFiltered += OnFilteredImage;
+                }
+            } else
+                throw new NullReferenceException("A sample (or list of samples) is nedded to set the filter color");
+        }
+
+        // TODO: Private?
+        public void FilterImage(Image<Bgr, Byte> i_img, EventArgs e) {
+            _colorFilter.FilterImage<Bgr>(i_img);
+        }
+
+        // TODO: Private?
+        public void OnFilteredImage(Image<Gray, Double> i_img, EventArgs e) {
+            // DEBUG
+                CvInvoke.cvShowImage("Filtered", i_img.Ptr);  // DEBUG
+                CvInvoke.cvWaitKey(0);  // DEBUG
+                CvInvoke.cvDestroyWindow("Filtered");  // DEBUG
+            // DEBUG
+        }
+
             #endregion
 
             #region Board

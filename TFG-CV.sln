@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sequencer", "Sequencer\Sequ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.SelectionRectangle", "Lib.SelectionRectangle\Lib.SelectionRectangle.csproj", "{15C1984E-DCC6-4722-9780-0F217A6B506E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.ProbabilisticImageFiltering", "Lib.ProbabilisticImageFiltering\Lib.ProbabilisticImageFiltering.csproj", "{FAC639F2-C42D-4B2F-8835-18764DCF5F40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{15C1984E-DCC6-4722-9780-0F217A6B506E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15C1984E-DCC6-4722-9780-0F217A6B506E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15C1984E-DCC6-4722-9780-0F217A6B506E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAC639F2-C42D-4B2F-8835-18764DCF5F40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC639F2-C42D-4B2F-8835-18764DCF5F40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC639F2-C42D-4B2F-8835-18764DCF5F40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC639F2-C42D-4B2F-8835-18764DCF5F40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
