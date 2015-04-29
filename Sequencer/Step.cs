@@ -10,6 +10,9 @@ namespace Sequencer {
     public class Step : Polygon {
         private int _id;
         #region Properties
+        /// <summary>
+        /// Configure the step ID
+        /// </summary>
         public int Id {
             get { return _id; }
             set { _id = value; }

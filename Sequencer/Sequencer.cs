@@ -22,7 +22,7 @@ namespace Sequencer {
         private Capture _camera;
         private bool _capturing = false;
         private Image<Bgr, Byte> _frame;  // This frame will be allways "perspective corrected".
-        private ImageBox _mainDisplay;  // Main display, on the form, for showing the frames
+        private ImageBox _mainDisplay;  // Main display, on the form, for showing the frames  // TODO: Sacar de aquí; solo necesito el tamaño.
         // Calibration
         private HomographyMatrix _calibMatrix;
         private bool _validCalibMatrix = false;
@@ -37,15 +37,27 @@ namespace Sequencer {
         // XML
         private string _configFilePath = "sequencer.config.xml";
         // Events
+        /// <summary>
+        /// Triggered at the stablished frames per second.
+        /// Only triggered if "PerspectiveCalibrated" is false.
+        /// </summary>
         public event GeneratedImage<Bgr, Byte> RawFrame;
+        /// <summary>
+        /// Triggered on every perspective corrected frame.
+        /// </summary>
         public event GeneratedImage<Bgr, Byte> PerspectiveCorrectedFrame;
+        /// <summary>
+        /// Triggered on every color filtered frame.
+        /// </summary>
         public event GeneratedImage<Gray, Double> ColorFilteredFrame;
 
+        /// <summary>
+        /// </summary>
+        /// <param name="i_disp">Main display used by the application.</param>
         public Sequencer(ImageBox i_disp) {
             if (i_disp != null) {
                 _mainDisplay = i_disp;
                 _camera = new Capture();  // TODO: Selección de cámara
-                //_camera.ImageGrabbed += OnRawFrame;
                 _fpsTimer = new System.Timers.Timer(1000 / _fps);
                 _fpsTimer.Elapsed += GetNewFrame;
                 _board = new Board();
@@ -56,11 +68,10 @@ namespace Sequencer {
         }
 
         #region Properties
-        /*
-        public Capture Camera {
-            get { return _camera; }
-        }
-        */
+        /// <summary>
+        /// True if the sequencer is retrieving frames from
+        /// the capture device.
+        /// </summary>
         public bool Capturing {
             get { return _capturing; }
         }
@@ -73,6 +84,9 @@ namespace Sequencer {
             get { return _calibMatrix; }
         }
 
+        /// <summary>
+        /// Configure if the board steps are drawn or not.
+        /// </summary>
         public bool DrawSteps {
             get { return _drawSteps; }
             set {
@@ -85,7 +99,11 @@ namespace Sequencer {
             }
         }
 
-        public int Fps {
+        /// <summary>
+        /// Configure the frames per second retrieved
+        /// from the capture device.
+        /// </summary>
+        public int FpsIn {
             get { return _fps; }
             set {
                 _fps = value >= 1 ? value : 1;
@@ -93,16 +111,17 @@ namespace Sequencer {
             }
         }
 
-        public Image<Bgr, Byte> Frame {
-            get { return _frame; }
-            set { _frame = value; }
-        }
-
+        /// <summary>
+        /// Indicates if the sequencer frames are
+        /// being perspective calibrated.
+        /// </summary>
         public bool PerspectiveCalibrated {
             get { return _validCalibMatrix; }
         }
 
-
+        /// <summary>
+        /// Bet the number of steps on the board.
+        /// </summary>
         public int StepCount {
             get { return _board.StepsCount; }
         }
@@ -112,24 +131,26 @@ namespace Sequencer {
         #region Public methods
 
             #region CV
-        public bool StartCapture() {
+        /// <summary>
+        /// Sterts retrieving frames from the capture device.
+        /// </summary>
+        public void StartCapture() {
             if (_camera != null) {
                 _camera.Start();
                 _capturing = true;
                 _fpsTimer.Enabled = true;
-                return true;
             }
-            return false;
         }
 
-        public bool StopCapture() {
+        /// <summary>
+        /// Stops retrieving frames from the capture device.
+        /// </summary>
+        public void StopCapture() {
             if (_camera != null) {
                 _camera.Stop();
                 _capturing = false;
                 _fpsTimer.Enabled = false;
-                return true;
             }
-            return false;
         }
 
         /// <summary>
@@ -154,18 +175,23 @@ namespace Sequencer {
 
             if (PerspectiveCalibrated)
                 this.RawFrame += CalibrateIncomingFrame;
-                //_camera.ImageGrabbed += CalibrateIncomingFrame;
             else
                 this.RawFrame -= CalibrateIncomingFrame;
-                //_camera.ImageGrabbed -= CalibrateIncomingFrame;
         }
 
+        /// <summary>
+        /// Resets the perspective calibration parameters.
+        /// </summary>
         public void ResetPerspectiveCalibration() {
             _validCalibMatrix = false;
             this.RawFrame -= CalibrateIncomingFrame;
-            //_camera.ImageGrabbed -= CalibrateIncomingFrame;
         }
 
+        /// <summary>
+        /// Configures the PerspectiveImageFilter to fit a
+        /// sample (or a collection of samples) from an image.
+        /// </summary>
+        /// <param name="i_sample">An Image object or a List<Image> with a collection of samples.</param>
         public void SetFilterColor(Object i_sample) {
             if (i_sample != null) {
                 _colorFilter.SetDistributionValues<Bgr>(i_sample);
@@ -181,15 +207,26 @@ namespace Sequencer {
             #endregion
 
             #region Board
+        /// <summary>
+        /// Add a step to the board
+        /// </summary>
+        /// <param name="i_step">The step to be added</param>
         public void AddStep(Step i_step) {
             _board.AddStep(i_step);
         }
 
-        public void AddStep(List<Point> i_points) {
+        /// <summary>
+        /// Add a step to the board from a polygon.
+        /// </summary>
+        /// <param name="i_points">A collection of points representing the step polygon</param>
+        public void AddStep(IEnumerable<Point> i_points) {
             Step s = new Step(i_points);
             _board.AddStep(s);
         }
 
+        /// <summary>
+        /// Clear all the steps in the board.
+        /// </summary>
         public void ClearSteps() {
             _board.ClearSteps();
         }
@@ -217,6 +254,10 @@ namespace Sequencer {
             configFile.Save(_configFilePath);
         }
 
+        /// <summary>
+        /// Loads the XML file with the serialized board data.
+        /// Then it deserializes it and load the board data.
+        /// </summary>
         public void Load() {
             XDocument configFile;
             // Intentamos abrir el fichero, sino existe creamos uno con la estructura xml básica.
@@ -230,6 +271,9 @@ namespace Sequencer {
             _board = Board.DeserializeFromXElement(boardXml);
         }
 
+        /// <summary>
+        /// Stops the capture device and releases any resource.
+        /// </summary>
         public void Dispose() {
             _camera.Stop();
             _capturing = false;
@@ -263,29 +307,29 @@ namespace Sequencer {
         }
 
         /// <summary>
-        /// Triggered on every frame retrieved by the capture device.
-        /// Triggers the "RawFrame" event.
+        /// Triggered on every "Elapsed" event of the timer.
+        /// Triggers a "RawFrame" event.
         /// </summary>
-        private void OnRawFrame(object sender, EventArgs e) {
-            // TODO: Desvincular del evento de la cámara para dejar de escuchar cuando ya se tenga calibrada la perspectiva??
-            if (!PerspectiveCalibrated) {
-                Image<Bgr, Byte> frame = ((Capture)sender).RetrieveBgrFrame().Clone();
-                RawFrame(frame, e);
-            }
-        }
-
         private void GetNewFrame(object sender, EventArgs e) {
             if (_capturing && RawFrame != null)
                 RawFrame(_camera.RetrieveBgrFrame(), e);
         }
 
         /// <summary>
-        /// 
+        /// This handler receives a perspective corrected frame and triggers
+        /// a color filtering on the ProbabilisticImageFiltering object.
         /// </summary>
+        /// <param name="i_img">Perspective corrected frame</param>
         private void FilterImage(Image<Bgr, Byte> i_img, EventArgs e) {
             _colorFilter.FilterImage<Bgr>(i_img);
         }
 
+        /// <summary>
+        /// Handles the event generated by the ProbabilisticImageFiltering whenever
+        /// it filters a frame.
+        /// Triggers the "ColorFilteredFrame" event.
+        /// </summary>
+        /// <param name="i_img">The color filtered image, generated by the ProbabilisticImageFiltering</param>
         private void OnFilteredImage(Image<Gray, Double> i_img, EventArgs e) {
             if (ColorFilteredFrame != null)
                 ColorFilteredFrame(i_img, e);

@@ -35,7 +35,7 @@ namespace Sequencer {
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
             _sequencer.ColorFilteredFrame += OnColorFilteredFrame;  // TODO: Mover de aquí una vez se definan los estados de la STMachine
-            numericUpDown_fpsIn.Value = _sequencer.Fps;
+            numericUpDown_fpsIn.Value = _sequencer.FpsIn;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -191,7 +191,7 @@ namespace Sequencer {
         }
 
         private void numericUpDown_fpsIn_ValueChanged(object sender, EventArgs e) {
-            _sequencer.Fps = (int)numericUpDown_fpsIn.Value;
+            _sequencer.FpsIn = (int)numericUpDown_fpsIn.Value;
         }
         #endregion
 
