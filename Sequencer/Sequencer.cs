@@ -27,6 +27,9 @@ namespace Sequencer {
         private HomographyMatrix _calibMatrix;
         private bool _validCalibMatrix = false;
         private bool _correctingPerspect = false;
+        // FPS handling
+        private System.Timers.Timer _fpsTimer;
+        private int _fps = 6;
         // Computer Vision
         private ProbabilisticImageFiltering _colorFilter;
         // Options
@@ -34,6 +37,7 @@ namespace Sequencer {
         // XML
         private string _configFilePath = "sequencer.config.xml";
         // Events
+        public event GeneratedImage<Bgr, Byte> RawFrame;
         public event GeneratedImage<Bgr, Byte> PerspectiveCorrectedFrame;
         public event GeneratedImage<Gray, Double> ColorFilteredFrame;
 
@@ -41,6 +45,9 @@ namespace Sequencer {
             if (i_disp != null) {
                 _mainDisplay = i_disp;
                 _camera = new Capture();  // TODO: Selección de cámara
+                //_camera.ImageGrabbed += OnRawFrame;
+                _fpsTimer = new System.Timers.Timer(1000 / _fps);
+                _fpsTimer.Elapsed += GetNewFrame;
                 _board = new Board();
                 _colorFilter = new ProbabilisticImageFiltering(3);
             } else {
@@ -49,10 +56,11 @@ namespace Sequencer {
         }
 
         #region Properties
+        /*
         public Capture Camera {
             get { return _camera; }
         }
-
+        */
         public bool Capturing {
             get { return _capturing; }
         }
@@ -63,19 +71,6 @@ namespace Sequencer {
         /// </summary>
         public HomographyMatrix CalibrationMatrix {
             get { return _calibMatrix; }
-        }
-
-        public bool PerspectiveCalibrated {
-            get { return _validCalibMatrix; }
-        }
-
-        public Image<Bgr, Byte> Frame {
-            get { return _frame; }
-            set { _frame = value; }
-        }
-
-        public int StepCount {
-            get { return _board.StepsCount; }
         }
 
         public bool DrawSteps {
@@ -89,6 +84,29 @@ namespace Sequencer {
                 _drawSteps = value;
             }
         }
+
+        public int Fps {
+            get { return _fps; }
+            set {
+                _fps = value >= 1 ? value : 1;
+                _fpsTimer.Interval = 1000 / _fps;
+            }
+        }
+
+        public Image<Bgr, Byte> Frame {
+            get { return _frame; }
+            set { _frame = value; }
+        }
+
+        public bool PerspectiveCalibrated {
+            get { return _validCalibMatrix; }
+        }
+
+
+        public int StepCount {
+            get { return _board.StepsCount; }
+        }
+
         #endregion
 
         #region Public methods
@@ -98,6 +116,7 @@ namespace Sequencer {
             if (_camera != null) {
                 _camera.Start();
                 _capturing = true;
+                _fpsTimer.Enabled = true;
                 return true;
             }
             return false;
@@ -107,6 +126,7 @@ namespace Sequencer {
             if (_camera != null) {
                 _camera.Stop();
                 _capturing = false;
+                _fpsTimer.Enabled = false;
                 return true;
             }
             return false;
@@ -133,14 +153,17 @@ namespace Sequencer {
             }
 
             if (PerspectiveCalibrated)
-                _camera.ImageGrabbed += CalibrateIncomingFrame;
+                this.RawFrame += CalibrateIncomingFrame;
+                //_camera.ImageGrabbed += CalibrateIncomingFrame;
             else
-                _camera.ImageGrabbed -= CalibrateIncomingFrame;
+                this.RawFrame -= CalibrateIncomingFrame;
+                //_camera.ImageGrabbed -= CalibrateIncomingFrame;
         }
 
         public void ResetPerspectiveCalibration() {
             _validCalibMatrix = false;
-            _camera.ImageGrabbed -= CalibrateIncomingFrame;
+            this.RawFrame -= CalibrateIncomingFrame;
+            //_camera.ImageGrabbed -= CalibrateIncomingFrame;
         }
 
         public void SetFilterColor(Object i_sample) {
@@ -153,16 +176,6 @@ namespace Sequencer {
                 }
             } else
                 throw new NullReferenceException("A sample (or list of samples) is nedded to set the filter color");
-        }
-
-        // TODO: Private?
-        public void FilterImage(Image<Bgr, Byte> i_img, EventArgs e) {
-            _colorFilter.FilterImage<Bgr>(i_img);
-        }
-
-        // TODO: Private?
-        public void OnFilteredImage(Image<Gray, Double> i_img, EventArgs e) {
-            ColorFilteredFrame(i_img, e);
         }
 
             #endregion
@@ -230,11 +243,10 @@ namespace Sequencer {
         /// The frame is proccessed to be calibrated and saved into the object atribute '_frame'.
         /// </summary>
         /// <param name="sender">A Capture object with an aviable frame to retrieve.</param>
-        private void CalibrateIncomingFrame(object sender, EventArgs e) {
-            Capture cam = (Capture)sender;
+        private void CalibrateIncomingFrame(Image<Bgr, Byte> i_frame, EventArgs e) {
             if ((PerspectiveCalibrated) && (!_correctingPerspect)) {
                 _correctingPerspect = true;
-                Image<Bgr, Byte> nframe = cam.RetrieveBgrFrame().Clone().Resize(_mainDisplay.Size.Width, _mainDisplay.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4);
+                Image<Bgr, Byte> nframe = i_frame.Resize(_mainDisplay.Size.Width, _mainDisplay.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4);
                 _frame = nframe.WarpPerspective(_calibMatrix, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
                 if (PerspectiveCorrectedFrame != null)
                     PerspectiveCorrectedFrame(_frame, e);
@@ -242,9 +254,41 @@ namespace Sequencer {
             }
         }
 
+        /// <summary>
+        /// Draws the board
+        /// </summary>
         private void PaintBoard(object sender, PaintEventArgs e) {
             if (DrawSteps)
                 _board.DrawSteps(e);
+        }
+
+        /// <summary>
+        /// Triggered on every frame retrieved by the capture device.
+        /// Triggers the "RawFrame" event.
+        /// </summary>
+        private void OnRawFrame(object sender, EventArgs e) {
+            // TODO: Desvincular del evento de la cámara para dejar de escuchar cuando ya se tenga calibrada la perspectiva??
+            if (!PerspectiveCalibrated) {
+                Image<Bgr, Byte> frame = ((Capture)sender).RetrieveBgrFrame().Clone();
+                RawFrame(frame, e);
+            }
+        }
+
+        private void GetNewFrame(object sender, EventArgs e) {
+            if (_capturing && RawFrame != null)
+                RawFrame(_camera.RetrieveBgrFrame(), e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void FilterImage(Image<Bgr, Byte> i_img, EventArgs e) {
+            _colorFilter.FilterImage<Bgr>(i_img);
+        }
+
+        private void OnFilteredImage(Image<Gray, Double> i_img, EventArgs e) {
+            if (ColorFilteredFrame != null)
+                ColorFilteredFrame(i_img, e);
         }
         #endregion
     }

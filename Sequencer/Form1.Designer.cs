@@ -46,6 +46,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
+            this.numericUpDown_fpsIn = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -62,6 +64,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer_Base
@@ -201,6 +204,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.numericUpDown_fpsIn);
             this.groupBox2.Controls.Add(this.button_setColor);
             this.groupBox2.Location = new System.Drawing.Point(6, 101);
             this.groupBox2.Name = "groupBox2";
@@ -282,7 +287,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(283, 610);
+            this.tabPage2.Size = new System.Drawing.Size(311, 640);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -303,6 +308,38 @@
             this.toolStripStatusLabel_state.Name = "toolStripStatusLabel_state";
             this.toolStripStatusLabel_state.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel_state.Text = "State: None";
+            // 
+            // numericUpDown_fpsIn
+            // 
+            this.numericUpDown_fpsIn.Location = new System.Drawing.Point(54, 46);
+            this.numericUpDown_fpsIn.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.numericUpDown_fpsIn.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_fpsIn.Name = "numericUpDown_fpsIn";
+            this.numericUpDown_fpsIn.Size = new System.Drawing.Size(34, 20);
+            this.numericUpDown_fpsIn.TabIndex = 7;
+            this.numericUpDown_fpsIn.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_fpsIn.ValueChanged += new System.EventHandler(this.numericUpDown_fpsIn_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 48);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "FPS in:";
             // 
             // Form1
             // 
@@ -331,9 +368,11 @@
             this.tabPage_Calibration.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_preview)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,6 +402,8 @@
         private Emgu.CV.UI.ImageBox imageBox_preview;
         private System.Windows.Forms.Integration.ElementHost cameraSettingsControl;
         private Aladaris.CameraSettingsControl cameraSettingsControl1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDown_fpsIn;
     }
 }
 

@@ -35,6 +35,7 @@ namespace Sequencer {
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
             _sequencer.ColorFilteredFrame += OnColorFilteredFrame;  // TODO: Mover de aquí una vez se definan los estados de la STMachine
+            numericUpDown_fpsIn.Value = _sequencer.Fps;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -44,7 +45,7 @@ namespace Sequencer {
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
-            _sequencer.Camera.ImageGrabbed -= OnImageGrabbed;
+            _sequencer.RawFrame -= OnImageGrabbed;
             _sequencer.Dispose();
         }
         #endregion
@@ -52,16 +53,16 @@ namespace Sequencer {
         #region Event Handlers
 
         /// <summary>
-        /// This method renders the "RAW" image retrieved from the capture object.
+        /// This method renders the "RAW" image retrieved from the sequencer.
         /// </summary>
-        /// <param name="sender">This our Capture object</param>
+        /// <param name="i_frame">The RAW frame retrieved from the capture device</param>
         /// <param name="e"></param>
-        public void OnImageGrabbed(object sender, EventArgs e) {
+        public void OnImageGrabbed(Image<Bgr, Byte> i_frame, EventArgs e) {
             if ((_stmachine.IsInState(State.Configuration)) || (_stmachine.IsInState(State.Init)) || (_stmachine.State == State.IdleInit)) {
                 Size s = imageBox_mainDisplay.Size;
-                imageBox_mainDisplay.Image = ((Capture)sender).RetrieveBgrFrame().Resize(s.Width, s.Height, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC);
+                imageBox_mainDisplay.Image = i_frame.Resize(s.Width, s.Height, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC);
             } else
-                _sequencer.Camera.ImageGrabbed -= OnImageGrabbed; /* Sino estamos en el estado correcto, nos damos de baja del evento de la cámara;
+                _sequencer.RawFrame -= OnImageGrabbed; /* Sino estamos en el estado correcto, nos damos de baja del evento de la cámara;
                                                                    * así nos aseguramos de dar de baja el manejador */
         }
 
@@ -188,7 +189,12 @@ namespace Sequencer {
             if (_stmachine.IsInState(State.IdleCalibrated))
                 _stmachine.Fire(Trigger.StartCVColorSampling);
         }
+
+        private void numericUpDown_fpsIn_ValueChanged(object sender, EventArgs e) {
+            _sequencer.Fps = (int)numericUpDown_fpsIn.Value;
+        }
         #endregion
+
 
     }
 }

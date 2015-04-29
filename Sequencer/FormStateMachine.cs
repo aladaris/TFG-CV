@@ -100,7 +100,7 @@ namespace Sequencer {
         #region Init State
         private void Initialize() {
             if (_sequencer != null) {
-                _sequencer.Camera.ImageGrabbed += OnImageGrabbed;
+                _sequencer.RawFrame += OnImageGrabbed;
                 _stmachine.Fire(Trigger.Initialized);
             }
         }
@@ -123,7 +123,7 @@ namespace Sequencer {
             * */
             _sequencer.ResetPerspectiveCalibration();  // Dentro se hace: Camera.ImageGrabbed -= CalibrateIncomingFrame
             _sequencer.PerspectiveCorrectedFrame -= OnPerspectiveCorrectedFrame;
-            _sequencer.Camera.ImageGrabbed += OnImageGrabbed;
+            _sequencer.RawFrame += OnImageGrabbed;
             // Polygon handling
             _polyDrawTool.Enabled = true;
             _polyDrawTool.ReturnPolygon += OnPerspetiveCalibrationPolygon;
@@ -141,7 +141,7 @@ namespace Sequencer {
 
         private void EndPerspectiveCalibration() {
             if (_sequencer.PerspectiveCalibrated) {
-                _sequencer.Camera.ImageGrabbed -= OnImageGrabbed;
+                _sequencer.RawFrame -= OnImageGrabbed;
                 _sequencer.PerspectiveCorrectedFrame += OnPerspectiveCorrectedFrame;
             }
             // GUI
@@ -205,7 +205,7 @@ namespace Sequencer {
         #region Idle States
 
         private void EnterIdleInit() {
-            _sequencer.Camera.ImageGrabbed += OnImageGrabbed;
+            _sequencer.RawFrame += OnImageGrabbed;
             _sequencer.PerspectiveCorrectedFrame -= OnPerspectiveCorrectedFrame;
             _sequencer.DrawSteps = false;
             // GUI
