@@ -34,6 +34,7 @@ namespace Sequencer {
             _sequencer = new Sequencer(imageBox_mainDisplay);
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
+            _sequencer.ColorFilteredFrame += OnColorFilteredFrame;  // TODO: Mover de aquí una vez se definan los estados de la STMachine
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -107,6 +108,11 @@ namespace Sequencer {
                 _stmachine.Fire(Trigger.FinishCVEdition);
             _sequencer.SetFilterColor(i_samples);
             
+        }
+
+        private void OnColorFilteredFrame(Image<Gray, Double> i_img, EventArgs e) {
+            // TODO: Todo lo de los estados
+            imageBox_preview.Image = i_img.Resize(imageBox_preview.Size.Width, imageBox_preview.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
         }
         #endregion
 

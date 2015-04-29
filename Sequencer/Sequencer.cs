@@ -35,13 +35,14 @@ namespace Sequencer {
         private string _configFilePath = "sequencer.config.xml";
         // Events
         public event GeneratedImage<Bgr, Byte> PerspectiveCorrectedFrame;
+        public event GeneratedImage<Gray, Double> ColorFilteredFrame;
 
         public Sequencer(ImageBox i_disp) {
             if (i_disp != null) {
                 _mainDisplay = i_disp;
                 _camera = new Capture();  // TODO: Selección de cámara
                 _board = new Board();
-                _colorFilter = new ProbabilisticImageFiltering();
+                _colorFilter = new ProbabilisticImageFiltering(3);
             } else {
                 throw new NullReferenceException("An ImageBox is required.");
             }
@@ -161,11 +162,7 @@ namespace Sequencer {
 
         // TODO: Private?
         public void OnFilteredImage(Image<Gray, Double> i_img, EventArgs e) {
-            // DEBUG
-                CvInvoke.cvShowImage("Filtered", i_img.Ptr);  // DEBUG
-                CvInvoke.cvWaitKey(0);  // DEBUG
-                CvInvoke.cvDestroyWindow("Filtered");  // DEBUG
-            // DEBUG
+            ColorFilteredFrame(i_img, e);
         }
 
             #endregion

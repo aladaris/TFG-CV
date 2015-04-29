@@ -41,12 +41,14 @@
     <Reference Include="Emgu.Util">
       <HintPath>C:\Emgu\emgucv-windows-universal-cuda 2.4.10.1940\bin\Emgu.Util.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Stateless">
       <HintPath>..\packages\Stateless.2.5.11.0\lib\portable-net40+sl50+win+wp80\Stateless.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +57,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
@@ -101,6 +106,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Control.CameraSettings\Control.CameraSettings.csproj">
+      <Project>{3C277999-D1DE-4AEC-82B4-FF58075A7440}</Project>
+      <Name>Control.CameraSettings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lib.ProbabilisticImageFiltering\Lib.ProbabilisticImageFiltering.csproj">
       <Project>{fac639f2-c42d-4b2f-8835-18764dcf5f40}</Project>
       <Name>Lib.ProbabilisticImageFiltering</Name>

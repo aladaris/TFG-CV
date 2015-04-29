@@ -89,7 +89,7 @@ namespace Aladaris
             }
             set
             {
-                if (value > 1)
+                if (value >= 1)
                     _reductionFactor = value;
             }
         }
@@ -188,7 +188,7 @@ namespace Aladaris
                 bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
                     delegate(object o, RunWorkerCompletedEventArgs args)
                     {
-                        result = result.Resize(result.Width * _reductionFactor, result.Height * _reductionFactor, INTER.CV_INTER_LINEAR);
+                        //result = result.Resize(result.Width * _reductionFactor, result.Height * _reductionFactor, INTER.CV_INTER_LINEAR);
                         OnImageFiltered(result, args);
                         _filtering = false;
                     });
