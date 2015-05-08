@@ -112,8 +112,21 @@ namespace Sequencer {
         }
 
         private void OnColorFilteredFrame(Image<Gray, Double> i_img, EventArgs e) {
-            // TODO: Todo lo de los estados
-            imageBox_preview.Image = i_img.Resize(imageBox_preview.Size.Width, imageBox_preview.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
+
+            CvInvoke.cvSmooth(i_img.Ptr, i_img.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_GAUSSIAN, 13, 13, 1.5, 1);
+            Image<Gray, Byte> gray = i_img.Convert<Gray, Byte>();//.PyrDown().PyrUp();
+            Gray grayLow = new Gray(1);
+            Gray grayHigh = new Gray(255);
+            Image<Gray, Byte> thresholded = gray.ThresholdBinary(grayLow, grayHigh);
+            using (MemStorage storage = new MemStorage()){
+                for (Contour<Point> contours = thresholded.Erode(1).FindContours(/*Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_LIST, storage*/); contours != null; contours = contours.HNext) {
+                    Contour<Point> currContour = contours.ApproxPoly(contours.Perimeter * 0.05, storage);
+                    thresholded.Draw(currContour, grayLow, 1);
+                }
+            }
+
+            // GUI
+            imageBox_preview.Image = thresholded.Resize(imageBox_preview.Size.Width, imageBox_preview.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
         }
         #endregion
 
@@ -194,6 +207,30 @@ namespace Sequencer {
             _sequencer.FpsIn = (int)numericUpDown_fpsIn.Value;
         }
         #endregion
+
+        private void numericUpDown_corcheaMin_ValueChanged(object sender, EventArgs e) {
+            _sequencer.Corchea.MinArea = (int)numericUpDown_corcheaMin.Value;
+        }
+
+        private void numericUpDown_corcheaMax_ValueChanged(object sender, EventArgs e) {
+            _sequencer.Corchea.MaxArea = (int)numericUpDown_corcheaMin.Value;
+        }
+
+        private void numericUpDown_negraMin_ValueChanged(object sender, EventArgs e) {
+            _sequencer.Negra.MinArea = (int)numericUpDown_corcheaMin.Value;
+        }
+
+        private void numericUpDown_negraMax_ValueChanged(object sender, EventArgs e) {
+            _sequencer.Negra.MaxArea = (int)numericUpDown_corcheaMin.Value;
+        }
+
+        private void numericUpDown_blancaMin_ValueChanged(object sender, EventArgs e) {
+            _sequencer.Blanca.MinArea = (int)numericUpDown_corcheaMin.Value;
+        }
+
+        private void numericUpDown_blancaMax_ValueChanged(object sender, EventArgs e) {
+            _sequencer.Blanca.MaxArea = (int)numericUpDown_corcheaMin.Value;
+        }
 
 
     }

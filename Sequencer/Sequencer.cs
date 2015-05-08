@@ -16,7 +16,64 @@ using Aladaris;
 
 namespace Sequencer {
 
-    class Sequencer : IDisposable{
+    #region Enums & Structs
+    /// <summary>
+    /// Musical figures
+    /// </summary>
+    public enum FIGURA {CORCHEA, NEGRA, BLANCA};
+
+    /// <summary>
+    /// Defines the duration of a certain musical figure.
+    /// It is determined by the area of a computer vision
+    /// detected blob.
+    /// Area range overlaps should be avoided.
+    /// </summary>
+    public class Duration {
+        private int[] _areaRange = new int[2];
+        private FIGURA _figure;
+
+        public Duration(FIGURA i_fig) {
+            _figure = i_fig;
+        }
+        /// <summary>
+        /// Minimum area size asociated with this duration.
+        /// On set, if the value if greater than MaxArea, it its
+        /// set to MaxArea - 1
+        /// </summary>
+        public int MinArea {
+            get { return _areaRange[0]; }
+            set {
+                if (value < _areaRange[1])
+                    _areaRange[0] = value;
+                else
+                    _areaRange[0] = _areaRange[1] - 1;
+            }
+        }
+        /// <summary>
+        /// Maximum area size asociated with this duration.
+        /// On set, if the value if lower than MinArea, it its
+        /// set to MinArea + 1
+        /// </summary>
+        public int MaxArea {
+            get { return _areaRange[1]; }
+            set {
+                if (value > _areaRange[0])
+                    _areaRange[1] = value;
+                else
+                    _areaRange[1] = _areaRange[0] + 1;
+            }
+        }
+        /// <summary>
+        /// The figure associated with this area sizes.
+        /// </summary>
+        public FIGURA Figure {
+            get { return _figure; }
+            set { _figure = value; }
+        }
+    }
+    #endregion
+
+    public class Sequencer : IDisposable {
         private Board _board;
         // Capture and display
         private Capture _camera;
@@ -32,10 +89,14 @@ namespace Sequencer {
         private int _fps = 6;
         // Computer Vision
         private ProbabilisticImageFiltering _colorFilter;
+        // Sequencer parameters
+        private Duration[] _durations = new Duration[3];
         // Options
         private bool _drawSteps = false;
         // XML
         private string _configFilePath = "sequencer.config.xml";
+
+
         // Events
         /// <summary>
         /// Triggered at the stablished frames per second.
@@ -62,6 +123,9 @@ namespace Sequencer {
                 _fpsTimer.Elapsed += GetNewFrame;
                 _board = new Board();
                 _colorFilter = new ProbabilisticImageFiltering(3);
+                _durations[0] = new Duration(FIGURA.CORCHEA);
+                _durations[1] = new Duration(FIGURA.NEGRA);
+                _durations[2] = new Duration(FIGURA.BLANCA);
             } else {
                 throw new NullReferenceException("An ImageBox is required.");
             }
@@ -126,6 +190,18 @@ namespace Sequencer {
             get { return _board.StepsCount; }
         }
 
+
+        public Duration Corchea {
+            get { return _durations[0]; }
+        }
+
+        public Duration Negra {
+            get { return _durations[0]; }
+        }
+
+        public Duration Blanca {
+            get { return _durations[0]; }
+        }
         #endregion
 
         #region Public methods
