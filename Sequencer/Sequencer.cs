@@ -16,62 +16,35 @@ using Aladaris;
 
 namespace Sequencer {
 
-    #region Enums & Structs
     /// <summary>
-    /// Musical figures
+    /// Defines at a global level, the values of the Figures used by
+    /// the sequencer.
     /// </summary>
-    public enum FIGURA {CORCHEA, NEGRA, BLANCA};
+    static public class Figures {
+        static private Figure _corchea = new Figure(FIGNAME.CORCHEA);
+        static private Figure _negra = new Figure(FIGNAME.NEGRA);
+        static private Figure _blanca = new Figure(FIGNAME.BLANCA);
 
-    /// <summary>
-    /// Defines the duration of a certain musical figure.
-    /// It is determined by the area of a computer vision
-    /// detected blob.
-    /// Area range overlaps should be avoided.
-    /// </summary>
-    public class Duration {
-        private int[] _areaRange = new int[2];
-        private FIGURA _figure;
+        static public Figure Corchea {
+            get { return _corchea; }
+        }
+        static public Figure Negra {
+            get { return _negra; }
+        }
+        static public Figure Blanca {
+            get { return _blanca; }
+        }
 
-        public Duration(FIGURA i_fig) {
-            _figure = i_fig;
-        }
-        /// <summary>
-        /// Minimum area size asociated with this duration.
-        /// On set, if the value if greater than MaxArea, it its
-        /// set to MaxArea - 1
-        /// </summary>
-        public int MinArea {
-            get { return _areaRange[0]; }
-            set {
-                if (value < _areaRange[1])
-                    _areaRange[0] = value;
-                else
-                    _areaRange[0] = _areaRange[1] - 1;
-            }
-        }
-        /// <summary>
-        /// Maximum area size asociated with this duration.
-        /// On set, if the value if lower than MinArea, it its
-        /// set to MinArea + 1
-        /// </summary>
-        public int MaxArea {
-            get { return _areaRange[1]; }
-            set {
-                if (value > _areaRange[0])
-                    _areaRange[1] = value;
-                else
-                    _areaRange[1] = _areaRange[0] + 1;
-            }
-        }
-        /// <summary>
-        /// The figure associated with this area sizes.
-        /// </summary>
-        public FIGURA Figure {
-            get { return _figure; }
-            set { _figure = value; }
+        static public Figure GetFigure(int area) {
+            if ((_corchea.MinArea <= area) && (area <= _corchea.MaxArea))
+                return _corchea;
+            if ((_negra.MinArea <= area) && (area <= _negra.MaxArea))
+                return _negra;
+            if ((_blanca.MinArea <= area) && (area <= _blanca.MaxArea))
+                return _blanca;
+            return null;
         }
     }
-    #endregion
 
     public class Sequencer : IDisposable {
         private Board _board;
@@ -89,8 +62,6 @@ namespace Sequencer {
         private int _fps = 6;
         // Computer Vision
         private ProbabilisticImageFiltering _colorFilter;
-        // Sequencer parameters
-        private Duration[] _durations = new Duration[3];
         // Options
         private bool _drawSteps = false;
         // XML
@@ -123,9 +94,6 @@ namespace Sequencer {
                 _fpsTimer.Elapsed += GetNewFrame;
                 _board = new Board();
                 _colorFilter = new ProbabilisticImageFiltering(3);
-                _durations[0] = new Duration(FIGURA.CORCHEA);
-                _durations[1] = new Duration(FIGURA.NEGRA);
-                _durations[2] = new Duration(FIGURA.BLANCA);
             } else {
                 throw new NullReferenceException("An ImageBox is required.");
             }
@@ -188,19 +156,6 @@ namespace Sequencer {
         /// </summary>
         public int StepCount {
             get { return _board.StepsCount; }
-        }
-
-
-        public Duration Corchea {
-            get { return _durations[0]; }
-        }
-
-        public Duration Negra {
-            get { return _durations[0]; }
-        }
-
-        public Duration Blanca {
-            get { return _durations[0]; }
         }
         #endregion
 

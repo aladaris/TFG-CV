@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="CVFigureBlob.cs" />
     <Compile Include="DataLogging.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -46,26 +46,26 @@
             this.button_saveBoard = new System.Windows.Forms.Button();
             this.button_loadBoard = new System.Windows.Forms.Button();
             this.tabPage_sequencer = new System.Windows.Forms.TabPage();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label_TODO_Cambiar_por_simbolo_correcto = new System.Windows.Forms.Label();
-            this.numericUpDown_corcheaMin = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel_figures = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown_corcheaMax = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDown_negraMin = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDown_negraMax = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.numericUpDown_blancaMin = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
             this.numericUpDown_blancaMax = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numericUpDown_blancaMin = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numericUpDown_negraMax = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numericUpDown_negraMin = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label_TODO_Cambiar_por_simbolo_correcto = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDown_corcheaMin = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDown_corcheaMax = new System.Windows.Forms.NumericUpDown();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -83,16 +83,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabPage_sequencer.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMin)).BeginInit();
             this.tableLayoutPanel_figures.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMax)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer_Base
@@ -353,23 +353,6 @@
             this.tabPage_sequencer.Text = "Sequencer";
             this.tabPage_sequencer.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel_state});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 644);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1187, 22);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel_state
-            // 
-            this.toolStripStatusLabel_state.Name = "toolStripStatusLabel_state";
-            this.toolStripStatusLabel_state.Size = new System.Drawing.Size(68, 17);
-            this.toolStripStatusLabel_state.Text = "State: None";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.groupBox4);
@@ -378,7 +361,7 @@
             this.groupBox3.Size = new System.Drawing.Size(299, 302);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Computer vision parameters";
+            this.groupBox3.Text = "Configuration parameters";
             // 
             // groupBox4
             // 
@@ -388,69 +371,7 @@
             this.groupBox4.Size = new System.Drawing.Size(287, 114);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Figures";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 31);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "♪";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(59, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 31);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Min. Area";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 31);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 31);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "♩";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label_TODO_Cambiar_por_simbolo_correcto
-            // 
-            this.label_TODO_Cambiar_por_simbolo_correcto.AutoSize = true;
-            this.label_TODO_Cambiar_por_simbolo_correcto.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_TODO_Cambiar_por_simbolo_correcto.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TODO_Cambiar_por_simbolo_correcto.Location = new System.Drawing.Point(3, 62);
-            this.label_TODO_Cambiar_por_simbolo_correcto.Name = "label_TODO_Cambiar_por_simbolo_correcto";
-            this.label_TODO_Cambiar_por_simbolo_correcto.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label_TODO_Cambiar_por_simbolo_correcto.Size = new System.Drawing.Size(50, 33);
-            this.label_TODO_Cambiar_por_simbolo_correcto.TabIndex = 2;
-            this.label_TODO_Cambiar_por_simbolo_correcto.Text = "♭";
-            this.label_TODO_Cambiar_por_simbolo_correcto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // numericUpDown_corcheaMin
-            // 
-            this.numericUpDown_corcheaMin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown_corcheaMin.Location = new System.Drawing.Point(115, 3);
-            this.numericUpDown_corcheaMin.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.numericUpDown_corcheaMin.Name = "numericUpDown_corcheaMin";
-            this.numericUpDown_corcheaMin.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDown_corcheaMin.TabIndex = 3;
-            this.numericUpDown_corcheaMin.ValueChanged += new System.EventHandler(this.numericUpDown_corcheaMin_ValueChanged);
+            this.groupBox4.Text = "Figures areas";
             // 
             // tableLayoutPanel_figures
             // 
@@ -485,91 +406,35 @@
             this.tableLayoutPanel_figures.Size = new System.Drawing.Size(281, 95);
             this.tableLayoutPanel_figures.TabIndex = 0;
             // 
-            // label5
+            // numericUpDown_blancaMax
             // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(171, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 31);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Max. Area";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numericUpDown_corcheaMax
-            // 
-            this.numericUpDown_corcheaMax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown_corcheaMax.Location = new System.Drawing.Point(227, 3);
-            this.numericUpDown_corcheaMax.Maximum = new decimal(new int[] {
+            this.numericUpDown_blancaMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_blancaMax.Location = new System.Drawing.Point(227, 65);
+            this.numericUpDown_blancaMax.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
-            this.numericUpDown_corcheaMax.Name = "numericUpDown_corcheaMax";
-            this.numericUpDown_corcheaMax.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDown_corcheaMax.TabIndex = 3;
-            this.numericUpDown_corcheaMax.ValueChanged += new System.EventHandler(this.numericUpDown_corcheaMax_ValueChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Location = new System.Drawing.Point(59, 31);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(50, 31);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Min. Area";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numericUpDown_negraMin
-            // 
-            this.numericUpDown_negraMin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown_negraMin.Location = new System.Drawing.Point(115, 34);
-            this.numericUpDown_negraMin.Maximum = new decimal(new int[] {
-            9999,
+            this.numericUpDown_blancaMax.Name = "numericUpDown_blancaMax";
+            this.numericUpDown_blancaMax.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDown_blancaMax.TabIndex = 12;
+            this.numericUpDown_blancaMax.Value = new decimal(new int[] {
+            3500,
             0,
             0,
             0});
-            this.numericUpDown_negraMin.Name = "numericUpDown_negraMin";
-            this.numericUpDown_negraMin.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDown_negraMin.TabIndex = 6;
-            this.numericUpDown_negraMin.ValueChanged += new System.EventHandler(this.numericUpDown_negraMin_ValueChanged);
+            this.numericUpDown_blancaMax.ValueChanged += new System.EventHandler(this.numericUpDown_blancaMax_ValueChanged);
             // 
-            // label7
+            // label9
             // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(171, 31);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(50, 31);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Max. Area";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numericUpDown_negraMax
-            // 
-            this.numericUpDown_negraMax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown_negraMax.Location = new System.Drawing.Point(227, 34);
-            this.numericUpDown_negraMax.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.numericUpDown_negraMax.Name = "numericUpDown_negraMax";
-            this.numericUpDown_negraMax.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDown_negraMax.TabIndex = 8;
-            this.numericUpDown_negraMax.ValueChanged += new System.EventHandler(this.numericUpDown_negraMax_ValueChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(59, 62);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(50, 33);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "Min. Area";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(171, 62);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(50, 33);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Max. Area";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // numericUpDown_blancaMin
             // 
@@ -583,32 +448,197 @@
             this.numericUpDown_blancaMin.Name = "numericUpDown_blancaMin";
             this.numericUpDown_blancaMin.Size = new System.Drawing.Size(50, 20);
             this.numericUpDown_blancaMin.TabIndex = 10;
+            this.numericUpDown_blancaMin.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.numericUpDown_blancaMin.ValueChanged += new System.EventHandler(this.numericUpDown_blancaMin_ValueChanged);
             // 
-            // label9
+            // label8
             // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(171, 62);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(50, 33);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "Max. Area";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Location = new System.Drawing.Point(59, 62);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(50, 33);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "Min. Area";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // numericUpDown_blancaMax
+            // numericUpDown_negraMax
             // 
-            this.numericUpDown_blancaMax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown_blancaMax.Location = new System.Drawing.Point(227, 65);
-            this.numericUpDown_blancaMax.Maximum = new decimal(new int[] {
+            this.numericUpDown_negraMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_negraMax.Location = new System.Drawing.Point(227, 34);
+            this.numericUpDown_negraMax.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
-            this.numericUpDown_blancaMax.Name = "numericUpDown_blancaMax";
-            this.numericUpDown_blancaMax.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDown_blancaMax.TabIndex = 12;
-            this.numericUpDown_blancaMax.ValueChanged += new System.EventHandler(this.numericUpDown_blancaMax_ValueChanged);
+            this.numericUpDown_negraMax.Name = "numericUpDown_negraMax";
+            this.numericUpDown_negraMax.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDown_negraMax.TabIndex = 8;
+            this.numericUpDown_negraMax.Value = new decimal(new int[] {
+            750,
+            0,
+            0,
+            0});
+            this.numericUpDown_negraMax.ValueChanged += new System.EventHandler(this.numericUpDown_negraMax_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(171, 31);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(50, 31);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Max. Area";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_negraMin
+            // 
+            this.numericUpDown_negraMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_negraMin.Location = new System.Drawing.Point(115, 34);
+            this.numericUpDown_negraMin.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_negraMin.Name = "numericUpDown_negraMin";
+            this.numericUpDown_negraMin.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDown_negraMin.TabIndex = 6;
+            this.numericUpDown_negraMin.Value = new decimal(new int[] {
+            550,
+            0,
+            0,
+            0});
+            this.numericUpDown_negraMin.ValueChanged += new System.EventHandler(this.numericUpDown_negraMin_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(59, 31);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 31);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Min. Area";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(171, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 31);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Max. Area";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_TODO_Cambiar_por_simbolo_correcto
+            // 
+            this.label_TODO_Cambiar_por_simbolo_correcto.AutoSize = true;
+            this.label_TODO_Cambiar_por_simbolo_correcto.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_TODO_Cambiar_por_simbolo_correcto.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_TODO_Cambiar_por_simbolo_correcto.Location = new System.Drawing.Point(3, 62);
+            this.label_TODO_Cambiar_por_simbolo_correcto.Name = "label_TODO_Cambiar_por_simbolo_correcto";
+            this.label_TODO_Cambiar_por_simbolo_correcto.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label_TODO_Cambiar_por_simbolo_correcto.Size = new System.Drawing.Size(50, 33);
+            this.label_TODO_Cambiar_por_simbolo_correcto.TabIndex = 2;
+            this.label_TODO_Cambiar_por_simbolo_correcto.Text = "♭";
+            this.label_TODO_Cambiar_por_simbolo_correcto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 31);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "♪";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(3, 31);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(50, 31);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "♩";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // numericUpDown_corcheaMin
+            // 
+            this.numericUpDown_corcheaMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_corcheaMin.Location = new System.Drawing.Point(115, 3);
+            this.numericUpDown_corcheaMin.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_corcheaMin.Name = "numericUpDown_corcheaMin";
+            this.numericUpDown_corcheaMin.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDown_corcheaMin.TabIndex = 3;
+            this.numericUpDown_corcheaMin.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.numericUpDown_corcheaMin.ValueChanged += new System.EventHandler(this.numericUpDown_corcheaMin_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Location = new System.Drawing.Point(59, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(50, 31);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Min. Area";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_corcheaMax
+            // 
+            this.numericUpDown_corcheaMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_corcheaMax.Location = new System.Drawing.Point(227, 3);
+            this.numericUpDown_corcheaMax.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_corcheaMax.Name = "numericUpDown_corcheaMax";
+            this.numericUpDown_corcheaMax.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDown_corcheaMax.TabIndex = 3;
+            this.numericUpDown_corcheaMax.Value = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+            this.numericUpDown_corcheaMax.ValueChanged += new System.EventHandler(this.numericUpDown_corcheaMax_ValueChanged);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel_state});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 644);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1187, 22);
+            this.statusStrip1.SizingGrip = false;
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel_state
+            // 
+            this.toolStripStatusLabel_state.Name = "toolStripStatusLabel_state";
+            this.toolStripStatusLabel_state.Size = new System.Drawing.Size(68, 17);
+            this.toolStripStatusLabel_state.Text = "State: None";
             // 
             // Form1
             // 
@@ -641,18 +671,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.tabPage_sequencer.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMin)).EndInit();
             this.tableLayoutPanel_figures.ResumeLayout(false);
             this.tableLayoutPanel_figures.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_negraMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_corcheaMax)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

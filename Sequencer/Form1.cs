@@ -26,6 +26,7 @@ namespace Sequencer {
         private Sequencer _sequencer;
         private StateMachine<State, Trigger> _stmachine = new StateMachine<State, Trigger>(State.Init);
         private bool _colorSampled = false;  // Indica si se ha seleccionado la muestra necesaria para el filtrado de color
+        private bool _gettingFigureBlobs = false;  // TODO: Mover a donde se mueva lka lógica de la detección de blobs
         #endregion
 
         #region Form Manage
@@ -42,11 +43,21 @@ namespace Sequencer {
             toolStripStatusLabel_state.Text = "State: Init";  // DEBUG ?
 
             InitStateMachine();
+            LoadFigureAreaValues();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
             _sequencer.RawFrame -= OnImageGrabbed;
             _sequencer.Dispose();
+        }
+
+        private void LoadFigureAreaValues() {
+            Figures.Corchea.MaxArea = (int)numericUpDown_corcheaMax.Value;
+            Figures.Corchea.MinArea = (int)numericUpDown_corcheaMin.Value;
+            Figures.Negra.MaxArea = (int)numericUpDown_negraMax.Value;
+            Figures.Negra.MinArea = (int)numericUpDown_negraMin.Value;
+            Figures.Blanca.MaxArea = (int)numericUpDown_blancaMax.Value;
+            Figures.Blanca.MinArea = (int)numericUpDown_blancaMin.Value;
         }
         #endregion
 
@@ -112,21 +123,32 @@ namespace Sequencer {
         }
 
         private void OnColorFilteredFrame(Image<Gray, Double> i_img, EventArgs e) {
-
-            CvInvoke.cvSmooth(i_img.Ptr, i_img.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_GAUSSIAN, 13, 13, 1.5, 1);
-            Image<Gray, Byte> gray = i_img.Convert<Gray, Byte>();//.PyrDown().PyrUp();
-            Gray grayLow = new Gray(1);
-            Gray grayHigh = new Gray(255);
-            Image<Gray, Byte> thresholded = gray.ThresholdBinary(grayLow, grayHigh);
-            using (MemStorage storage = new MemStorage()){
-                for (Contour<Point> contours = thresholded.Erode(1).FindContours(/*Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE, Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_LIST, storage*/); contours != null; contours = contours.HNext) {
-                    Contour<Point> currContour = contours.ApproxPoly(contours.Perimeter * 0.05, storage);
-                    thresholded.Draw(currContour, grayLow, 1);
+            if (!_gettingFigureBlobs) {
+                _gettingFigureBlobs = true;
+                //CvInvoke.cvSmooth(i_img.Ptr, i_img.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_GAUSSIAN, 13, 13, 1.5, 1);
+                Image<Gray, Byte> gray = i_img.Convert<Gray, Byte>();//.PyrDown().PyrUp();
+                CvInvoke.cvSmooth(gray.Ptr, gray.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_GAUSSIAN, 13, 13, 1.5, 1);
+                Gray grayLow = new Gray(1);
+                Gray grayHigh = new Gray(255);
+                Image<Gray, Byte> thresholded = gray.ThresholdBinary(grayLow, grayHigh);
+                List<CVFigureBlob> blobs = new List<CVFigureBlob>();
+                using (MemStorage storage = new MemStorage()) {
+                    for (Contour<Point> contours = thresholded.Erode(1).FindContours(); contours != null; contours = contours.HNext) {
+                        Contour<Point> currContour = contours.ApproxPoly(contours.Perimeter * 0.05, storage);
+                        Figure fig = Figures.GetFigure((int)currContour.Area);
+                        if (fig != null) {
+                            blobs.Add(new CVFigureBlob(currContour.BoundingRectangle, fig, imageBox_mainDisplay));
+                            blobs[blobs.Count - 1].Paint();
+                        }
+                        //CVFigureBlob blob = new CVFigureBlob(currContour.BoundingRectangle, currContour.Area, imageBox_mainDisplay);
+                        //thresholded.Draw(currContour, grayLow, 1);
+                    }
                 }
-            }
 
-            // GUI
-            imageBox_preview.Image = thresholded.Resize(imageBox_preview.Size.Width, imageBox_preview.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
+                // GUI
+                imageBox_preview.Image = thresholded;//.Resize(imageBox_preview.Size.Width, imageBox_preview.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
+                _gettingFigureBlobs = false;
+            }
         }
         #endregion
 
@@ -208,28 +230,36 @@ namespace Sequencer {
         }
         #endregion
 
+
+        // TODO: Eliminar todo este código duplicado del infierno
         private void numericUpDown_corcheaMin_ValueChanged(object sender, EventArgs e) {
-            _sequencer.Corchea.MinArea = (int)numericUpDown_corcheaMin.Value;
+            Figures.Corchea.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = Figures.Corchea.MinArea;
         }
 
         private void numericUpDown_corcheaMax_ValueChanged(object sender, EventArgs e) {
-            _sequencer.Corchea.MaxArea = (int)numericUpDown_corcheaMin.Value;
+            Figures.Corchea.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = Figures.Corchea.MaxArea;
         }
 
         private void numericUpDown_negraMin_ValueChanged(object sender, EventArgs e) {
-            _sequencer.Negra.MinArea = (int)numericUpDown_corcheaMin.Value;
+            Figures.Negra.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = Figures.Negra.MinArea;
         }
 
         private void numericUpDown_negraMax_ValueChanged(object sender, EventArgs e) {
-            _sequencer.Negra.MaxArea = (int)numericUpDown_corcheaMin.Value;
+            Figures.Negra.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = Figures.Negra.MaxArea;
         }
 
         private void numericUpDown_blancaMin_ValueChanged(object sender, EventArgs e) {
-            _sequencer.Blanca.MinArea = (int)numericUpDown_corcheaMin.Value;
+            Figures.Blanca.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = Figures.Blanca.MinArea;
         }
 
         private void numericUpDown_blancaMax_ValueChanged(object sender, EventArgs e) {
-            _sequencer.Blanca.MaxArea = (int)numericUpDown_corcheaMin.Value;
+            Figures.Blanca.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = Figures.Blanca.MaxArea;
         }
 
 
