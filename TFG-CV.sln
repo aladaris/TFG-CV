@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.ProbabilisticImageFilte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Control.CameraSettings", "Control.CameraSettings\Control.CameraSettings.csproj", "{3C277999-D1DE-4AEC-82B4-FF58075A7440}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSoundBridgeTests", "CSoundBridgeTests\CSoundBridgeTests.csproj", "{5277620B-AC6C-4732-84C5-5ECA1A38FC9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3C277999-D1DE-4AEC-82B4-FF58075A7440}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C277999-D1DE-4AEC-82B4-FF58075A7440}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C277999-D1DE-4AEC-82B4-FF58075A7440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5277620B-AC6C-4732-84C5-5ECA1A38FC9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5277620B-AC6C-4732-84C5-5ECA1A38FC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5277620B-AC6C-4732-84C5-5ECA1A38FC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5277620B-AC6C-4732-84C5-5ECA1A38FC9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

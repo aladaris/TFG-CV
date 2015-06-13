@@ -218,7 +218,7 @@ namespace Aladaris
             Guid IID_IBaseFilter = new Guid("56a86895-0ad4-11ce-b03a-0020af0ba770");
             dev.Mon.BindToObject(null, null, ref IID_IBaseFilter, out o);
             IAMVideoProcAmp vProps = (IAMVideoProcAmp)o;
-            VideoProcAmpFlags pFlags = new VideoProcAmpFlags();
+            VideoProcAmpFlags pFlags = VideoProcAmpFlags.Manual;
             vProps.Set(i_prop, value, pFlags);
         }
         #endregion
