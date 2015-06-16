@@ -15,7 +15,7 @@ namespace Sequencer {
     /// <summary>
     /// Musical figures names
     /// </summary>
-    public enum FIGNAME { CORCHEA, NEGRA, BLANCA };
+    public enum FIGNAME { CORCHEA = 1, NEGRA = 2, BLANCA = 4 };
 
     /// <summary>
     /// Defines the blob area range asociated with a musical figure.
@@ -68,30 +68,25 @@ namespace Sequencer {
     class CVFigureBlob /*: IDisposable*/ {
         //private Rectangle _blob;
         private Point _blobCenter;
-        private Figure _figure;
         private bool _valid = false;
         private ImageBox _imgBox;
+
+        public Figure Figura { get; private set; }
+        public double Area { get; private set; }
 
         public bool IsValid {
             get { return _valid; }
         }
-/*
-        public CVFigureBlob(Rectangle boundingBox, double area, ImageBox imgbox) {
-            _blob = boundingBox;
-            _figure = Figures.GetFigure((int)area);
-            if (_figure != null)
-                _valid = true;
-            imgbox.Paint += OnPaint;
-        }
-*/
-        public CVFigureBlob(Rectangle boundingBox, Figure fig, ImageBox imgbox) {
+
+        public CVFigureBlob(Rectangle boundingBox, double area, Figure fig, ImageBox imgbox) {
             boundingBox.Width *= 3;
             boundingBox.Height *= 3;
             boundingBox.X *= 3;
             boundingBox.Y *= 3;
+            Area = area;
             _blobCenter = new Point(boundingBox.X + boundingBox.Width / 2, boundingBox.Y + boundingBox.Height / 2);
-            _figure = fig;
-            if (_figure != null)
+            Figura = fig;
+            if (Figura != null)
                 _valid = true;
             _imgBox = imgbox;
             //_imgBox.Paint += OnPaint;
@@ -109,19 +104,59 @@ namespace Sequencer {
         public void Paint() {
             if (_valid) {
                 string figureCharacter = "";
-                switch (_figure.FigureName) {
+                switch (Figura.FigureName) {
                     case FIGNAME.CORCHEA: figureCharacter = "♪"; break;
                     case FIGNAME.NEGRA: figureCharacter = "♩"; break;
                     case FIGNAME.BLANCA: figureCharacter = "♭"; break;
                 }
-                _imgBox.CreateGraphics().DrawString(figureCharacter, new Font("Arial", 14), Brushes.Yellow, _blobCenter);
+                if (_imgBox != null)
+                    _imgBox.CreateGraphics().DrawString(figureCharacter, new Font("Arial", 14), Brushes.Yellow, _blobCenter);
             }
+        }
+
+        /// <summary>
+        /// Obtiene una lista con los blobs detectados en la imagen (ya filtrada) proporcionada.
+        /// La lista es de objetos CVFigureBlob, así que también se le asigna una figura a cada blob.
+        /// </summary>
+        /// <param name="i_img"></param>
+        /// <param name="display"></param>
+        /// <returns></returns>
+        public static List<CVFigureBlob> GetBlobs(Image<Gray, Double> i_img, ImageBox display) {
+            //CvInvoke.cvSmooth(i_img.Ptr, i_img.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_GAUSSIAN, 13, 13, 1.5, 1);
+            var gray = i_img.Convert<Gray, Byte>();//.PyrDown().PyrUp();
+            CvInvoke.cvSmooth(gray.Ptr, gray.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_BLUR, 13, 13, 1.5, 1);
+            Image<Gray, Byte> thresholded = gray.ThresholdBinary(new Gray(1), new Gray(255));
+            List<CVFigureBlob> blobs = new List<CVFigureBlob>();
+            using (MemStorage storage = new MemStorage()) {
+                for (Contour<Point> contours = thresholded.Erode(1).FindContours(); contours != null; contours = contours.HNext) {
+                    Contour<Point> currContour = contours.ApproxPoly(contours.Perimeter * 0.05, storage);
+                    Figure fig = Figures.GetFigure((int)currContour.Area);
+                    if (fig != null) {
+                        blobs.Add(new CVFigureBlob(currContour.BoundingRectangle, currContour.Area, fig, display));
+                        blobs[blobs.Count - 1].Paint();  // DEBUG // VERBOSE
+                    }
+                }
+            }
+            return blobs;
+        }
+
+        public static CVFigureBlob GetBiggestBlob(Image<Gray, Double> i_img, ImageBox display) {
+            var blobs = GetBlobs(i_img, display);
+            double biggest = 0d;
+            CVFigureBlob result = null;
+            foreach (var blob in blobs) {
+                if (biggest < blob.Area) {
+                    result = blob;
+                    biggest = blob.Area;
+                }
+            }
+            return result;
         }
 
         private void OnPaint(object sender, PaintEventArgs e) {
             if (_valid) {
                 string figureCharacter = "";
-                switch (_figure.FigureName) {
+                switch (Figura.FigureName) {
                     case FIGNAME.CORCHEA: figureCharacter = "♪"; break;
                     case FIGNAME.NEGRA: figureCharacter = "♩"; break;
                     case FIGNAME.BLANCA: figureCharacter = "♭"; break;

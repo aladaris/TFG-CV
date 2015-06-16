@@ -189,16 +189,16 @@ namespace Sequencer {
             _selectionRect.AcquiredSample += OnSample;
             _selectionRect.AcquiredSampleList += OnSampleList;
             // GUI
-            button_setColor.Text = "Sampling";
+            button_setColor_Track1.Text = "Sampling";
             toolStripStatusLabel_state.Text = "State: Color Sample Selection";  // DEBUG ?
         }
-        private void StopColorSampling() {
+        private void StopColorSamplingKK() {
             _colorSampled = true;
             _selectionRect.Enabled = false;
             _selectionRect.AcquiredSample -= OnSample;
             _selectionRect.AcquiredSampleList -= OnSampleList;
             // GUI
-            button_setColor.Text = "Set color";
+            button_setColor_Track1.Text = "Set color";
         }
         #endregion
 
@@ -225,7 +225,7 @@ namespace Sequencer {
                 button_saveBoard.Enabled = true;
                 button_clearSteps.Enabled = true;
             }
-            button_setColor.Enabled = true;
+            button_setColor_Track1.Enabled = true;
             toolStripStatusLabel_state.Text = "State: Idle Calibrated";  // DEBUG ?
         }
 
@@ -236,7 +236,7 @@ namespace Sequencer {
             button_clearSteps.Enabled = false;
             button_loadBoard.Enabled = false;
             button_saveBoard.Enabled = false;
-            button_setColor.Enabled = false;
+            button_setColor_Track1.Enabled = false;
         }
 
         private void EnterIdleWithBoard() {

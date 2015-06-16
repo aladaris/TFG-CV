@@ -37,16 +37,29 @@
             this.cameraSettingsControl1 = new Aladaris.CameraSettingsControl();
             this.imageBox_preview = new Emgu.CV.UI.ImageBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown_fpsIn = new System.Windows.Forms.NumericUpDown();
-            this.button_setColor = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.p_colorPreview_Track1 = new System.Windows.Forms.Panel();
+            this.button_setColor_Track1 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.p_colorPreview_Track2 = new System.Windows.Forms.Panel();
+            this.button_setColor_Track2 = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.p_colorPreview_Track3 = new System.Windows.Forms.Panel();
+            this.button_setColor_Track3 = new System.Windows.Forms.Button();
+            this.tabPage_sequencer = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.button_StartInstrument = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button_clearSteps = new System.Windows.Forms.Button();
             this.button_addSteps = new System.Windows.Forms.Button();
             this.button_saveBoard = new System.Windows.Forms.Button();
             this.button_loadBoard = new System.Windows.Forms.Button();
-            this.tabPage_sequencer = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_figures = new System.Windows.Forms.TableLayoutPanel();
             this.numericUpDown_blancaMax = new System.Windows.Forms.NumericUpDown();
@@ -66,6 +79,8 @@
             this.numericUpDown_corcheaMax = new System.Windows.Forms.NumericUpDown();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cb_FlipH = new System.Windows.Forms.CheckBox();
+            this.cb_FlipV = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -80,10 +95,17 @@
             this.tabPage_Calibration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_preview)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.tabPage_sequencer.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tableLayoutPanel_figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMax)).BeginInit();
@@ -150,6 +172,8 @@
             this.flowLayoutPanel_CamStuff.Controls.Add(this.comboBox_CameraList);
             this.flowLayoutPanel_CamStuff.Controls.Add(this.button_startCamera);
             this.flowLayoutPanel_CamStuff.Controls.Add(this.button_setPersCalib);
+            this.flowLayoutPanel_CamStuff.Controls.Add(this.cb_FlipH);
+            this.flowLayoutPanel_CamStuff.Controls.Add(this.cb_FlipV);
             this.flowLayoutPanel_CamStuff.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel_CamStuff.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel_CamStuff.Name = "flowLayoutPanel_CamStuff";
@@ -178,7 +202,6 @@
             // 
             // button_setPersCalib
             // 
-            this.button_setPersCalib.Enabled = false;
             this.button_setPersCalib.Location = new System.Drawing.Point(286, 8);
             this.button_setPersCalib.Name = "button_setPersCalib";
             this.button_setPersCalib.Size = new System.Drawing.Size(75, 60);
@@ -203,7 +226,6 @@
             this.tabPage_Calibration.Controls.Add(this.cameraSettingsControl);
             this.tabPage_Calibration.Controls.Add(this.imageBox_preview);
             this.tabPage_Calibration.Controls.Add(this.groupBox2);
-            this.tabPage_Calibration.Controls.Add(this.groupBox1);
             this.tabPage_Calibration.Location = new System.Drawing.Point(4, 22);
             this.tabPage_Calibration.Name = "tabPage_Calibration";
             this.tabPage_Calibration.Padding = new System.Windows.Forms.Padding(3);
@@ -232,20 +254,45 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.numericUpDown_fpsIn);
-            this.groupBox2.Controls.Add(this.button_setColor);
-            this.groupBox2.Location = new System.Drawing.Point(6, 101);
+            this.groupBox2.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(302, 73);
+            this.groupBox2.Size = new System.Drawing.Size(302, 168);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Image setup";
+            this.groupBox2.Text = "Visual configuration";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(296, 149);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.label1);
+            this.flowLayoutPanel1.Controls.Add(this.numericUpDown_fpsIn);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(296, 29);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 48);
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 8;
@@ -253,7 +300,7 @@
             // 
             // numericUpDown_fpsIn
             // 
-            this.numericUpDown_fpsIn.Location = new System.Drawing.Point(54, 46);
+            this.numericUpDown_fpsIn.Location = new System.Drawing.Point(50, 3);
             this.numericUpDown_fpsIn.Maximum = new decimal(new int[] {
             24,
             0,
@@ -274,16 +321,153 @@
             0});
             this.numericUpDown_fpsIn.ValueChanged += new System.EventHandler(this.numericUpDown_fpsIn_ValueChanged);
             // 
-            // button_setColor
+            // tableLayoutPanel2
             // 
-            this.button_setColor.Enabled = false;
-            this.button_setColor.Location = new System.Drawing.Point(6, 19);
-            this.button_setColor.Name = "button_setColor";
-            this.button_setColor.Size = new System.Drawing.Size(75, 23);
-            this.button_setColor.TabIndex = 6;
-            this.button_setColor.Text = "Set color";
-            this.button_setColor.UseVisualStyleBackColor = true;
-            this.button_setColor.Click += new System.EventHandler(this.button_setColor_Click);
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.Controls.Add(this.groupBox5, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.groupBox6, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.groupBox7, 2, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 32);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(290, 114);
+            this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.p_colorPreview_Track1);
+            this.groupBox5.Controls.Add(this.button_setColor_Track1);
+            this.groupBox5.Location = new System.Drawing.Point(3, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(86, 51);
+            this.groupBox5.TabIndex = 9;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Track 1";
+            // 
+            // p_colorPreview_Track1
+            // 
+            this.p_colorPreview_Track1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_colorPreview_Track1.Location = new System.Drawing.Point(66, 19);
+            this.p_colorPreview_Track1.Name = "p_colorPreview_Track1";
+            this.p_colorPreview_Track1.Size = new System.Drawing.Size(12, 23);
+            this.p_colorPreview_Track1.TabIndex = 10;
+            // 
+            // button_setColor_Track1
+            // 
+            this.button_setColor_Track1.Location = new System.Drawing.Point(6, 19);
+            this.button_setColor_Track1.Name = "button_setColor_Track1";
+            this.button_setColor_Track1.Size = new System.Drawing.Size(57, 23);
+            this.button_setColor_Track1.TabIndex = 6;
+            this.button_setColor_Track1.Text = "Set color";
+            this.button_setColor_Track1.UseVisualStyleBackColor = true;
+            this.button_setColor_Track1.Click += new System.EventHandler(this.button_setColor_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.p_colorPreview_Track2);
+            this.groupBox6.Controls.Add(this.button_setColor_Track2);
+            this.groupBox6.Location = new System.Drawing.Point(99, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(86, 51);
+            this.groupBox6.TabIndex = 9;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Track 2";
+            // 
+            // p_colorPreview_Track2
+            // 
+            this.p_colorPreview_Track2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_colorPreview_Track2.Location = new System.Drawing.Point(66, 19);
+            this.p_colorPreview_Track2.Name = "p_colorPreview_Track2";
+            this.p_colorPreview_Track2.Size = new System.Drawing.Size(12, 23);
+            this.p_colorPreview_Track2.TabIndex = 10;
+            // 
+            // button_setColor_Track2
+            // 
+            this.button_setColor_Track2.Location = new System.Drawing.Point(6, 19);
+            this.button_setColor_Track2.Name = "button_setColor_Track2";
+            this.button_setColor_Track2.Size = new System.Drawing.Size(57, 23);
+            this.button_setColor_Track2.TabIndex = 6;
+            this.button_setColor_Track2.Text = "Set color";
+            this.button_setColor_Track2.UseVisualStyleBackColor = true;
+            this.button_setColor_Track2.Click += new System.EventHandler(this.button_setColor_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.p_colorPreview_Track3);
+            this.groupBox7.Controls.Add(this.button_setColor_Track3);
+            this.groupBox7.Location = new System.Drawing.Point(195, 3);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(86, 51);
+            this.groupBox7.TabIndex = 9;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Track 3";
+            // 
+            // p_colorPreview_Track3
+            // 
+            this.p_colorPreview_Track3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_colorPreview_Track3.Location = new System.Drawing.Point(66, 19);
+            this.p_colorPreview_Track3.Name = "p_colorPreview_Track3";
+            this.p_colorPreview_Track3.Size = new System.Drawing.Size(12, 23);
+            this.p_colorPreview_Track3.TabIndex = 10;
+            // 
+            // button_setColor_Track3
+            // 
+            this.button_setColor_Track3.Location = new System.Drawing.Point(6, 19);
+            this.button_setColor_Track3.Name = "button_setColor_Track3";
+            this.button_setColor_Track3.Size = new System.Drawing.Size(57, 23);
+            this.button_setColor_Track3.TabIndex = 6;
+            this.button_setColor_Track3.Text = "Set color";
+            this.button_setColor_Track3.UseVisualStyleBackColor = true;
+            this.button_setColor_Track3.Click += new System.EventHandler(this.button_setColor_Click);
+            // 
+            // tabPage_sequencer
+            // 
+            this.tabPage_sequencer.Controls.Add(this.groupBox8);
+            this.tabPage_sequencer.Controls.Add(this.groupBox3);
+            this.tabPage_sequencer.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_sequencer.Name = "tabPage_sequencer";
+            this.tabPage_sequencer.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_sequencer.Size = new System.Drawing.Size(311, 640);
+            this.tabPage_sequencer.TabIndex = 1;
+            this.tabPage_sequencer.Text = "Sequencer";
+            this.tabPage_sequencer.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.button_StartInstrument);
+            this.groupBox8.Location = new System.Drawing.Point(6, 260);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(299, 158);
+            this.groupBox8.TabIndex = 1;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Sequencer";
+            // 
+            // button_StartInstrument
+            // 
+            this.button_StartInstrument.Location = new System.Drawing.Point(9, 19);
+            this.button_StartInstrument.Name = "button_StartInstrument";
+            this.button_StartInstrument.Size = new System.Drawing.Size(75, 35);
+            this.button_StartInstrument.TabIndex = 0;
+            this.button_StartInstrument.Text = "Start instrument";
+            this.button_StartInstrument.UseVisualStyleBackColor = true;
+            this.button_StartInstrument.Click += new System.EventHandler(this.button_StartInstrument_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.groupBox1);
+            this.groupBox3.Controls.Add(this.groupBox4);
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(299, 248);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Configuration parameters";
             // 
             // groupBox1
             // 
@@ -291,16 +475,15 @@
             this.groupBox1.Controls.Add(this.button_addSteps);
             this.groupBox1.Controls.Add(this.button_saveBoard);
             this.groupBox1.Controls.Add(this.button_loadBoard);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Location = new System.Drawing.Point(6, 19);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(302, 89);
-            this.groupBox1.TabIndex = 7;
+            this.groupBox1.Size = new System.Drawing.Size(287, 89);
+            this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Board setup";
             // 
             // button_clearSteps
             // 
-            this.button_clearSteps.Enabled = false;
             this.button_clearSteps.Location = new System.Drawing.Point(87, 19);
             this.button_clearSteps.Name = "button_clearSteps";
             this.button_clearSteps.Size = new System.Drawing.Size(75, 23);
@@ -311,7 +494,6 @@
             // 
             // button_addSteps
             // 
-            this.button_addSteps.Enabled = false;
             this.button_addSteps.Location = new System.Drawing.Point(6, 19);
             this.button_addSteps.Name = "button_addSteps";
             this.button_addSteps.Size = new System.Drawing.Size(75, 23);
@@ -322,8 +504,7 @@
             // 
             // button_saveBoard
             // 
-            this.button_saveBoard.Enabled = false;
-            this.button_saveBoard.Location = new System.Drawing.Point(221, 60);
+            this.button_saveBoard.Location = new System.Drawing.Point(209, 60);
             this.button_saveBoard.Name = "button_saveBoard";
             this.button_saveBoard.Size = new System.Drawing.Size(75, 23);
             this.button_saveBoard.TabIndex = 2;
@@ -333,8 +514,7 @@
             // 
             // button_loadBoard
             // 
-            this.button_loadBoard.Enabled = false;
-            this.button_loadBoard.Location = new System.Drawing.Point(140, 60);
+            this.button_loadBoard.Location = new System.Drawing.Point(128, 60);
             this.button_loadBoard.Name = "button_loadBoard";
             this.button_loadBoard.Size = new System.Drawing.Size(75, 23);
             this.button_loadBoard.TabIndex = 3;
@@ -342,31 +522,10 @@
             this.button_loadBoard.UseVisualStyleBackColor = true;
             this.button_loadBoard.Click += new System.EventHandler(this.button_loadSteps_Click);
             // 
-            // tabPage_sequencer
-            // 
-            this.tabPage_sequencer.Controls.Add(this.groupBox3);
-            this.tabPage_sequencer.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_sequencer.Name = "tabPage_sequencer";
-            this.tabPage_sequencer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_sequencer.Size = new System.Drawing.Size(311, 640);
-            this.tabPage_sequencer.TabIndex = 1;
-            this.tabPage_sequencer.Text = "Sequencer";
-            this.tabPage_sequencer.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.groupBox4);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(299, 302);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Configuration parameters";
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.tableLayoutPanel_figures);
-            this.groupBox4.Location = new System.Drawing.Point(6, 19);
+            this.groupBox4.Location = new System.Drawing.Point(6, 114);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(287, 114);
             this.groupBox4.TabIndex = 1;
@@ -640,6 +799,30 @@
             this.toolStripStatusLabel_state.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel_state.Text = "State: None";
             // 
+            // cb_FlipH
+            // 
+            this.cb_FlipH.AutoSize = true;
+            this.cb_FlipH.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.cb_FlipH.Location = new System.Drawing.Point(367, 8);
+            this.cb_FlipH.Name = "cb_FlipH";
+            this.cb_FlipH.Size = new System.Drawing.Size(75, 31);
+            this.cb_FlipH.TabIndex = 5;
+            this.cb_FlipH.Text = "Flip horizontal";
+            this.cb_FlipH.UseVisualStyleBackColor = true;
+            this.cb_FlipH.CheckedChanged += new System.EventHandler(this.cb_FlipH_CheckedChanged);
+            // 
+            // cb_FlipV
+            // 
+            this.cb_FlipV.AutoSize = true;
+            this.cb_FlipV.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.cb_FlipV.Location = new System.Drawing.Point(448, 8);
+            this.cb_FlipV.Name = "cb_FlipV";
+            this.cb_FlipV.Size = new System.Drawing.Size(64, 31);
+            this.cb_FlipV.TabIndex = 5;
+            this.cb_FlipV.Text = "Flip vertical";
+            this.cb_FlipV.UseVisualStyleBackColor = true;
+            this.cb_FlipV.CheckedChanged += new System.EventHandler(this.cb_FlipV_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -663,15 +846,23 @@
             this.splitContainer_LeftSideBase.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_mainDisplay)).EndInit();
             this.flowLayoutPanel_CamStuff.ResumeLayout(false);
+            this.flowLayoutPanel_CamStuff.PerformLayout();
             this.tabControl_Modes.ResumeLayout(false);
             this.tabPage_Calibration.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_preview)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.tabPage_sequencer.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.tableLayoutPanel_figures.ResumeLayout(false);
             this.tableLayoutPanel_figures.PerformLayout();
@@ -699,16 +890,11 @@
         private System.Windows.Forms.ComboBox comboBox_CameraList;
         private System.Windows.Forms.Button button_startCamera;
         private Emgu.CV.UI.ImageBox imageBox_mainDisplay;
-        private System.Windows.Forms.Button button_saveBoard;
-        private System.Windows.Forms.Button button_loadBoard;
         private System.Windows.Forms.Button button_setPersCalib;
-        private System.Windows.Forms.Button button_addSteps;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_state;
-        private System.Windows.Forms.Button button_setColor;
+        private System.Windows.Forms.Button button_setColor_Track1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button_clearSteps;
         private Emgu.CV.UI.ImageBox imageBox_preview;
         private System.Windows.Forms.Integration.ElementHost cameraSettingsControl;
         private Aladaris.CameraSettingsControl cameraSettingsControl1;
@@ -732,6 +918,26 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_corcheaMin;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown_corcheaMax;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button_clearSteps;
+        private System.Windows.Forms.Button button_addSteps;
+        private System.Windows.Forms.Button button_saveBoard;
+        private System.Windows.Forms.Button button_loadBoard;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Panel p_colorPreview_Track3;
+        private System.Windows.Forms.Button button_setColor_Track3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Panel p_colorPreview_Track2;
+        private System.Windows.Forms.Button button_setColor_Track2;
+        private System.Windows.Forms.Panel p_colorPreview_Track1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Button button_StartInstrument;
+        private System.Windows.Forms.CheckBox cb_FlipH;
+        private System.Windows.Forms.CheckBox cb_FlipV;
     }
 }
 

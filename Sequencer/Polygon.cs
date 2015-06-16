@@ -118,6 +118,54 @@ namespace Sequencer {
                 e.Graphics.FillEllipse(_centerBrush, _center.X - _centerRadius / 2, _center.Y - _centerRadius / 2, _centerRadius, _centerRadius);
         }
 
+        public Rectangle GetBoundingRectangle() {
+            int minX = GetMinXValue();
+            int maxX = GetMaxXValue();
+            int minY = GetMinYValue();
+            int maxY = GetMaxYValue();
+            return new Rectangle(new Point(minX, minY), new Size(maxX - minX, maxY - minY));
+        }
+
+        private int GetMinXValue() {
+            int min = Int32.MaxValue;
+            for (int i = 0; i < _poly.Length; i++) {
+                if (_poly[i].X < min) {
+                    min = _poly[i].X;
+                }
+            }
+            return min;
+        }
+
+        private int GetMinYValue() {
+            int min = Int32.MaxValue;
+            for (int i = 0; i < _poly.Length; i++) {
+                if (_poly[i].Y < min) {
+                    min = _poly[i].Y;
+                }
+            }
+            return min;
+        }
+
+        private int GetMaxXValue() {
+            int max = Int32.MinValue;
+            for (int i = 0; i < _poly.Length; i++) {
+                if (_poly[i].X > max) {
+                    max = _poly[i].X;
+                }
+            }
+            return max;
+        }
+
+        private int GetMaxYValue() {
+            int max = Int32.MinValue;
+            for (int i = 0; i < _poly.Length; i++) {
+                if (_poly[i].Y > max) {
+                    max = _poly[i].Y;
+                }
+            }
+            return max;
+        }
+
         #region Class Methods
         /// <summary>
         /// Serialize a polygon as an XElement.

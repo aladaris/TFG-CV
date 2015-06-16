@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 using Emgu.CV;
 using Emgu.CV.UI;
@@ -93,6 +94,18 @@ namespace Aladaris
                     _reductionFactor = value;
             }
         }
+
+        public System.Drawing.Color SampleMeanColor {
+            get {
+                var means = _dist.Mean;  // BGR
+                if ((means != null)&&(means.Length == 3))
+                    return System.Drawing.Color.FromArgb((int)Math.Round(means[2]), (int)Math.Round(means[1]), (int)Math.Round(means[0]));
+                return System.Drawing.Color.Black;
+            }
+        }
+
+        public bool Sampled { get; private set; }
+        public bool Filtering { get { return _filtering; } }
         #endregion
 
         #region Events Stuff
@@ -116,6 +129,7 @@ namespace Aladaris
         {
             _realTime = false;
             ReductionFactor = i_reduxFactor;
+            Sampled = false;
         }
 
         /// <summary>
@@ -125,6 +139,7 @@ namespace Aladaris
         /// <param name="i_realTime">¿Realizar la conversión en tiempo real?</param>
         public ProbabilisticImageFiltering(Capture i_cap, bool i_realTime = true)
         {
+            Sampled = false;
             _realTime = i_realTime;
             if (_realTime)
                 i_cap.ImageGrabbed += OnImageGrabbed;
@@ -160,6 +175,7 @@ namespace Aladaris
             {
                 throw new ArgumentException("Error adaptando la matriz de datos a la distribución. Variedad de color insuficiente", e);
             }
+            Sampled = true;
         }
 
         /// <summary>
@@ -196,6 +212,21 @@ namespace Aladaris
                 bw.RunWorkerAsync();
             }
 
+        }
+
+        public async Task<Image<Gray, double>> FilterImageAsync<C>(Image<C, byte> i_img)
+            where C : struct, IColor
+        {
+            //if (_dist != null && !_filtering) {
+                _filtering = true;
+                i_img = i_img.Resize(i_img.Width / _reductionFactor, i_img.Height / _reductionFactor, INTER.CV_INTER_LINEAR);
+                Image<Gray, double> result = new Image<Gray, double>(i_img.Size);
+                result = GenerateProbabilisticImage<C>(i_img);
+                //result = await Task.Run(() => GenerateProbabilisticImage<C>(i_img));
+                _filtering = false;
+                return result;
+            //}
+            //return null;
         }
 
         #endregion
