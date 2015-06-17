@@ -15,6 +15,18 @@ namespace CSoundBridgeTests {
         static Csound6Table enabled1;
 
         static void Main(string[] args) {
+            var v = Sequencer.CSNoteHandler.ListOfNotes;
+            foreach (var n in v) {
+                Console.WriteLine(n);
+            }
+            var input = Console.ReadLine();
+            var dinput = 0d;
+            while (!input.Equals("0")) {
+                Double.TryParse(input, out dinput);
+                Console.WriteLine(Sequencer.CSNoteHandler.GetNoteValue(dinput));
+                input = Console.ReadLine();
+            }
+            /*
             //string[] a = ;
             Console.Out.WriteLine();
             CsoundHandler csHandler = new CsoundHandler(new string[]{ @"Files\sequencer.csd" });
@@ -46,6 +58,7 @@ namespace CSoundBridgeTests {
             perfThread.Join();
             while (perfThread.IsRunning) ;
             perfThread.Dispose();
+            */
         }
 
         static private void OnOutPutChannelData(object sender, Csound6ChannelEventArgs e) {

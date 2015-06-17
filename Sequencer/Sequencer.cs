@@ -220,28 +220,19 @@ namespace Sequencer {
                 int index = 0;
                 Image<Bgr, byte> step_img = null;
                 Track track = null;
-                switch (e.Name) {
-                    case "Index_1":
-                        track = GetTrack(1);
-                        if (track != null) {
-                            Int32.TryParse(e.Value.ToString(), out index);
-                            index++;
-                            if (index >= track.Length)
-                                index = 0;
-                            step_img = GetStepROI(index);
-                            if (step_img != null)
-                                track.ReadStepAsync<Bgr>(index, step_img);
-                        }
-                        break;
-                    case "Index_2":
-                        Int32.TryParse(e.Value.ToString(), out index);
-                        step_img = GetStepROI(index);
-                        //if (step_img != null)
-                            //GetTrack(2).ReadStepAsync<Bgr>(index, step_img);
-                        break;
-                    case "Index_3":
-                        // TODO: Batería
-                        break;
+                int tNumber = -1;
+                Int32.TryParse(e.Name[e.Name.Length - 1].ToString(), out tNumber);  // Los nombres de los canales acaban con el número de la pista
+                if (tNumber >= 0) {
+                    track = GetTrack(tNumber);
+                }
+                if (track != null) {
+                    Int32.TryParse(e.Value.ToString(), out index);
+                    index++;
+                    if (index >= track.Length)
+                        index = 0;
+                    step_img = GetStepROI(index);
+                    if (step_img != null)
+                        track.ReadStepAsync<Bgr>(index, step_img);
                 }
             }
         }
@@ -326,7 +317,7 @@ namespace Sequencer {
                 if (track != null) {
                     try {
                         track.ColorFilter.SetDistributionValues<Bgr>(i_sample);
-                    } catch (ArgumentException e) {
+                    } catch (ArgumentException) {
                         MessageBox.Show("Área seleccionada inválida.");
                         return;
                     }
@@ -493,7 +484,7 @@ namespace Sequencer {
         /// a color filtering on the ProbabilisticImageFiltering object.
         /// </summary>
         /// <param name="i_img">Perspective corrected frame</param>
-        private async void FilterImage(Image<Bgr, Byte> i_img, EventArgs e) {
+        private void FilterImage(Image<Bgr, Byte> i_img, EventArgs e) {
             //_colorFilter.FilterImage<Bgr>(i_img);
             /*
             var watch = System.Diagnostics.Stopwatch.StartNew();  // DEBUG: Time measure

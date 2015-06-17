@@ -97,9 +97,11 @@ namespace Aladaris
 
         public System.Drawing.Color SampleMeanColor {
             get {
-                var means = _dist.Mean;  // BGR
-                if ((means != null)&&(means.Length == 3))
-                    return System.Drawing.Color.FromArgb((int)Math.Round(means[2]), (int)Math.Round(means[1]), (int)Math.Round(means[0]));
+                if (_dist != null) {
+                    var means = _dist.Mean;  // BGR
+                    if ((means != null) && (means.Length == 3))
+                        return System.Drawing.Color.FromArgb((int)Math.Round(means[2]), (int)Math.Round(means[1]), (int)Math.Round(means[0]));
+                }
                 return System.Drawing.Color.Black;
             }
         }

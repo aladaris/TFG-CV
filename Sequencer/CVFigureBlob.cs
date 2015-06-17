@@ -133,7 +133,7 @@ namespace Sequencer {
                     Figure fig = Figures.GetFigure((int)currContour.Area);
                     if (fig != null) {
                         blobs.Add(new CVFigureBlob(currContour.BoundingRectangle, currContour.Area, fig, display));
-                        blobs[blobs.Count - 1].Paint();  // DEBUG // VERBOSE
+                        //blobs[blobs.Count - 1].Paint();  // DEBUG // VERBOSE
                     }
                 }
             }

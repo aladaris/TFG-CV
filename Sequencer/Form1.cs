@@ -26,15 +26,19 @@ namespace Sequencer {
         private Sequencer _sequencer;
         private StateMachine<State, Trigger> _stmachine = new StateMachine<State, Trigger>(State.Init);
         private bool _colorSampled = false;  // Indica si se ha seleccionado la muestra necesaria para el filtrado de color
-        private bool _gettingFigureBlobs = false;  // TODO: Mover a donde se mueva lka lógica de la detección de blobs
+        //private bool _gettingFigureBlobs = false;  // TODO: Mover a donde se mueva lka lógica de la detección de blobs
         private int _samplingTrackID = -1;  // The track ID of the track wich is sampling a color.
+        private Stack<NoteComboBox> _notesComboBoxesTrack1 = new Stack<NoteComboBox>();
+        private Stack<NoteComboBox> _notesComboBoxesTrack2 = new Stack<NoteComboBox>();
+        private Stack<NoteComboBox> _notesComboBoxesTrack3 = new Stack<NoteComboBox>();
         #endregion
 
         #region Form Manage
         public Form1() {
             InitializeComponent();
-            _sequencer = new Sequencer(imageBox_mainDisplay, 1);
+            _sequencer = new Sequencer(imageBox_mainDisplay, 2);
             _sequencer.Tracks[0] = new Track(1, _sequencer.CSound, 10, 11, 12);
+            _sequencer.Tracks[1] = new Track(2, _sequencer.CSound, 20, 21, 22);
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
             numericUpDown_fpsIn.Value = _sequencer.FpsIn;
@@ -45,6 +49,9 @@ namespace Sequencer {
             if (_sequencer != null) {
                 cb_FlipH.Checked = _sequencer.FlipH;
                 cb_FlipV.Checked = _sequencer.FlipV;
+                numericUpDown_LengthTrack1.Value = _sequencer.GetTrack(1).Length;
+                numericUpDown_LengthTrack2.Value = _sequencer.GetTrack(2).Length;
+                //numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
             }
 
             InitStateMachine();
@@ -168,157 +175,5 @@ namespace Sequencer {
                 _sequencer.DrawSteps = true;
             }
         }
-
-        #region GUI Handlers
-        /// <summary>
-        /// This method handles the startup and stopping of the capture thread.
-        /// </summary>
-        private void button_startCamera_Click(object sender, EventArgs e) {
-            if (!_sequencer.Capturing) {
-                _sequencer.StartCapture();
-                if (_sequencer.PerspectiveCalibrated) {
-                    _sequencer.PerspectiveCorrectedFrame += OnPerspectiveCorrectedFrame;
-                } else {
-                    _sequencer.RawFrame += OnImageGrabbed;
-                }
-                // GUI
-                button_startCamera.Text = "Stop Camera";
-            } else {
-                _sequencer.StopCapture();
-                _sequencer.RawFrame -= OnImageGrabbed;
-                if (_sequencer.PerspectiveCalibrated) {
-                    _sequencer.PerspectiveCorrectedFrame -= OnPerspectiveCorrectedFrame;
-                }
-                // GUI
-                button_startCamera.Text = "Start Camera";
-            }
-        }
-
-        /// <summary>
-        /// Starts the perspective correction calibration.
-        /// </summary>
-        private void button_setPersCalib_Click(object sender, EventArgs e) {
-            if (_sequencer.PerspectiveCalibrated){
-                _sequencer.ResetPerspectiveCalibration();
-                _sequencer.RawFrame += OnImageGrabbed;
-            }
-            _sequencer.PerspectiveCorrectedFrame -= OnPerspectiveCorrectedFrame;
-            // Polygon handling
-            _polyDrawTool.Enabled = true;
-            _polyDrawTool.ReturnPolygon += OnPerspetiveCalibrationPolygon;
-            // Board Handling
-            _sequencer.DrawSteps = false;
-            // GUI
-            button_setPersCalib.Text = "Draw 4 points";
-        }
-
-        private void button_addSteps_Click(object sender, EventArgs e) {
-            if (!_polyDrawTool.Enabled) {
-                // Polygon handling
-                _polyDrawTool.Enabled = true;
-                _polyDrawTool.ReturnPolygon += OnStepPolygon;
-                // Board Handling
-                _sequencer.DrawSteps = true;
-                // GUI
-                button_addSteps.Text = "Stop Adding";
-            } else {
-                // Polygon handling
-                _polyDrawTool.Enabled = false;
-                _polyDrawTool.ReturnPolygon -= OnStepPolygon;
-                // Board Handling
-                if (_sequencer.StepCount <= 0)
-                    _sequencer.DrawSteps = false;
-                // GUI
-                button_addSteps.Text = "Add steps";
-            }
-        }
-
-        private void button_clearSteps_Click(object sender, EventArgs e) {
-            if (_sequencer != null) {
-                _sequencer.ClearSteps();
-                _sequencer.DrawSteps = false;
-            }
-        }
-
-        private void button_saveSteps_Click(object sender, EventArgs e) {
-            if (_sequencer != null)
-                _sequencer.Save();
-        }
-
-        private void button_loadSteps_Click(object sender, EventArgs e) {
-            if (_sequencer != null) {
-                _sequencer.Load();
-                _sequencer.DrawSteps = true;
-            }
-        }
-
-        private void button_setColor_Click(object sender, EventArgs e) {
-            var b = sender as Button;
-            if (b != null) {
-                int trackId = 0;
-                bool parsed = Int32.TryParse(b.Name[b.Name.Length - 1].ToString(), out trackId);
-                if (parsed) {
-                    _samplingTrackID = trackId;
-                    _selectionRect.Enabled = true;
-                    _selectionRect.AcquiredSample += OnSample;
-                    _selectionRect.AcquiredSampleList += OnSampleList;
-                    _sequencer.DrawSteps = false;
-                    b.Text = "Sampling";
-                }
-            }
-        }
-
-        private void numericUpDown_fpsIn_ValueChanged(object sender, EventArgs e) {
-            _sequencer.FpsIn = (int)numericUpDown_fpsIn.Value;
-        }
-
-        private void button_StartInstrument_Click(object sender, EventArgs e) {
-            if ((_sequencer.PerspectiveCalibrated)&&(_sequencer.StepCount > 0)&&(!_sequencer.CSoundRunning))
-                _sequencer.StartCSound();
-        }
-        #endregion
-
-
-        // TODO: Eliminar todo este código duplicado del infierno
-        private void numericUpDown_corcheaMin_ValueChanged(object sender, EventArgs e) {
-            Figures.Corchea.MinArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Corchea.MinArea;
-        }
-
-        private void numericUpDown_corcheaMax_ValueChanged(object sender, EventArgs e) {
-            Figures.Corchea.MaxArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Corchea.MaxArea;
-        }
-
-        private void numericUpDown_negraMin_ValueChanged(object sender, EventArgs e) {
-            Figures.Negra.MinArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Negra.MinArea;
-        }
-
-        private void numericUpDown_negraMax_ValueChanged(object sender, EventArgs e) {
-            Figures.Negra.MaxArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Negra.MaxArea;
-        }
-
-        private void numericUpDown_blancaMin_ValueChanged(object sender, EventArgs e) {
-            Figures.Blanca.MinArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Blanca.MinArea;
-        }
-
-        private void numericUpDown_blancaMax_ValueChanged(object sender, EventArgs e) {
-            Figures.Blanca.MaxArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Blanca.MaxArea;
-        }
-
-        private void cb_FlipH_CheckedChanged(object sender, EventArgs e) {
-            if (_sequencer != null)
-                _sequencer.FlipH = cb_FlipH.Checked;
-        }
-
-        private void cb_FlipV_CheckedChanged(object sender, EventArgs e) {
-            if (_sequencer != null)
-                _sequencer.FlipV = cb_FlipV.Checked;
-        }
-
     }
 }

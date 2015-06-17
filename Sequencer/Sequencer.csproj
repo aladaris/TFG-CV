@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="CSNoteHandler.cs" />
     <Compile Include="CSoundHandler.cs" />
     <Compile Include="CVFigureBlob.cs" />
     <Compile Include="DataLogging.cs" />
@@ -76,6 +77,9 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStateMachine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIHandling.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ImageHandling.cs" />

@@ -52,6 +52,11 @@ namespace Sequencer {
                 return _tables.ActiveSteps;
             }
         }
+        public Csound6Table Notes {
+            get {
+                return _tables.Notes;
+            }
+        }
 
         /// <summary>
         /// Constructor de la clase Track.
