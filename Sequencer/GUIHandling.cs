@@ -8,24 +8,37 @@ using System.Windows.Forms;
 
 namespace Sequencer {
 
+    public delegate void NoteComboBoxValueChangeHandler(int tId, int sId, string value);
+
     public class NoteComboBox : IDisposable {
         private readonly string[] notes_list;
 
         public ComboBox ComboBox { get; set; }
+        public int TrackId { get; private set; }
+        public int StepId { get; private set; }
+        public NoteComboBoxValueChangeHandler NoteValueChange;
         
-        public NoteComboBox() {
+        public NoteComboBox(int tId, int sId) {
             notes_list = CSNoteHandler.ListOfNotes;
+            TrackId = tId;
+            StepId = sId;
             ComboBox = new ComboBox();
             ComboBox.Size = new Size(45, ComboBox.Size.Height);
             ComboBox.Items.AddRange(notes_list);
             ComboBox.AutoCompleteMode = AutoCompleteMode.Append;
             ComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            ComboBox.SelectedValueChanged += OnComboBoxValueChange;
         }
 
         public void Dispose() {
             if (ComboBox != null) {
                 ComboBox.Dispose();
             }
+        }
+
+        private void OnComboBoxValueChange(object sender, EventArgs e) {
+            if (NoteValueChange != null)
+                NoteValueChange(TrackId, StepId, ComboBox.Text);
         }
     }
 
@@ -219,14 +232,26 @@ namespace Sequencer {
                                 noteCb.Dispose();
                             }
                             while (cbs.Count < track.Length) {
-                                var noteCb = new NoteComboBox();
+                                var noteCb = new NoteComboBox(trackId, cbs.Count);
                                 noteCb.ComboBox.SelectedText = CSNoteHandler.GetNoteValue(track.Notes[cbs.Count]);
+                                noteCb.NoteValueChange += OnNoteComboBoxValueChange;
                                 nud.Parent.Controls.Add(noteCb.ComboBox);
                                 cbs.Push(noteCb);
                             }
                         }
                     }
 
+                }
+            }
+        }
+
+        private void OnNoteComboBoxValueChange(int tId, int sId, string value) {
+            if ((tId > 0) && (tId < _sequencer.Tracks.Length)&&(value != null)&&(!value.Equals(String.Empty))) {
+                var track = _sequencer.GetTrack(tId);
+                if (track != null) {
+                    if ((sId >= 0) && (sId < track.Length)) {
+                        track.Notes[sId] = CSNoteHandler.GetPchValue(value);
+                    }
                 }
             }
         }

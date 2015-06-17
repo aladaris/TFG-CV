@@ -14,7 +14,7 @@ namespace Sequencer {
         // Drawing stuff
         private Color _pointColor = Color.FromArgb(200, 255, 107, 107);
         private Brush _pointBrush;
-        private Color _polygonColor = Color.FromArgb(150, 78, 205, 196);
+        private Color _polygonColor = Color.FromArgb(75, 78, 205, 196);
         private Brush _polygonBrush;
         private Color _centerColor = Color.FromArgb(220, 85, 98, 112);
         private Brush _centerBrush;

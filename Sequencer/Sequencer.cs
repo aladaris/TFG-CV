@@ -456,8 +456,9 @@ namespace Sequencer {
                             case 2: figureCharacter = "♩"; break;
                             case 4: figureCharacter = "♭"; break;
                         }
-                        if (t.AvtiveSteps[j] > 0d)
-                            e.Graphics.DrawString(figureCharacter, new Font("Arial", 14),  new SolidBrush(t.ColorFilter.SampleMeanColor), _board.Steps[j].Center);
+                        if ((t.AvtiveSteps[j] > 0d) && (_board.Steps.Count > 0) && (_board.Steps.Count > j)) {
+                            e.Graphics.DrawString(figureCharacter, new Font("Arial", 14), new SolidBrush(t.ColorFilter.SampleMeanColor), _board.Steps[j].Center);
+                        }
                     }
 
                 }

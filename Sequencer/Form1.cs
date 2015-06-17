@@ -49,6 +49,9 @@ namespace Sequencer {
             if (_sequencer != null) {
                 cb_FlipH.Checked = _sequencer.FlipH;
                 cb_FlipV.Checked = _sequencer.FlipV;
+                numericUpDown_LengthTrack1.Maximum = _sequencer.GetTrack(1).MaxSteps;
+                numericUpDown_LengthTrack2.Maximum = _sequencer.GetTrack(2).MaxSteps;
+                //numericUpDown_LengthTrack3.Maximum = _sequencer.GetTrack(3).MaxSteps;
                 numericUpDown_LengthTrack1.Value = _sequencer.GetTrack(1).Length;
                 numericUpDown_LengthTrack2.Value = _sequencer.GetTrack(2).Length;
                 //numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
