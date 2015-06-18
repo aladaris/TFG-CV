@@ -64,6 +64,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabPage_sequencer = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.numericUpDown_bpm = new System.Windows.Forms.NumericUpDown();
             this.button_StartInstrument = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -116,6 +118,7 @@
             this.statusStrip1.SuspendLayout();
             this.tabPage_sequencer.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -613,6 +616,8 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.label13);
+            this.groupBox8.Controls.Add(this.numericUpDown_bpm);
             this.groupBox8.Controls.Add(this.button_StartInstrument);
             this.groupBox8.Location = new System.Drawing.Point(6, 260);
             this.groupBox8.Name = "groupBox8";
@@ -620,6 +625,33 @@
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Sequencer";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(95, 30);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(27, 13);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "bpm";
+            // 
+            // numericUpDown_bpm
+            // 
+            this.numericUpDown_bpm.Location = new System.Drawing.Point(128, 28);
+            this.numericUpDown_bpm.Maximum = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+            this.numericUpDown_bpm.Name = "numericUpDown_bpm";
+            this.numericUpDown_bpm.Size = new System.Drawing.Size(43, 20);
+            this.numericUpDown_bpm.TabIndex = 1;
+            this.numericUpDown_bpm.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_bpm.ValueChanged += new System.EventHandler(this.numericUpDown_bpm_ValueChanged);
             // 
             // button_StartInstrument
             // 
@@ -1001,6 +1033,8 @@
             this.statusStrip1.PerformLayout();
             this.tabPage_sequencer.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
@@ -1082,6 +1116,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_LengthTrack3;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown numericUpDown_LengthTrack2;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown numericUpDown_bpm;
     }
 }
 

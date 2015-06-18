@@ -65,6 +65,7 @@ namespace Sequencer {
         // CSound
         private CsoundHandler _csHandler;
         private csound6netlib.Csound6NetThread _csPerfThread;
+        private int _bpm;
         // Options
         private bool _drawSteps = false;
         // XML
@@ -145,7 +146,7 @@ namespace Sequencer {
             get { return _board.StepsCount; }
         }
 
-        public csound6netlib.Csound6Net CSound {
+        public csound6netlib.Csound6NetRealtime CSound {
             get {
                 if (_csHandler != null)
                     return _csHandler.Csound;
@@ -163,6 +164,16 @@ namespace Sequencer {
 
         public bool FlipH { get; set; }
         public bool FlipV { get; set; }
+        public int Bpm {
+            get {
+                return _bpm;
+            }
+            set {
+                if (value > 0) {
+                    _bpm = value;
+                }
+            }
+        }
         #endregion
 
         /// <summary>
@@ -193,6 +204,7 @@ namespace Sequencer {
                 _csHandler = new CsoundHandler(new string[] { @"Files\sequencer.csd" });
                 _csHandler.Csound.ReadScore("i10 0 1000\n");  // TODO: Change me !!
                 _csHandler.Csound.OutputChannelCallback += OnCSoundOutputChannel;
+                _csHandler.Csound.InputChannelCallback += OnCSoundInputChannel;
                 
             }
         }
@@ -234,6 +246,12 @@ namespace Sequencer {
                     if (step_img != null)
                         track.ReadStepAsync<Bgr>(index, step_img);
                 }
+            }
+        }
+
+        private void OnCSoundInputChannel(object sender, csound6netlib.Csound6ChannelEventArgs e) {
+            switch (e.Name) {
+                case "bpm": e.SetCsoundValue(CSound, (double)Bpm); break;
             }
         }
 

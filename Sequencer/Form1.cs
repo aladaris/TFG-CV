@@ -55,6 +55,7 @@ namespace Sequencer {
                 numericUpDown_LengthTrack1.Value = _sequencer.GetTrack(1).Length;
                 numericUpDown_LengthTrack2.Value = _sequencer.GetTrack(2).Length;
                 //numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
+                numericUpDown_bpm.Value = 120;
             }
 
             InitStateMachine();

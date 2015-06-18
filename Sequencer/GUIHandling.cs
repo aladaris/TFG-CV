@@ -192,6 +192,12 @@ namespace Sequencer {
                 _sequencer.FlipV = cb_FlipV.Checked;
         }
 
+        private void numericUpDown_bpm_ValueChanged(object sender, EventArgs e) {
+            if (_sequencer != null) {
+                _sequencer.Bpm = (int)numericUpDown_bpm.Value;
+            }
+        }
+
         #endregion
 
         private void tabControl_bottom_SelectedIndexChanged(object sender, EventArgs e) {
@@ -246,7 +252,7 @@ namespace Sequencer {
         }
 
         private void OnNoteComboBoxValueChange(int tId, int sId, string value) {
-            if ((tId > 0) && (tId < _sequencer.Tracks.Length)&&(value != null)&&(!value.Equals(String.Empty))) {
+            if ((tId > 0) && (tId <= _sequencer.Tracks.Length)&&(value != null)&&(!value.Equals(String.Empty))) {
                 var track = _sequencer.GetTrack(tId);
                 if (track != null) {
                     if ((sId >= 0) && (sId < track.Length)) {
