@@ -1,0 +1,331 @@
+; Instruments
+# define GEN_Saw      # 51 #
+# define GEN_Square   # 52 #
+# define GEN_Triangle # 53 #
+# define GEN_arbitrary # 54 #
+# define Simple       # 55 #
+# define String       # 56 #
+
+; Single cycle waves
+# define Sine # 57 #
+# define Tri  # 58 #
+
+; RAP
+# define RAP_Triangle_8 # 100 #
+# define RAP_Square_16  # 101 #
+# define RAP_Saw_32     # 102 #
+# define RAP_Buzz_32    # 103 #
+# define RAP_Arbitrary    # 104 #
+
+; Curves
+# define Lin    # 200 #
+# define Exp    # 201 # 
+# define Custom # 202 #
+
+; Body
+# define Flat         # 300 #
+# define SawDown      # 301 #
+# define TriNoise_512 # 302 #
+# define Comb_64      # 303 #
+# define TriNoise_8   # 304 #
+
+; Tune
+# define Slight  # 400 #
+# define Extreme # 401 #
+
+; Shapes
+# define Rise # 500 #
+# define Fall # 501 #
+# define Peak # 502 #
+# define Dip  # 503 #
+
+opcode GEN_Saw, 0, ii 
+ifn, in_harmonics       xin
+
+     ; Generates data for a band-limited saw wave in Add_Synth format:
+    ;     frequency ratio, amplitude, phase  
+    isize = abs(in_harmonics * 3) * -1
+    itemp ftgen ifn, 0, isize, 10, 0
+        
+    i_index = 0
+    loop_start:
+        ifreq = i_index + 1
+        iamp = 1 / ifreq
+        iphase = 0
+        
+        tabw_i ifreq, i_index * 3, ifn
+        tabw_i iamp, i_index * 3 + 1, ifn
+        tabw_i iphase, i_index * 3 + 2, ifn
+        
+        prints "GEN_Saw %d: %f %f %f\n", i_index, ifreq, iamp, iphase
+        
+    loop_lt i_index, 1, in_harmonics, loop_start
+endop
+
+opcode GEN_Square, 0, ii
+ifn, imax_harmonic    xin
+    ; Generates data for a band-limited square wave in Add_Synth format:
+    ;     frequency ratio, amplitude, phase
+       
+    in_harmonics = int((imax_harmonic + 1) / 2)
+    isize = abs(in_harmonics * 3) * -1
+    itemp ftgen ifn, 0, isize, 10, 0
+        
+    i_index = 0
+    loop_start:
+        ifreq = i_index * 2 + 1
+        iamp = 1 / ifreq
+        iphase = 0
+        
+        tabw_i ifreq, i_index * 3, ifn
+        tabw_i iamp, i_index * 3 + 1, ifn
+        tabw_i iphase, i_index * 3 + 2, ifn
+        
+        prints "GEN_Square %d: %f %f %f\n", i_index, ifreq, iamp, iphase
+        
+    loop_lt i_index, 1, in_harmonics, loop_start
+endop
+
+opcode GEN_Triangle, 0, ii
+ifn, imax_harmonic    xin
+    ; Generates data for a band-limited triangle wave in Add_Synth format:
+    ;     frequency ratio, amplitude, phase
+    
+    in_harmonics = int((imax_harmonic + 1) / 2)
+    isize = abs(in_harmonics * 3) * -1
+    itemp ftgen ifn, 0, isize, 10, 0
+        
+    i_index = 0
+    loop_start:
+        ifreq = i_index * 2 + 1
+        iamp = 1 / ((i_index * 2 + 1) ^ 2) * (-1 ^ i_index)
+        iphase = 0
+        
+        tabw_i ifreq, i_index * 3, ifn
+        tabw_i iamp, i_index * 3 + 1, ifn
+        tabw_i iphase, i_index * 3 + 2, ifn
+        
+        prints "GEN_Triangle %d: %f %f %f\n", i_index, ifreq, iamp, iphase
+        
+    loop_lt i_index, 1, in_harmonics, loop_start
+endop
+
+opcode GEN_arbitrary, 0, ii
+ifn, in_harmonics    xin
+    ; Generates data for a band-limited arbitrary wave in Add_Synth format:
+    ;     frequency ratio, amplitude, phase
+    
+    ;in_harmonics = int((imax_harmonic + 1) / 2)
+    isize = abs(in_harmonics * 3) * -1
+    itemp ftgen ifn, 0, isize, 10, 0
+        
+    i_index = 0
+    loop_start:
+        icos sin i_index / ($M_PI * 3)
+        ifreq = i_index * icos
+        iamp = 1 / abs(ifreq)
+        iphase = iamp / ($M_PI_2)
+        
+        tabw_i ifreq, i_index * 3, ifn
+        tabw_i iamp, i_index * 3 + 1, ifn
+        tabw_i iphase, i_index * 3 + 2, ifn
+        
+        prints "GEN_Arbitrary %d: %f %f %f\n", i_index, ifreq, iamp, iphase
+        
+    loop_lt i_index, 1, in_harmonics, loop_start
+endop
+
+opcode Get_RAP, iii, ii
+ifn, i_index        xin
+    ; Returns Add_Synth data
+    isize = ftlen(ifn) / 3
+    
+    iratio tab_i i_index * 3, ifn
+    iamp tab_i i_index * 3 + 1, ifn
+    iphase tab_i i_index * 3 + 2, ifn
+
+    ; Returns frequency ratio, amplitude and phase
+    xout iratio, iamp, iphase
+endop
+
+opcode Add_Synth, a, kkiiiiiiikki
+kfreq_base, kfreq_mod, ifreq_min, ifreq_max, irap, ibody_curve, ibody_tune, ibody_amp, iflt, kflt_freq, kflt_width, i_index     xin
+;kfreq_base,  \  ; Base frequency
+;kfreq_mod,   \  ; Frequency modulation
+;ifreq_min,   \  ; Minimum frequency
+;ifreq_max,   \  ; Maximum frequency
+;irap,        \  ; RAP table (ratio, amplitude, phase)
+;ibody_curve, \  ; Body frequency curve
+;ibody_tune,  \  ; Body tuning table
+;ibody_amp,   \  ; Body amplitude table
+;iflt,        \  ; Filter table
+;kflt_freq,   \  ; Frequency of filter (index 0 of filter table)
+;kflt_width,  \  ; Width of filter
+;i_index    \  ; Index of current harmonic
+;xin
+
+    ; This harmonic
+    kfreq init 0  ; Frequency for this partial
+    kamp init 0   ; Amplitude for this partial
+    
+    ; Additive band-limited waveform
+    iratio, iamp, iphase Get_RAP irap, i_index  ; Extract RAP from table    
+    kfreq = kfreq_base * iratio                 ; Frequency of partial
+    kfreq = kfreq + kfreq * kfreq_mod           ; Modulate frequency
+    kamp = iamp
+    
+    ; Body
+    kcurve tablei kfreq / 22050, ibody_curve, 1, 0, 0  ; Frequency curve
+    ktune tablei kcurve, ibody_tune, 1, 0, 0           ; Warp frequency
+    kfreq = kfreq * ktune
+    kbody_amp tablei kcurve, ibody_amp, 1, 0, 0        ; Amplitude
+    kamp = kamp * kbody_amp
+    
+    ; Additive synth filter
+    kflt init 0
+    iflt_size = ftlen(iflt)    
+    kflt_transfer = (kfreq - kflt_freq) / kflt_width
+
+    if (kflt_transfer < 0 || kflt_width <= 0) then  ; Transfer function
+        kflt tab 0, iflt
+    elseif (kflt_transfer >= 1) then
+        kflt tab iflt_size - 1, iflt
+    else
+        kflt tablei kflt_transfer, iflt, 1, 0, 0
+    endif
+        
+    kamp = kamp * kflt
+    
+    ; Generate this voice
+    a1 init 0
+    
+    if (kfreq >= ifreq_min && kfreq < ifreq_max) then
+        a1 oscil kamp, kfreq, $Sine, iphase
+    else
+        a1 = 0
+    endif
+    
+    ; Recursive oscillator
+    a2 init 0
+
+    if (i_index < (ftlen(irap) / 3) - 1 && i(kfreq) < ifreq_max) then
+        a2 Add_Synth kfreq_base, kfreq_mod, ifreq_min, ifreq_max, irap,   \
+                     ibody_curve, ibody_tune, ibody_amp, iflt, kflt_freq, \
+                     kflt_width, i_index + 1
+    endif
+    
+    ; Return audio
+    xout a1 + a2
+endop
+
+instr $GEN_Saw
+    ; Wrapper for UDO of the same name
+
+    ifn = p4           ; Function number of table to create
+    in_harmonics = p5  ; Number of harmonics
+   
+    GEN_Saw ifn, in_harmonics
+
+    turnoff
+endin
+
+instr $GEN_Square
+    ; Wrapper for UDO of the same name
+
+    ifn = p4           ; Function number of table to create
+    in_harmonics = p5  ; Number of harmonics
+   
+    GEN_Square ifn, in_harmonics
+
+    turnoff
+endin
+
+instr $GEN_Triangle
+    ; Wrapper for UDO of the same name
+
+    ifn = p4           ; Function number of table to create
+    in_harmonics = p5  ; Number of harmonics
+   
+    GEN_Triangle ifn, in_harmonics
+
+    turnoff
+endin
+
+instr $GEN_arbitrary
+    ; Wrapper for UDO of the same name
+
+    ifn = p4           ; Function number of table to create
+    in_harmonics = p5  ; Number of harmonics
+   
+    GEN_arbitrary ifn, in_harmonics
+
+    turnoff
+endin
+
+instr $Simple
+    idur = p3          ; Duration
+    iamp = p4          ; Amplitude
+    ipch = cpspch(p5)  ; Pitch
+
+    ; Fixed Add_Synth Attributes
+    irap        = $RAP_Square_16
+    ibody_curve = $Lin
+    ibody_tune  = $Flat
+    ibody_amp   = $Comb_64
+    iflt        = $Rise
+
+    ; Frequency Modulation
+    kfreq_mod oscil 0.01, 5, $Tri
+    
+    ; Filter
+    kflt_freq expon ipch * 8, idur, ipch
+    kflt_width = kflt_freq * 4
+    
+    ; Generate Audio
+    a1 Add_Synth ipch, kfreq_mod, 20, 22050, irap, ibody_curve, ibody_tune, \
+                 ibody_amp, iflt, kflt_freq, kflt_width, 0
+    
+    ; Amp
+    aenv linseg 0, 0.05, iamp, idur - 0.1, iamp, 0.05, 0
+    a1 = a1 * aenv
+    a1 limit a1, -1, 1  ; Prevent audio explosions
+    
+    ;Output
+    outs a1, a1
+endin
+
+instr $String
+    idur = p3          ; Duration
+    iamp = p4          ; Amplitude
+    ipch = cpspch(p5)  ; Pitch in octave point pitch-class
+    ipan = p6          ; Pan position
+    
+    irap = $RAP_Saw_32
+    ibody_curve = $Custom
+    ibody_amp = $TriNoise_512
+    ibody_tune = $Flat
+    iflt = $Flat
+    
+    ; Pitch vibrato
+    k2 linsegr 0, 0.4, 0, 0.7, 1, 1, 1, 1, 0.3, 0.01, 1
+    klfo oscil k2, 4.8 + rnd(0.4), $Tri
+    krand randh rnd(0.9) + 0.1, 0.125 + rnd(0.25)
+    kvibrato = (klfo + krand) * (0.003 + rnd(0.007)) * 2
+    
+    ; Pitch
+    kpch expseg 2 ^ (-1 / 12), 0.05 + rnd(0.05), 2 ^ (0 / 12), 0.001, \
+                2 ^ (0 / 12)
+    
+    ; Generate audio
+    a1 Add_Synth ipch, kvibrato + kpch, 20, 22050, irap, ibody_curve, \
+                 ibody_tune, ibody_amp, iflt, 0, 22050, 0
+
+    ; Amp
+    aenv linsegr 0, 0.1 + rnd(0.105), 0.2 + rnd(0.3), 0.1, 0.5, 2, 0.333, \
+                 0.2 + rnd(0.1), 0             
+    asig = a1 * aenv * iamp * (0.9 + rnd(0.1))
+    aleft limit asig * sqrt(1 - ipan), -1, 1
+    aright limit asig * sqrt(ipan), -1, 1
+
+    outs aleft, aright 
+endin

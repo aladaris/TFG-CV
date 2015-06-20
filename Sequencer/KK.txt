@@ -1,0 +1,510 @@
+virtual_keyboard real time MIDI plugin for Csound
+0dBFS level = 32768.0
+Csound version 6.04 (double samples) Dec  8 2014
+libsndfile-1.0.25
+orchname:  Files\sequencer.orc
+rtaudio: PortAudio module enabled ... 
+using callback interface
+rtmidi: PortMIDI module enabled
+ Elapsed time at end of orchestra compile: real: 0.022s, CPU: 0.021s
+sorting score ...
+sread: illegal opcode ï
+  section 1:  at position 0
+      remainder of line flushed
+Macro definition for GEN_Saw
+Macro definition for GEN_Square
+Macro definition for GEN_Triangle
+Macro definition for GEN_arbitrary
+Macro definition for Simple
+Macro definition for String
+Macro definition for Sine
+Macro definition for Tri
+Macro definition for RAP_Triangle_8
+Macro definition for RAP_Square_16
+Macro definition for RAP_Saw_32
+Macro definition for RAP_Buzz_32
+Macro definition for RAP_Arbitrary
+Macro definition for Lin
+Macro definition for Exp
+Macro definition for Custom
+Macro definition for Flat
+Macro definition for SawDown
+Macro definition for TriNoise_512
+Macro definition for Comb_64
+Macro definition for TriNoise_8
+Macro definition for Slight
+Macro definition for Extreme
+Macro definition for Rise
+Macro definition for Fall
+Macro definition for Peak
+Macro definition for Dip
+	... done
+Elapsed time at end of score sort: real: 0.023s, CPU: 0.023s
+--Csound version 6.04 (double samples) Dec  8 2014
+graphics suppressed, ascii substituted
+0dBFS level = 1.0
+ftable 101:
+ftable 101:	1024 points, scalemax 1.000
+_
+ ''-._                                                                    .-'''
+      '._                                                              _-'
+         -                                                           _-
+          '.                                                        -
+            '_                                                    _'
+              .                                                  -
+               -                                               _'
+                '_                                            .
+                  .                                          -
+___________________-________________________________________-__________________
+                    '                                     _'
+                     '_                                  .
+                       .                                -
+                        -                             _'
+                         '_                          .
+                           .                        -
+                            '_                    .'
+                              -_                .'
+                                -.            .'
+                                  '-.______.-'
+ftable 10:
+ftable 10:	8 points, scalemax 1.000
+________
+ftable 11:
+ftable 11:	8 points, scalemax 7.050
+       _
+    '''
+----
+ftable 12:
+ftable 12:	8 points, scalemax 1.000
+________
+ftable 20:
+ftable 20:	8 points, scalemax 2.000
+________
+ftable 21:
+ftable 21:	8 points, scalemax 5.050
+      _
+'''''' '
+ftable 22:
+ftable 22:	8 points, scalemax 1.000
+________
+ftable 30:
+ftable 30:	8 points, scalemax 2.000
+________
+ftable 31:
+ftable 31:	8 points, scalemax 3.000
+  __
+
+
+
+ -  - -
+
+
+.    . .
+chnl 1 using instr 1
+chnl 2 using instr 1
+chnl 3 using instr 1
+chnl 4 using instr 1
+chnl 5 using instr 1
+chnl 6 using instr 1
+chnl 7 using instr 1
+chnl 8 using instr 1
+chnl 9 using instr 1
+chnl 10 using instr 1
+chnl 11 using instr 1
+chnl 12 using instr 1
+chnl 13 using instr 1
+chnl 14 using instr 1
+chnl 15 using instr 1
+chnl 16 using instr 1
+ftable 1:
+deferred alloc
+audio sr = 44100, monaural
+opening WAV infile \Dropbox\ETSII\2014-2015\TFG\TFG_CV\Sequencer\Files\samples\kit1\kick.wav
+  defer length 20461
+ftable 1:	20461 points, scalemax 1.000
+         .      .      _
+        _   '  '   -  _   _.  _   .   _
+__-__--________________________._____.___-'__--__-.__-___.___.__________________
+'          .      . -        _   ' -   .   ..  .-  .'  .' '-  '-  ''  ''  ''  ''
+   .      .  -_  .   _  -.  -   -   -   '
+       .
+    _
+
+ -
+ftable 2:
+deferred alloc
+audio sr = 44100, monaural
+opening WAV infile \Dropbox\ETSII\2014-2015\TFG\TFG_CV\Sequencer\Files\samples\kit1\hihat.wav
+  defer length 17511
+ftable 2:	17511 points, scalemax 1.000
+     _
+ . _
+         -    . _   '    _ ._  -
+_____________'___-___-__-_________-______-______________________________________
+'   . -   _    _  .-   -      ' ''  '-'-'  '     '  '  ' '    ''   ''  '''
+       '   -_
+        '
+ftable 3:
+deferred alloc
+audio sr = 44100, monaural
+opening WAV infile \Dropbox\ETSII\2014-2015\TFG\TFG_CV\Sequencer\Files\samples\kit1\snare.wav
+  defer length 15938
+ftable 3:	15938 points, scalemax 1.000
+ '   -
+   .
+      '
+    .
+  '
+           .
+
+
+              -     _
+_________________-______'________.______________________________________________
+               .-  - -   ''.  '        '   '' '''' ''    '  ''' '''  ''   '   '
+         '
+       -
+        _ ' _'
+orch now loaded
+audio buffered in 4096 sample-frame blocks
+writing 16384-byte blks of shorts to test.wav (WAV)
+SECTION 1:
+ftable 57:
+ftable 57:	65536 points, scalemax 1.000
+               _--'''''--_
+            _-'           '-_
+          _-                 -_
+         .                     .
+       _'                       '_
+      -                           -
+    _'                             '_
+   .                                 .
+  -                                   -
+_'_____________________________________'________________________________________
+                                        '_                                     .
+                                          .                                   .
+                                           -                                 -
+                                            '_                             _'
+                                              .                           -
+                                               -_                       _'
+                                                 .                     -
+                                                  '.                 .'
+                                                    '._           _-'
+                                                       -.._____.-'
+ftable 58:
+ftable 58:	65536 points, scalemax 1.000
+                                      _-'.
+                                    _-    '.
+                                  _-        '.
+                                _-            '.
+                              _-                '.
+                            _-                    '.
+                          _-                        '.
+                        _-                            '.
+                      _-                                '.
+_____________________-____________________________________'.____________________
+                  _-                                        '.
+                _-                                            '.
+              _-                                                '.
+            _-                                                    '.
+          _-                                                        '.
+        _-                                                            '.
+      _-                                                                '.
+    _-                                                                    '.
+  _-                                                                        '.
+_-                                                                            '.
+ftable 200:
+ftable 200:	65536 points, scalemax 1.000
+                                                                        __..--''
+                                                                __..--''
+                                                        __..--''
+                                                __..--''
+                                        __..--''
+                                __..--''
+                        __..--''
+                __..--''
+        __..--''
+__..--''________________________________________________________________________
+ftable 201:
+ftable 201:	65536 points, scalemax 1.000
+                                                                               '
+                                                                              '
+                                                                            _'
+                                                                           .
+                                                                         _'
+                                                                       .-
+                                                                    _-'
+                                                              __.-''
+___________________________________________________.....----''__________________
+ftable 202:
+ftable 202:	65536 points, scalemax 1.000
+                                        __________..........----------''''''''''
+                                    _.-'
+                                _.-'
+                           _.-''
+                       _.-'
+                  _.--'
+              _.-'
+         _..-'
+     _.-'
+__.-'___________________________________________________________________________
+ftable 300:
+ftable 300:	2 points, scalemax 1.000
+__
+ftable 301:
+ftable 301:	8192 points, scalemax 1.000
+_
+ '--..__
+        ''--..__
+                ''--..__
+                        ''--..__
+                                ''--..__
+                                        ''--..__
+                                                ''--..__
+                                                        ''--..__
+                                                                ''--..__
+________________________________________________________________________''--..__
+ftable 302:
+ftable 302:	512 points, scalemax 1.000
+                                                       _
+          -
+                                     '                           - .
+     -      .                   -                                   _
+ -     '-                    _                             -
+                    _                    '  .
+                        . '                                     .
+           _                      _        .              ' .
+  _      _                                     .        -      .
+_______________'_._____________________-________________________________-_
+.                        '                       _                   -'
+    _ _                     '      _         '                         ' .
+              . _     .       .           '
+                                    '               .        ..   '
+                       '                        - '  .   '
+                  _        .          . .
+   -         '     . -         '                      '
+                                 '
+ftable 303:
+ftable 303:	64 points, scalemax 1.000
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+
+
+
+
+
+
+
+________________________________________________________________
+ftable 304:
+ftable 304:	8 points, scalemax 1.000
+   _
+
+
+
+
+
+
+  -
+
+
+________
+ _  '-
+'
+
+
+      .
+
+       -
+ftable 400:
+ftable 400:	8 points, scalemax 1.050
+   _   _
+-_- -_-
+ftable 401:
+ftable 401:	16 points, scalemax 1.244
+      _
+          .
+  -      -     .
+    '' '   _''-
+-_ -    .
+ftable 500:
+ftable 500:	8192 points, scalemax 1.000
+_
+ '--..__
+        ''--..__
+                ''--..__
+                        ''--..__
+                                ''--..__
+                                        ''--..__
+                                                ''--..__
+                                                        ''--..__
+                                                                ''--..__
+________________________________________________________________________''--..__
+ftable 501:
+ftable 501:	8192 points, scalemax 1.000
+                                                                        __..--''
+                                                                __..--''
+                                                        __..--''
+                                                __..--''
+                                        __..--''
+                                __..--''
+                        __..--''
+                __..--''
+        __..--''
+__..--''________________________________________________________________________
+ftable 502:
+ftable 502:	8192 points, scalemax 1.000
+                                    _.-''-._
+                                _.-'        '-._
+                            _.-'                '-._
+                        _.-'                        '-._
+                    _.-'                                '-._
+                _.-'                                        '-._
+            _.-'                                                '-._
+        _.-'                                                        '-._
+    _.-'                                                                '-._
+_.-'________________________________________________________________________'-._
+ftable 503:
+ftable 503:	8192 points, scalemax 1.000
+_
+ -._                                                                        _.-'
+    '-._                                                                _.-'
+        '-._                                                        _.-'
+            '-._                                                _.-'
+                '-._                                        _.-'
+                    '-._                                _.-'
+                        '-._                        _.-'
+                            '-._                _.-'
+                                '-._        _.-'
+____________________________________'-.__.-'____________________________________
+ftable 103:
+ftable 103:	96 points, scalemax 32.000
+                                          _  -
+                                       .
+                                 _  '
+                              -
+                        .  '
+                  _  -
+               .
+         _  '
+      -
+._.'_.__.__.__.__.__.__.__.__.__.__.__.__.__.__.
+new alloc for instr 10:
+new alloc for instr 51:
+ftable 102:
+ftable 102:	96 points, scalemax 0.000
+GEN_Saw 0: 1.000000 1.000000 0.000000
+GEN_Saw 1: 2.000000 0.500000 0.000000
+GEN_Saw 2: 3.000000 0.333333 0.000000
+GEN_Saw 3: 4.000000 0.250000 0.000000
+GEN_Saw 4: 5.000000 0.200000 0.000000
+GEN_Saw 5: 6.000000 0.166667 0.000000
+GEN_Saw 6: 7.000000 0.142857 0.000000
+GEN_Saw 7: 8.000000 0.125000 0.000000
+GEN_Saw 8: 9.000000 0.111111 0.000000
+GEN_Saw 9: 10.000000 0.100000 0.000000
+GEN_Saw 10: 11.000000 0.090909 0.000000
+GEN_Saw 11: 12.000000 0.083333 0.000000
+GEN_Saw 12: 13.000000 0.076923 0.000000
+GEN_Saw 13: 14.000000 0.071429 0.000000
+GEN_Saw 14: 15.000000 0.066667 0.000000
+GEN_Saw 15: 16.000000 0.062500 0.000000
+GEN_Saw 16: 17.000000 0.058824 0.000000
+GEN_Saw 17: 18.000000 0.055556 0.000000
+GEN_Saw 18: 19.000000 0.052632 0.000000
+GEN_Saw 19: 20.000000 0.050000 0.000000
+GEN_Saw 20: 21.000000 0.047619 0.000000
+GEN_Saw 21: 22.000000 0.045455 0.000000
+GEN_Saw 22: 23.000000 0.043478 0.000000
+GEN_Saw 23: 24.000000 0.041667 0.000000
+GEN_Saw 24: 25.000000 0.040000 0.000000
+GEN_Saw 25: 26.000000 0.038462 0.000000
+GEN_Saw 26: 27.000000 0.037037 0.000000
+GEN_Saw 27: 28.000000 0.035714 0.000000
+GEN_Saw 28: 29.000000 0.034483 0.000000
+GEN_Saw 29: 30.000000 0.033333 0.000000
+GEN_Saw 30: 31.000000 0.032258 0.000000
+GEN_Saw 31: 32.000000 0.031250 0.000000
+new alloc for instr 52:
+ftable 101:
+ftable 101:	24 points, scalemax 0.000
+GEN_Square 0: 1.000000 1.000000 0.000000
+GEN_Square 1: 3.000000 0.333333 0.000000
+GEN_Square 2: 5.000000 0.200000 0.000000
+GEN_Square 3: 7.000000 0.142857 0.000000
+GEN_Square 4: 9.000000 0.111111 0.000000
+GEN_Square 5: 11.000000 0.090909 0.000000
+GEN_Square 6: 13.000000 0.076923 0.000000
+GEN_Square 7: 15.000000 0.066667 0.000000
+new alloc for instr 53:
+ftable 100:
+ftable 100:	12 points, scalemax 0.000
+GEN_Triangle 0: 1.000000 1.000000 0.000000
+GEN_Triangle 1: 3.000000 -0.111111 0.000000
+GEN_Triangle 2: 5.000000 0.040000 0.000000
+GEN_Triangle 3: 7.000000 -0.020408 0.000000
+new alloc for instr 54:
+ftable 104:
+ftable 104:	48 points, scalemax 0.000
+GEN_Arbitrary 0: 0.000000 inf inf
+GEN_Arbitrary 1: 0.105904 9.442485 6.011273
+GEN_Arbitrary 2: 0.421235 2.373972 1.511317
+GEN_Arbitrary 3: 0.938885 1.065093 0.678059
+GEN_Arbitrary 4: 1.647144 0.607111 0.386499
+GEN_Arbitrary 5: 2.529894 0.395273 0.251639
+GEN_Arbitrary 6: 3.566885 0.280357 0.178481
+GEN_Arbitrary 7: 4.734074 0.211235 0.134476
+GEN_Arbitrary 8: 6.004042 0.166554 0.106032
+GEN_Arbitrary 9: 7.346458 0.136120 0.086657
+GEN_Arbitrary 10: 8.728600 0.114566 0.072935
+GEN_Arbitrary 11: 10.115925 0.098854 0.062932
+GEN_Arbitrary 12: 11.472668 0.087164 0.055490
+GEN_Arbitrary 13: 12.762473 0.078355 0.049882
+GEN_Arbitrary 14: 13.949038 0.071690 0.045639
+GEN_Arbitrary 15: 14.996770 0.066681 0.042450
+new alloc for instr 5:
+  rtevent:	   T  0.249 TT  0.249 M:  0.00000  0.00000
+new alloc for instr 20:
+new alloc for instr 56:
+  rtevent:	   T  0.499 TT  0.499 M:  0.00000  0.00000
+new alloc for instr 20:
+  rtevent:	   T  0.749 TT  0.749 M:  0.00000  0.00000
+new alloc for instr 56:
+  rtevent:	   T  0.998 TT  0.998 M:  0.00000  0.00000
+B  0.000 ..  1.000 T  1.000 TT  1.000 M:  0.00000  0.00000
+B  1.000 ..  1.043 T  1.043 TT  1.043 M:  0.00000  0.00000
+B  1.043 ..  1.249 T  1.249 TT  1.249 M:  0.00000  0.00000
+B  1.249 ..  1.480 T  1.480 TT  1.480 M:  0.00000  0.00000
+  rtevent:	   T  1.498 TT  1.498 M:  0.00000  0.00000
+B  1.480 ..  1.499 T  1.499 TT  1.499 M:  0.00000  0.00000
+B  1.499 ..  1.749 T  1.749 TT  1.749 M:  0.00000  0.00000
+B  1.749 ..  1.969 T  1.969 TT  1.969 M:  0.00000  0.00000
+  rtevent:	   T  1.998 TT  1.998 M:  0.00000  0.00000
+B  1.969 ..  1.999 T  1.999 TT  1.999 M:  0.00000  0.00000
+B  1.999 ..  2.249 T  2.249 TT  2.249 M:  0.00000  0.00000
+  rtevent:	   T  2.498 TT  2.498 M:  0.00000  0.00000
+B  2.249 ..  2.540 T  2.540 TT  2.540 M:  0.00000  0.00000
+B  2.540 ..  2.749 T  2.749 TT  2.749 M:  0.00000  0.00000
+B  2.749 ..  2.963 T  2.963 TT  2.963 M:  0.00000  0.00000
+  rtevent:	   T  2.998 TT  2.998 M:  0.00000  0.00000
+B  2.963 ..  2.999 T  2.999 TT  2.999 M:  0.00000  0.00000
+B  2.999 ..  3.249 T  3.249 TT  3.249 M:  0.00000  0.00000
+B  3.249 ..  3.474 T  3.474 TT  3.474 M:  0.00000  0.00000
+  rtevent:	   T  3.498 TT  3.498 M:  0.00000  0.00000
+B  3.474 ..  3.499 T  3.499 TT  3.499 M:  0.00000  0.00000
+B  3.499 ..  3.749 T  3.749 TT  3.749 M:  0.00000  0.00000
+B  3.749 ..  3.951 T  3.951 TT  3.951 M:  0.00000  0.00000
+B  3.951 ..  3.999 T  3.999 TT  3.999 M:  0.00000  0.00000
+B  3.999 ..  4.249 T  4.249 TT  4.249 M:  0.00000  0.00000
+  rtevent:	   T  4.249 TT  4.249 M:  0.00000  0.00000
+  rtevent:	   T  4.249 TT  4.249 M:  0.00000  0.00000
+B  4.249 ..  4.249 T  4.249 TT  4.249 M:  0.00000  0.00000
+B  4.249 ..  4.483 T  4.483 TT  4.483 M:  0.00000  0.00000
+B  4.483 ..  4.499 T  4.499 TT  4.499 M:  0.00000  0.00000
+csoundPerform(): stopped.
+inactive allocs returned to freespace
+end of score.		   overall amps:  0.00000  0.00000
+	   overall samples out of range:        0        0
+0 errors in performance
+Elapsed time at end of performance: real: 0.463s, CPU: 0.463s
+8192 16384 sample blks of shorts written to test.wav (WAV)

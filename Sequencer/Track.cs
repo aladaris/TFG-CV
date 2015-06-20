@@ -57,6 +57,7 @@ namespace Sequencer {
                 return _tables.Notes;
             }
         }
+        public double Volumen { get; set; }
 
         /// <summary>
         /// Constructor de la clase Track.

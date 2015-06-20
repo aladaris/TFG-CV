@@ -261,6 +261,24 @@ namespace Sequencer {
                 }
             }
         }
+
+        private void TrackVolumenChange(object sender, EventArgs e) {
+            TrackBar tb = sender as TrackBar;
+            if ((tb != null)&&(_sequencer != null)) {
+                int trackId = 0;
+                Int32.TryParse(tb.Name[tb.Name.Length - 1].ToString(), out trackId);
+                if (trackId > 0) {
+                    var track = _sequencer.GetTrack(trackId);
+                    if (track != null)
+                        track.Volumen = tb.Value / 100d;
+                }
+            }
+        }
+
+        private void trackBar_MainVol_Scroll(object sender, EventArgs e) {
+            if (_sequencer != null)
+                _sequencer.MainVolumen = trackBar_MainVol.Value / 100d;
+        }
         #endregion
     }
 }

@@ -32,6 +32,7 @@
 
     0dbfs = 1.0
 
+	#include "Files/RAPUDO.txt"
 
 
     gi_Cos ftgen 0, 0, 2^10, 11, 1  ; Cosine Table
@@ -44,7 +45,7 @@
 
     gi_NotesTable1 ftgen 11, 0, 8, -2, 6.05, 6.08, 6.10, 6.08, 7.03, 7.01, 7.03, 7.05  ;; On the run
 
-    gi_EnabledTable1 ftgen 12, 0, 8, -2, 0, 0, 0, 0, 0, 0, 0, 0  ;  Pasos activos == 1, inactivos == 0
+    gi_EnabledTable1 ftgen 12, 0, 8, -2, 1, 1, 1, 1, 1, 1, 1, 1  ;  Pasos activos == 1, inactivos == 0
 
     ;; ADDITIVE 1 (TABLES)
 
@@ -70,7 +71,8 @@
 
     ;; SEQUENCER VARIABLES
     
-     ;gkbpm init 120
+    ;gk_MainVol init 1.0
+    
      
 
     	; Substractive 1
@@ -78,18 +80,21 @@
     gk_Index1 init -1  ; NOTE: -1 en el init para que el primer trigger lo ponga en la primera posición
 
     gk_DurCount1 init 0 
+    ;gk_Vol1 invalue "Vol1"
 
     	; Additive 1
 
     gk_Index2 init -1
 
     gk_DurCount2 init 0
+    ;gk_Vol2 invalue "Vol2"
 
     	; Sampler 1
 
     gk_Index3 init -1
 
     gk_DurCount3 init 0
+    ;gk_Vol3 invalue "Vol3"
 
 
 
@@ -153,9 +158,12 @@
 
     instr 10
     ;kbpm init 120
-	kbpm invalue "bpm"
-	printks2 "BPM: ", kbpm  ;; DEBUG
-    	kidur = (kbpm * 2) / 60 ;; bpm * 2 para cuantificar como corcheas los valores 1 en las tablas de duracion
+    gk_MainVol invalue "MainVol"
+    gk_Vol1 invalue "Vol1"
+    gk_Vol2 invalue "Vol2"
+    gk_Vol3 invalue "Vol3"
+	  kbpm invalue "bpm"
+    kidur = (kbpm * 2) / 60 ;; bpm * 2 para cuantificar como corcheas los valores 1 en las tablas de duracion
 
     	
 
@@ -207,7 +215,7 @@
 
                 if (kactive > 0) then
 
-    			     event "i", 20, 0, kdur, knote   ; FIRE: Substractive 1
+    			     event "i", 20, 0, kdur, knote, gk_Vol1 * gk_MainVol   ; FIRE: Substractive 1
 
                 endif
 
@@ -235,19 +243,13 @@
 
             	kactive   table gk_Index2, gi_EnabledTable2, 0, 0, 1
 
-    			
-
     			kdur = (1/kidur)
 
     			kdur = kdur * kDurAdd1
 
-    			kpartials = 33 ;* (1 - abs(gk_LFO)) ;; TODO: Como se controlará esto? LFO GLobal? ;; NOTE: El 33 crea un sonido tipo "botella soplada"
-
-
-
                 if (kactive > 0) then
 
-    			    event "i", 30, 0, kdur, knote, kpartials   ; FIRE: Additive 1 
+    			    event "i", $String, 0, kdur, gk_Vol2 * gk_MainVol, knote, 0.5 * gk_LFO
 
                 endif
 
@@ -322,20 +324,23 @@
     ;; ////////////////////
 
     instr 20
+    
+    ivol = p5
 
     ; Envelope VCA
 
     	; TODO: Calcular los valores ADR con respecto a la duración de la nota (p4) para que sumen en total ese valor (p4).
 
-    	iatt = .01   ; <P>
+    	iatt = p3 * .64   ; <P>
 
-    	idec = .01    ; <P>
+    	idec = p3 * .02    ; <P>
 
-    	islev = .8   ; <P>
+    	islev = .9   ; <P>
 
-    	irel = .7   ; <P>
+    	irel = p3 * .42   ; <P>
 
     	kaenv adsr iatt, idec, islev, irel  ; VCA's ADRS envelope
+    	kaenv = kaenv / 2
 
 
 
@@ -345,7 +350,7 @@
 
     	ildepth = 0  ; LFO1 amplitude <P>
 
-    	ilfreq = 10  ; LFO1 frequency <P>
+    	ilfreq = 220  ; LFO1 frequency <P>
 
     	
 
@@ -371,9 +376,9 @@
 
     	ifreq = cpspch(p4) ;         <S>
 
-      	imode = 2    ;               <S>  		;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
+    imode = 2    ;               <S>  		;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
 
-    	iamp = ampdbfs(0)  ; VCO1 amplitude <P>
+    	iamp = ivol / 2  ; VCO1 amplitude <P>
 
     	kpwm = 0.99 - abs(gk_LFO) ; VCO1 pwm       <P>
 
@@ -387,9 +392,9 @@
 
     	ifreq2 = ifreq / 2 ; VCO2 note value  <Divisor es P>
 
-      	imode2 = 0 ;                <P>        ;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
+    imode2 = 0 ;                <P>        ;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
 
-    	iamp2 = ampdbfs(-6)  ; VCO2 amplitude <S>
+    	iamp2 = ivol / 4  ; VCO2 amplitude <S>
 
     	kpwm2 = 0.01 + abs(gk_LFO); VCO2 pwm       <P>  
 
@@ -403,7 +408,8 @@
 
     ; NOISE
 
-    	inoiseAmp = 0.03  ;;  Range [0, 1]   <P>
+    	inoiseAmp = ivol / 66
+    	 ;;  Range [0, 1]   <P>
 
     	inoiseBeta = -0.99   ;; Range [-1, 1]
 
@@ -429,7 +435,7 @@
 
     	
 
-    	af1 moogvcf2 anoise, icutoff + (klfo2 * iLFODepth), ires, 32768  ;; TODO: Mirar el Magicnumber bien
+    	af1 moogvcf2 anoise, icutoff + (klfo2 * iLFODepth), ires, 0dbfs
 
     	af1 sum ((1-kfilterDepth) * anoise), (af1 * kfilterDepth) ; Establecemos la cantidad de señal filtrada
 
@@ -438,76 +444,6 @@
     	out af1, af1
 
     endin
-
-
-
-    ;; ////////////////////
-
-    ;; ///   ADDITIVE   ///
-
-    ;; ////////////////////
-
-    ; TODO: Work In PRogress
-
-
-
-
-
-    instr 30
-
-    ; Envelope VCA
-
-    	; TODO: Calcular los valores ADR con respecto a la duración de la nota (p4) para que sumen en total ese valor (p4).
-
-	iatt = .6 / p4  ; <P>
-
-	idec = .01 / p4  ; <P>
-
-	isus = .8  ; <P>
-
-	irel = 1 ; <P>
-
-    	;iatt chnget "add1_attack" ;iatt = .2 / p4  ; <P>
-
-    	;idec chnget "add1_decay"  ;idec = 1 / p4  ; <P>
-
-    	;isus chnget "add1_sustain";islev = .8  ; <P>
-
-    	;irel chnget "add1_release";irel = 1 / p4 ; <P>
-
-    	
-
-    	kaenv adsr iatt, idec, isus, irel  ; VCA's ADRS envelope
-
-
-
-    ; Synthesis
-
-    	ifreq = cpspch(p4) ;         <S>
-
-    	iamp =  ampdbfs(2)
-
-    	iharmnum  =  p5; number of harmonics
-
-    	klh  =     1          ; lowest harmonic
-
-    	kmul =     .333          ; amplitude coefficient multiplier
-
-    	;iharmnum chnget "add1_harmnum";iharmnum  =  p5; number of harmonics
-
-    	;klh chnget "add1_lharm"		;klh  =     1          ; lowest harmonic
-
-    	;kmul chnget "add1_mul"		;kmul =     .333          ; amplitude coefficient multiplier
-
-    	
-
-    	asig gbuzz kaenv * iamp, ifreq, iharmnum, klh, kmul, gi_Cos
-
-         outs  asig, asig
-
-    endin
-
-
 
     ;; ////////////////////
 
@@ -529,7 +465,7 @@
 
 
 
-       	iamp = ampdbfs(p5)
+       	iamp = p5
 
     	istable = p4
 
@@ -537,7 +473,7 @@
 
     	ifn = 1;p7
 
-       	ibas = 1;p8
+     ibas = 1;p8
 
 
 
@@ -549,8 +485,6 @@
 
     </CsInstruments>
     <CsScore>
-		i 10 0 300 	;play for 300 seconds
-		e
 	</CsScore>
     
     

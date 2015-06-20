@@ -43,18 +43,21 @@
             this.p_colorPreview_Track3 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.numericUpDown_LengthTrack3 = new System.Windows.Forms.NumericUpDown();
+            this.trackBar_volTrack3 = new System.Windows.Forms.TrackBar();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.flowLayout_track2 = new System.Windows.Forms.FlowLayoutPanel();
             this.button_setColor_Track2 = new System.Windows.Forms.Button();
             this.p_colorPreview_Track2 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.numericUpDown_LengthTrack2 = new System.Windows.Forms.NumericUpDown();
+            this.trackBar_volTrack2 = new System.Windows.Forms.TrackBar();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.flowLayout_track1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button_setColor_Track1 = new System.Windows.Forms.Button();
             this.p_colorPreview_Track1 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.numericUpDown_LengthTrack1 = new System.Windows.Forms.NumericUpDown();
+            this.trackBar_volTrack1 = new System.Windows.Forms.TrackBar();
             this.tabControl_Modes = new System.Windows.Forms.TabControl();
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -64,6 +67,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabPage_sequencer = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.trackBar_MainVol = new System.Windows.Forms.TrackBar();
             this.label13 = new System.Windows.Forms.Label();
             this.numericUpDown_bpm = new System.Windows.Forms.NumericUpDown();
             this.button_StartInstrument = new System.Windows.Forms.Button();
@@ -107,17 +112,21 @@
             this.groupBox10.SuspendLayout();
             this.flowLayout_track3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_LengthTrack3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volTrack3)).BeginInit();
             this.groupBox9.SuspendLayout();
             this.flowLayout_track2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_LengthTrack2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volTrack2)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.flowLayout_track1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_LengthTrack1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volTrack1)).BeginInit();
             this.tabControl_Modes.SuspendLayout();
             this.tabPage_Calibration.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabPage_sequencer.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_MainVol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -334,6 +343,7 @@
             this.flowLayout_track3.Controls.Add(this.p_colorPreview_Track3);
             this.flowLayout_track3.Controls.Add(this.label12);
             this.flowLayout_track3.Controls.Add(this.numericUpDown_LengthTrack3);
+            this.flowLayout_track3.Controls.Add(this.trackBar_volTrack3);
             this.flowLayout_track3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayout_track3.Location = new System.Drawing.Point(3, 16);
             this.flowLayout_track3.Margin = new System.Windows.Forms.Padding(0);
@@ -391,6 +401,17 @@
             0});
             this.numericUpDown_LengthTrack3.ValueChanged += new System.EventHandler(this.TrackLength_ValueChanged);
             // 
+            // trackBar_volTrack3
+            // 
+            this.trackBar_volTrack3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.trackBar_volTrack3.Location = new System.Drawing.Point(165, 3);
+            this.trackBar_volTrack3.Maximum = 100;
+            this.trackBar_volTrack3.Name = "trackBar_volTrack3";
+            this.trackBar_volTrack3.Size = new System.Drawing.Size(55, 45);
+            this.trackBar_volTrack3.TabIndex = 2;
+            this.trackBar_volTrack3.Value = 50;
+            this.trackBar_volTrack3.Scroll += new System.EventHandler(this.TrackVolumenChange);
+            // 
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.flowLayout_track2);
@@ -409,6 +430,7 @@
             this.flowLayout_track2.Controls.Add(this.p_colorPreview_Track2);
             this.flowLayout_track2.Controls.Add(this.label11);
             this.flowLayout_track2.Controls.Add(this.numericUpDown_LengthTrack2);
+            this.flowLayout_track2.Controls.Add(this.trackBar_volTrack2);
             this.flowLayout_track2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayout_track2.Location = new System.Drawing.Point(3, 16);
             this.flowLayout_track2.Margin = new System.Windows.Forms.Padding(0);
@@ -467,6 +489,17 @@
             0});
             this.numericUpDown_LengthTrack2.ValueChanged += new System.EventHandler(this.TrackLength_ValueChanged);
             // 
+            // trackBar_volTrack2
+            // 
+            this.trackBar_volTrack2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.trackBar_volTrack2.Location = new System.Drawing.Point(165, 3);
+            this.trackBar_volTrack2.Maximum = 100;
+            this.trackBar_volTrack2.Name = "trackBar_volTrack2";
+            this.trackBar_volTrack2.Size = new System.Drawing.Size(55, 45);
+            this.trackBar_volTrack2.TabIndex = 2;
+            this.trackBar_volTrack2.Value = 50;
+            this.trackBar_volTrack2.Scroll += new System.EventHandler(this.TrackVolumenChange);
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.flowLayout_track1);
@@ -485,6 +518,7 @@
             this.flowLayout_track1.Controls.Add(this.p_colorPreview_Track1);
             this.flowLayout_track1.Controls.Add(this.label10);
             this.flowLayout_track1.Controls.Add(this.numericUpDown_LengthTrack1);
+            this.flowLayout_track1.Controls.Add(this.trackBar_volTrack1);
             this.flowLayout_track1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayout_track1.Location = new System.Drawing.Point(3, 16);
             this.flowLayout_track1.Margin = new System.Windows.Forms.Padding(0);
@@ -541,6 +575,17 @@
             0,
             0});
             this.numericUpDown_LengthTrack1.ValueChanged += new System.EventHandler(this.TrackLength_ValueChanged);
+            // 
+            // trackBar_volTrack1
+            // 
+            this.trackBar_volTrack1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.trackBar_volTrack1.Location = new System.Drawing.Point(165, 3);
+            this.trackBar_volTrack1.Maximum = 100;
+            this.trackBar_volTrack1.Name = "trackBar_volTrack1";
+            this.trackBar_volTrack1.Size = new System.Drawing.Size(55, 45);
+            this.trackBar_volTrack1.TabIndex = 2;
+            this.trackBar_volTrack1.Value = 50;
+            this.trackBar_volTrack1.Scroll += new System.EventHandler(this.TrackVolumenChange);
             // 
             // tabControl_Modes
             // 
@@ -616,15 +661,38 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.label14);
+            this.groupBox8.Controls.Add(this.trackBar_MainVol);
             this.groupBox8.Controls.Add(this.label13);
             this.groupBox8.Controls.Add(this.numericUpDown_bpm);
             this.groupBox8.Controls.Add(this.button_StartInstrument);
-            this.groupBox8.Location = new System.Drawing.Point(6, 260);
+            this.groupBox8.Location = new System.Drawing.Point(6, 446);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(343, 158);
+            this.groupBox8.Size = new System.Drawing.Size(343, 185);
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Sequencer";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 158);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(48, 13);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "Volumen";
+            // 
+            // trackBar_MainVol
+            // 
+            this.trackBar_MainVol.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.trackBar_MainVol.Location = new System.Drawing.Point(9, 60);
+            this.trackBar_MainVol.Maximum = 100;
+            this.trackBar_MainVol.Name = "trackBar_MainVol";
+            this.trackBar_MainVol.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBar_MainVol.Size = new System.Drawing.Size(45, 104);
+            this.trackBar_MainVol.TabIndex = 3;
+            this.trackBar_MainVol.Value = 75;
+            this.trackBar_MainVol.Scroll += new System.EventHandler(this.trackBar_MainVol_Scroll);
             // 
             // label13
             // 
@@ -1018,14 +1086,17 @@
             this.flowLayout_track3.ResumeLayout(false);
             this.flowLayout_track3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_LengthTrack3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volTrack3)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.flowLayout_track2.ResumeLayout(false);
             this.flowLayout_track2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_LengthTrack2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volTrack2)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.flowLayout_track1.ResumeLayout(false);
             this.flowLayout_track1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_LengthTrack1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_volTrack1)).EndInit();
             this.tabControl_Modes.ResumeLayout(false);
             this.tabPage_Calibration.ResumeLayout(false);
             this.tabPage_Calibration.PerformLayout();
@@ -1034,6 +1105,7 @@
             this.tabPage_sequencer.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_MainVol)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -1118,6 +1190,11 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_LengthTrack2;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.NumericUpDown numericUpDown_bpm;
+        private System.Windows.Forms.TrackBar trackBar_MainVol;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TrackBar trackBar_volTrack1;
+        private System.Windows.Forms.TrackBar trackBar_volTrack3;
+        private System.Windows.Forms.TrackBar trackBar_volTrack2;
     }
 }
 

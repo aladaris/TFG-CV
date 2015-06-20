@@ -56,6 +56,10 @@ namespace Sequencer {
                 numericUpDown_LengthTrack2.Value = _sequencer.GetTrack(2).Length;
                 //numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
                 numericUpDown_bpm.Value = 120;
+                trackBar_MainVol.Value = 75;
+                trackBar_volTrack1.Value = 50;
+                trackBar_volTrack2.Value = 50;
+                trackBar_volTrack3.Value = 50;
             }
 
             InitStateMachine();
