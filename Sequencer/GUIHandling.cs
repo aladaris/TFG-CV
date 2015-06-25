@@ -153,33 +153,63 @@ namespace Sequencer {
 
         // TODO: Eliminar todo este código duplicado del infierno
         private void numericUpDown_corcheaMin_ValueChanged(object sender, EventArgs e) {
-            Figures.Corchea.MinArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Corchea.MinArea;
+            MelodicFigures.Corchea.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = MelodicFigures.Corchea.MinArea;
         }
 
         private void numericUpDown_corcheaMax_ValueChanged(object sender, EventArgs e) {
-            Figures.Corchea.MaxArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Corchea.MaxArea;
+            MelodicFigures.Corchea.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = MelodicFigures.Corchea.MaxArea;
         }
 
         private void numericUpDown_negraMin_ValueChanged(object sender, EventArgs e) {
-            Figures.Negra.MinArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Negra.MinArea;
+            MelodicFigures.Negra.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = MelodicFigures.Negra.MinArea;
         }
 
         private void numericUpDown_negraMax_ValueChanged(object sender, EventArgs e) {
-            Figures.Negra.MaxArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Negra.MaxArea;
+            MelodicFigures.Negra.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = MelodicFigures.Negra.MaxArea;
         }
 
         private void numericUpDown_blancaMin_ValueChanged(object sender, EventArgs e) {
-            Figures.Blanca.MinArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Blanca.MinArea;
+            MelodicFigures.Blanca.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = MelodicFigures.Blanca.MinArea;
         }
 
         private void numericUpDown_blancaMax_ValueChanged(object sender, EventArgs e) {
-            Figures.Blanca.MaxArea = (int)(((NumericUpDown)sender).Value);
-            ((NumericUpDown)sender).Value = Figures.Blanca.MaxArea;
+            MelodicFigures.Blanca.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = MelodicFigures.Blanca.MaxArea;
+        }
+
+        private void numericUpDown_kickMin_ValueChanged(object sender, EventArgs e) {
+            RitmicFigures.Kick.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = RitmicFigures.Kick.MinArea;
+        }
+
+        private void numericUpDown_KickMax_ValueChanged(object sender, EventArgs e) {
+            RitmicFigures.Kick.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = RitmicFigures.Kick.MaxArea;
+        }
+
+        private void numericUpDown_SnareMin_ValueChanged(object sender, EventArgs e) {
+            RitmicFigures.Snare.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = RitmicFigures.Snare.MinArea;
+        }
+
+        private void numericUpDown_SnareMax_ValueChanged(object sender, EventArgs e) {
+            RitmicFigures.Snare.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = RitmicFigures.Snare.MaxArea;
+        }
+
+        private void numericUpDown_HihatMin_ValueChanged(object sender, EventArgs e) {
+            RitmicFigures.Hihat.MinArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = RitmicFigures.Hihat.MinArea;
+        }
+
+        private void numericUpDown_HihatMax_ValueChanged(object sender, EventArgs e) {
+            RitmicFigures.Hihat.MaxArea = (int)(((NumericUpDown)sender).Value);
+            ((NumericUpDown)sender).Value = RitmicFigures.Hihat.MaxArea;
         }
 
         private void cb_FlipH_CheckedChanged(object sender, EventArgs e) {
@@ -233,16 +263,25 @@ namespace Sequencer {
                             case 3: cbs = _notesComboBoxesTrack3; break;
                         }
                         if (cbs != null) {
-                            while (cbs.Count > track.Length) {
-                                var noteCb = cbs.Pop();
-                                noteCb.Dispose();
-                            }
-                            while (cbs.Count < track.Length) {
-                                var noteCb = new NoteComboBox(trackId, cbs.Count);
-                                noteCb.ComboBox.SelectedText = CSNoteHandler.GetNoteValue(track.Notes[cbs.Count]);
-                                noteCb.NoteValueChange += OnNoteComboBoxValueChange;
-                                nud.Parent.Controls.Add(noteCb.ComboBox);
-                                cbs.Push(noteCb);
+                            MelodicTrack mt = track as MelodicTrack;
+                            if (mt != null) {  // Track Melódica
+                                while (cbs.Count > track.Length) {
+                                    var noteCb = cbs.Pop();
+                                    noteCb.Dispose();
+                                }
+
+                                while (cbs.Count < track.Length) {
+                                    var noteCb = new NoteComboBox(trackId, cbs.Count);
+                                    noteCb.ComboBox.SelectedText = CSNoteHandler.GetNoteValue(mt.Notes[cbs.Count]);
+                                    noteCb.NoteValueChange += OnNoteComboBoxValueChange;
+                                    nud.Parent.Controls.Add(noteCb.ComboBox);
+                                    cbs.Push(noteCb);
+                                }
+                            } else {
+                                RitmicTrack rt = track as RitmicTrack;
+                                if (rt != null) {  // Track Rítmica
+                                    // TODO
+                                }
                             }
                         }
                     }
@@ -253,7 +292,7 @@ namespace Sequencer {
 
         private void OnNoteComboBoxValueChange(int tId, int sId, string value) {
             if ((tId > 0) && (tId <= _sequencer.Tracks.Length)&&(value != null)&&(!value.Equals(String.Empty))) {
-                var track = _sequencer.GetTrack(tId);
+                var track = _sequencer.GetTrack(tId) as MelodicTrack;  // Sólo las tracks melódicas tienen estos controles
                 if (track != null) {
                     if ((sId >= 0) && (sId < track.Length)) {
                         track.Notes[sId] = CSNoteHandler.GetPchValue(value);

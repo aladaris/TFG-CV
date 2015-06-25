@@ -36,9 +36,10 @@ namespace Sequencer {
         #region Form Manage
         public Form1() {
             InitializeComponent();
-            _sequencer = new Sequencer(imageBox_mainDisplay, 2);
-            _sequencer.Tracks[0] = new Track(1, _sequencer.CSound, 10, 11, 12);
-            _sequencer.Tracks[1] = new Track(2, _sequencer.CSound, 20, 21, 22);
+            _sequencer = new Sequencer(imageBox_mainDisplay, 3);
+            _sequencer.Tracks[0] = new MelodicTrack(1, _sequencer.CSound, 10, 11, 12);
+            _sequencer.Tracks[1] = new MelodicTrack(2, _sequencer.CSound, 20, 21, 22);
+            _sequencer.Tracks[2] = new RitmicTrack (3, _sequencer.CSound, 30, 31, 32);
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
             numericUpDown_fpsIn.Value = _sequencer.FpsIn;
@@ -51,10 +52,10 @@ namespace Sequencer {
                 cb_FlipV.Checked = _sequencer.FlipV;
                 numericUpDown_LengthTrack1.Maximum = _sequencer.GetTrack(1).MaxSteps;
                 numericUpDown_LengthTrack2.Maximum = _sequencer.GetTrack(2).MaxSteps;
-                //numericUpDown_LengthTrack3.Maximum = _sequencer.GetTrack(3).MaxSteps;
+                numericUpDown_LengthTrack3.Maximum = _sequencer.GetTrack(3).MaxSteps;
                 numericUpDown_LengthTrack1.Value = _sequencer.GetTrack(1).Length;
                 numericUpDown_LengthTrack2.Value = _sequencer.GetTrack(2).Length;
-                //numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
+                numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
                 numericUpDown_bpm.Value = 120;
                 trackBar_MainVol.Value = 75;
                 trackBar_volTrack1.Value = 50;
@@ -76,7 +77,7 @@ namespace Sequencer {
                 */
             }
 
-            InitStateMachine();
+            //InitStateMachine();
             LoadFigureAreaValues();
         }
 
@@ -86,12 +87,20 @@ namespace Sequencer {
         }
 
         private void LoadFigureAreaValues() {
-            Figures.Corchea.MaxArea = (int)numericUpDown_corcheaMax.Value;
-            Figures.Corchea.MinArea = (int)numericUpDown_corcheaMin.Value;
-            Figures.Negra.MaxArea = (int)numericUpDown_negraMax.Value;
-            Figures.Negra.MinArea = (int)numericUpDown_negraMin.Value;
-            Figures.Blanca.MaxArea = (int)numericUpDown_blancaMax.Value;
-            Figures.Blanca.MinArea = (int)numericUpDown_blancaMin.Value;
+            MelodicFigures.Corchea.MaxArea = (int)numericUpDown_corcheaMax.Value;
+            MelodicFigures.Corchea.MinArea = (int)numericUpDown_corcheaMin.Value;
+            MelodicFigures.Negra.MaxArea = (int)numericUpDown_negraMax.Value;
+            MelodicFigures.Negra.MinArea = (int)numericUpDown_negraMin.Value;
+            MelodicFigures.Blanca.MaxArea = (int)numericUpDown_blancaMax.Value;
+            MelodicFigures.Blanca.MinArea = (int)numericUpDown_blancaMin.Value;
+
+            RitmicFigures.Kick.MaxArea = (int)numericUpDown_KickMax.Value;
+            RitmicFigures.Kick.MinArea = (int)numericUpDown_kickMin.Value;
+            RitmicFigures.Snare.MaxArea = (int)numericUpDown_SnareMax.Value;
+            RitmicFigures.Snare.MinArea = (int)numericUpDown_SnareMin.Value;
+            RitmicFigures.Hihat.MaxArea = (int)numericUpDown_HihatMax.Value;
+            RitmicFigures.Hihat.MinArea = (int)numericUpDown_HihatMin.Value;
+
         }
         #endregion
 

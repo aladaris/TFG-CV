@@ -21,9 +21,6 @@
     </CsOptions>
 
     <CsInstruments>
-
-
-
     sr = 44100
 
     ksmps = 32
@@ -31,9 +28,12 @@
     nchnls = 2
 
     0dbfs = 1.0
-
-	#include "Files/RAPUDO.txt"
-
+    
+	#define KickSample  # 701 #
+	#define SnareSample # 702 #
+	#define HihatSample # 703 #
+    
+	#include "RAPUDO.txt"
 
     gi_Cos ftgen 0, 0, 2^10, 11, 1  ; Cosine Table
 
@@ -41,7 +41,7 @@
 
     ;; SUBSTRACTIVE 1 (TABLES)
 
-    gi_DurTable1   ftgen 10, 0, 8, -2, 1, 1, 1, 1, 1, 1, 1, 1   ; Duracion de los pasos (1, 2 o 4 == Corchea, Negra o Blanca)
+    gi_DurTable1   ftgen 10, 0, 8, -2, 1, 1, 1, 2, 1, 1, 1, 1   ; Duracion de los pasos (1, 2 o 4 == Corchea, Negra o Blanca)
 
     gi_NotesTable1 ftgen 11, 0, 8, -2, 6.05, 6.08, 6.10, 6.08, 7.03, 7.01, 7.03, 7.05  ;; On the run
 
@@ -57,15 +57,13 @@
 
     ;; SAMPLER 1 (TABLES)
 
-    gi_DurTable3 ftgen 30, 0, 8, -2, 2, 2, 2, 2, 2, 2, 2, 2   ; Duracion de los pasos (1, 2 ó 4 == Corchea, Negra ó Blanca)
+	gi_RythmDur1 = 2    
+    gi_KickTable ftgen  30, 0, 8, -2,  1, 1, 1, 1, 1, 1, 1, 1
+    gi_SnareTable ftgen 31, 0, 8, -2,  0, 0, 1, 0, 0, 0, 0, 0
+    gi_HihatTable ftgen 32, 0, 8, -2,  0, 0, 0, 0, 0, 0, 1, 0
+	
 
-    gi_NotesTable3 ftgen 31, 0, 8, -2, 1, 2, 3, 3, 2, 1, 2, 1
-
-    	; TODO: Crear una tabla binaria para cada sample de la batería. Cada posicion indicará si el sample es disparado o no
-
-    	; 	  Con eso se consigue poder lanzar samples distintos a la vez (ejem: caja + kick)
-
-    	; IDEA: ¿La betería debería funcionar siempre con pasos de duración 1?
+  
 
 
 
@@ -80,23 +78,25 @@
     gk_Index1 init -1  ; NOTE: -1 en el init para que el primer trigger lo ponga en la primera posición
 
     gk_DurCount1 init 0 
-    ;gk_Vol1 invalue "Vol1"
+    
+    ;gk_Vol1 init 1
+    
 
     	; Additive 1
 
     gk_Index2 init -1
 
     gk_DurCount2 init 0
-    ;gk_Vol2 invalue "Vol2"
+    
+    ;gk_Vol2 init 1
 
     	; Sampler 1
 
     gk_Index3 init -1
 
     gk_DurCount3 init 0
-    ;gk_Vol3 invalue "Vol3"
-
-
+    
+    ;gk_Vol3 init 1
 
     ;; ////////////////////
 
@@ -138,7 +138,7 @@
 
     	imode = 1  ; 0 - Sine, 1 - Triangle, 2 - Square (bipolar), 3 - Square (unipolar), 4 - Sawtooth, 5 - Sawtooth (down)
 
-    	gk_LFO lfo 1, ifreq, imode
+    	gk_LFO lfo .5, ifreq, imode
 
     endin
 
@@ -157,13 +157,14 @@
     ;; ////////////////////
 
     instr 10
-    ;kbpm init 120
+
     gk_MainVol invalue "MainVol"
     gk_Vol1 invalue "Vol1"
     gk_Vol2 invalue "Vol2"
     gk_Vol3 invalue "Vol3"
+
 	  kbpm invalue "bpm"
-    kidur = (kbpm * 2) / 60 ;; bpm * 2 para cuantificar como corcheas los valores 1 en las tablas de duracion
+    	kidur = (kbpm * 2) / 60 ;; bpm * 2 para cuantificar como corcheas los valores 1 en las tablas de duracion
 
     	
 
@@ -249,7 +250,7 @@
 
                 if (kactive > 0) then
 
-    			    event "i", $String, 0, kdur, gk_Vol2 * gk_MainVol, knote, 0.5 * gk_LFO
+    			    event "i", $String, 0, kdur, gk_Vol2 * gk_MainVol, knote
 
                 endif
 
@@ -261,7 +262,7 @@
 
     		;; SAMPLER 1
 
-    		if (gk_DurCount3 == kDurSmp1) then
+    		if (gk_DurCount3 == gi_RythmDur1) then
 
     			gk_Index3 = gk_Index3 + 1
 
@@ -272,26 +273,22 @@
     			endif
 
           outvalue  "Index_3", gk_Index3
-
-    			kDurSmp1 table gk_Index3, gi_DurTable3, 0, 0, 1
-
-    			ksample 	  table gk_Index3, gi_NotesTable3, 0, 0, 1
-
-                ;kactive   table gk_Index3, gi_EnabledTable3, 0, 0, 1
-
-    			
-
+                          
+             kKick_Enabled table gk_Index3, gi_KickTable, 0, 0, 1
+             kSnare_Enabled table gk_Index3, gi_SnareTable , 0, 0, 1
+             kHihat_Enabled table gk_Index3, gi_HihatTable , 0, 0, 1
     			kdur = (1/kidur)
+    			kdur = kdur * gi_RythmDur1
 
-    			kdur = kdur * kDurSmp1
-
-    			
-
-    			kdb = 0  ;<P>
-
-    			
-
-    			;event "i", 40, 0, kdur, ksample, kdb   ; FIRE: Sampler 1 
+			if (kKick_Enabled == 1) then
+				event "i", 40, 0, kdur, $KickSample, gk_Vol3 * gk_MainVol
+			endif
+			if (kSnare_Enabled == 1) then
+				event "i", 40, 0, kdur, $SnareSample, gk_Vol3 * gk_MainVol
+			endif
+			if (kHihat_Enabled == 1) then
+				event "i", 40, 0, kdur, $HihatSample, gk_Vol3 * gk_MainVol
+			endif
 
     			gk_DurCount3 = 0
 
@@ -331,13 +328,13 @@
 
     	; TODO: Calcular los valores ADR con respecto a la duración de la nota (p4) para que sumen en total ese valor (p4).
 
-    	iatt = p3 * .64   ; <P>
+    	iatt = p3 * .12   ; <P>
 
     	idec = p3 * .02    ; <P>
 
     	islev = .9   ; <P>
 
-    	irel = p3 * .42   ; <P>
+    	irel = p3 * .8   ; <P>
 
     	kaenv adsr iatt, idec, islev, irel  ; VCA's ADRS envelope
     	kaenv = kaenv / 2
@@ -351,9 +348,6 @@
     	ildepth = 0  ; LFO1 amplitude <P>
 
     	ilfreq = 220  ; LFO1 frequency <P>
-
-    	
-
     	klfo lfo ildepth, ilfreq, iltype
 
 
@@ -376,15 +370,16 @@
 
     	ifreq = cpspch(p4) ;         <S>
 
-    imode = 2    ;               <S>  		;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
+    imode = 10    ;               <S>  		;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
 
     	iamp = ivol / 2  ; VCO1 amplitude <P>
 
-    	kpwm = 0.99 - abs(gk_LFO) ; VCO1 pwm       <P>
+    	kpwm = (0.99 - abs(gk_LFO)) / 2 ; VCO1 pwm       <P>
 
     	
 
       	a1 vco2 iamp * kaenv, ifreq + klfo, imode, kpwm, 0, .5
+    		a1 limit a1, -1, 1  ; Prevent audio explosions
 
 
 
@@ -392,17 +387,19 @@
 
     	ifreq2 = ifreq / 2 ; VCO2 note value  <Divisor es P>
 
-    imode2 = 0 ;                <P>        ;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
+    imode2 = 4 ;                <P>        ;0 - Sawtooth, 2 - pwm sqr, 4 - pwm sawtooth/triangle/ramp, 6 - pulse, 10 - sqr (fast), 12 - triangle (fast)
 
     	iamp2 = ivol / 4  ; VCO2 amplitude <S>
 
-    	kpwm2 = 0.01 + abs(gk_LFO); VCO2 pwm       <P>  
+    	kpwm2 = (0.01 + abs(gk_LFO)) / 2; VCO2 pwm       <P>  
 
     	
 
-      	a2 vco2 iamp2 * kaenv, ifreq2 + klfo, imode2, kpwm2, 0, .5 	 	
+      	a2 vco2 iamp2 * kaenv, ifreq2 + klfo, imode2, kpwm2, 0, .5
+      	a2 limit a2, -1, 1  ; Prevent audio explosions
 
       	avco sum a1, a2
+      	avco limit avco, -1, 1  ; Prevent audio explosions
 
 
 
@@ -418,6 +415,7 @@
     	a3 noise inoiseAmp * kaenv, inoiseBeta
 
     	anoise sum avco, a3
+    	anoise limit anoise, -1, 1  ; Prevent audio explosions
 
     	
 
@@ -439,7 +437,7 @@
 
     	af1 sum ((1-kfilterDepth) * anoise), (af1 * kfilterDepth) ; Establecemos la cantidad de señal filtrada
 
-
+	af1 limit af1, -1, 1  ; Prevent audio explosions
 
     	out af1, af1
 
@@ -453,41 +451,26 @@
 
     ; TODO: Work In Progress
 
-    gi_SampleKick ftgen  1, 0, 0, 1, "samples\kit1\kick.wav",  0, 0, 0
+    gi_SampleKick ftgen  $KickSample, 0, 0, 1, "samples\kit1\kick.wav",  0, 0, 0
 
-    gi_SampleHihat ftgen 2, 0, 0, 1, "samples\kit1\hihat.wav", 0, 0, 0
+    gi_SampleHihat ftgen $HihatSample, 0, 0, 1, "samples\kit1\hihat.wav", 0, 0, 0
 
-    gi_SampleSnare ftgen 3, 0, 0, 1, "samples\kit1\snare.wav", 0, 0, 0
+    gi_SampleSnare ftgen $SnareSample, 0, 0, 1, "samples\kit1\snare.wav", 0, 0, 0
 
 
 
     instr 40
-
-
-
-       	iamp = p5
-
-    	istable = p4
-
-    	icps = 1;p6
-
-    	ifn = 1;p7
-
-     ibas = 1;p8
-
-
-
-       	a1 loscil iamp, icps, istable, ibas
-
-    	out a1, a1
-
+		iamp = p5
+	    	istable = p4
+	    	icps = 1;p6
+	    	ifn = 1;p7
+		ibas = 1;p8
+		a1 loscil iamp, icps, istable, ibas
+		a1 limit a1, -1, 1  ; Prevent audio explosions
+	    	out a1, a1
     endin
 
     </CsInstruments>
-    <CsScore>
-	</CsScore>
-    
-    
     </CsoundSynthesizer>
 
 

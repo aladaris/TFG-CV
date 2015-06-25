@@ -187,7 +187,7 @@ namespace Aladaris
         /// </summary>
         /// <typeparam name="C">Color Space</typeparam>
         /// <param name="i_img">Input image</param>
-        public void FilterImage<C>(Image<C, byte> i_img)
+        public void FilterImageBackGround<C>(Image<C, byte> i_img)
             where C : struct, IColor
         {
             if (_dist != null && !_filtering)
@@ -216,20 +216,21 @@ namespace Aladaris
 
         }
 
-        public async Task<Image<Gray, double>> FilterImageAsync<C>(Image<C, byte> i_img)
+        
+        public Image<Gray, double> FilterImage<C>(Image<C, byte> i_img)
             where C : struct, IColor
         {
-            //if (_dist != null && !_filtering) {
+            if (_dist != null && !_filtering) {
                 _filtering = true;
                 i_img = i_img.Resize(i_img.Width / _reductionFactor, i_img.Height / _reductionFactor, INTER.CV_INTER_LINEAR);
-                Image<Gray, double> result = new Image<Gray, double>(i_img.Size);
+                var result = new Image<Gray, double>(i_img.Size);
                 result = GenerateProbabilisticImage<C>(i_img);
-                //result = await Task.Run(() => GenerateProbabilisticImage<C>(i_img));
                 _filtering = false;
                 return result;
-            //}
-            //return null;
+            }
+            return null;
         }
+        
 
         #endregion
 

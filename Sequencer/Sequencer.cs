@@ -16,36 +16,6 @@ using Aladaris;
 
 namespace Sequencer {
 
-    /// <summary>
-    /// Defines at a global level, the values of the Figures used by
-    /// the sequencer.
-    /// </summary>
-    static public class Figures {
-        static private Figure _corchea = new Figure(FIGNAME.CORCHEA);
-        static private Figure _negra = new Figure(FIGNAME.NEGRA);
-        static private Figure _blanca = new Figure(FIGNAME.BLANCA);
-
-        static public Figure Corchea {
-            get { return _corchea; }
-        }
-        static public Figure Negra {
-            get { return _negra; }
-        }
-        static public Figure Blanca {
-            get { return _blanca; }
-        }
-
-        static public Figure GetFigure(int area) {
-            if ((_corchea.MinArea <= area) && (area <= _corchea.MaxArea))
-                return _corchea;
-            if ((_negra.MinArea <= area) && (area <= _negra.MaxArea))
-                return _negra;
-            if ((_blanca.MinArea <= area) && (area <= _blanca.MaxArea))
-                return _blanca;
-            return null;
-        }
-    }
-
     public class Sequencer : IDisposable {
         private Board _board;
         // Capture and display
@@ -243,14 +213,23 @@ namespace Sequencer {
                 if (tNumber >= 0) {
                     track = GetTrack(tNumber);
                 }
-                if (track != null) {
-                    Int32.TryParse(e.Value.ToString(), out index);
-                    index++;
-                    if (index >= track.Length)
-                        index = 0;
-                    step_img = GetStepROI(index);
+
+                 Int32.TryParse(e.Value.ToString(), out index);
+                //index++;
+                if (index >= track.Length)
+                    index = 0;
+                step_img = GetStepROI(index);
+
+                MelodicTrack mt = track as MelodicTrack;
+                if (mt != null) {  // Track melódica
                     if (step_img != null)
-                        track.ReadStepAsync<Bgr>(index, step_img);
+                        mt.ReadStep<Bgr>(index, step_img);
+                } else {
+                    RitmicTrack rt = track as RitmicTrack;
+                    if (rt != null) {  // Track rítmica
+                        if (step_img != null)
+                            rt.ReadStep<Bgr>(index, step_img);
+                    }
                 }
             }
         }
@@ -296,16 +275,16 @@ namespace Sequencer {
                 var bRectangle = step.GetBoundingRectangle();
                 var stepArea = _frame.Copy(bRectangle);  // Recortamos un rectángulo que contanga el paso.
                 
-                CvInvoke.cvShowImage("Step", stepArea.Ptr);  // DEBUG
-                CvInvoke.cvWaitKey(0);  // DEBUG
+                //CvInvoke.cvShowImage("Step", stepArea.Ptr);  // DEBUG
+                //CvInvoke.cvWaitKey(0);  // DEBUG
 
                 var mask = new Image<Gray, byte>(stepArea.Width, stepArea.Height, new Gray(0));
                 mask.Draw(Step.GetDisplacedStep(step, bRectangle.Left, bRectangle.Top), new Gray(255), 0);
 
-                CvInvoke.cvShowImage("Mask", mask.Ptr);  // DEBUG
-                CvInvoke.cvWaitKey(0);  // DEBUG
-                CvInvoke.cvShowImage("Result", stepArea.Copy(mask).Ptr);  // DEBUG
-                CvInvoke.cvWaitKey(0);  // DEBUG
+                //CvInvoke.cvShowImage("Mask", mask.Ptr);  // DEBUG
+                //CvInvoke.cvWaitKey(0);  // DEBUG
+                //CvInvoke.cvShowImage("Result", stepArea.Copy(mask).Ptr);  // DEBUG
+                //CvInvoke.cvWaitKey(0);  // DEBUG
 
                 return stepArea.Copy(mask);
             }
@@ -493,20 +472,25 @@ namespace Sequencer {
             if ((_board != null) && (DrawSteps)) {
                 _board.DrawSteps(e);
 
-                // Now we draw the current figures on each step table
+                // Now we draw each track
                 for (int i = 0; i < _tracks.Length; i++) {
-                    var t = _tracks[i];
+                    Track t = _tracks[i];
 
-                    for (int j = 0; j < t.Durations.Length; j++ ) {
-                        string figureCharacter = "";
-                        switch ((int)t.Durations[j]) {
-                            case 1: figureCharacter = "♪"; break;
-                            case 2: figureCharacter = "♩"; break;
-                            case 4: figureCharacter = "♭"; break;
+                    MelodicTrack mt = t as MelodicTrack;
+                    if (mt != null) {
+                        for (int j = 0; j < mt.Durations.Length; j++) {
+                            string figureCharacter = "";
+                            switch ((int)mt.Durations[j]) {
+                                case 1: figureCharacter = "♪"; break;
+                                case 2: figureCharacter = "♩"; break;
+                                case 4: figureCharacter = "♭"; break;
+                            }
+                            if ((mt.AvtiveSteps[j] > 0d) && (_board.Steps.Count > 0) && (_board.Steps.Count > j)) {
+                                e.Graphics.DrawString(figureCharacter, new Font("Arial", 14), new SolidBrush(t.ColorFilter.SampleMeanColor), _board.Steps[j].Center);
+                            }
                         }
-                        if ((t.AvtiveSteps[j] > 0d) && (_board.Steps.Count > 0) && (_board.Steps.Count > j)) {
-                            e.Graphics.DrawString(figureCharacter, new Font("Arial", 14), new SolidBrush(t.ColorFilter.SampleMeanColor), _board.Steps[j].Center);
-                        }
+                    } else {
+
                     }
 
                 }

@@ -73,6 +73,8 @@
     <Content Include="Files\score.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="enums.cs" />
+    <Compile Include="Figure.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,7 +106,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Files\sequencer.csd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

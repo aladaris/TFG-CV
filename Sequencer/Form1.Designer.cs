@@ -78,6 +78,23 @@
             this.button_addSteps = new System.Windows.Forms.Button();
             this.button_saveBoard = new System.Windows.Forms.Button();
             this.button_loadBoard = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.numericUpDown_HihatMax = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.numericUpDown_HihatMin = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.numericUpDown_SnareMax = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.numericUpDown_SnareMin = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.numericUpDown_kickMin = new System.Windows.Forms.NumericUpDown();
+            this.label23 = new System.Windows.Forms.Label();
+            this.numericUpDown_KickMax = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_figures = new System.Windows.Forms.TableLayoutPanel();
             this.numericUpDown_blancaMax = new System.Windows.Forms.NumericUpDown();
@@ -130,6 +147,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_HihatMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_HihatMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_SnareMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_SnareMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_kickMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_KickMax)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.tableLayoutPanel_figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_blancaMax)).BeginInit();
@@ -734,10 +759,11 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.groupBox1);
+            this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(343, 248);
+            this.groupBox3.Size = new System.Drawing.Size(343, 434);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuration parameters";
@@ -795,6 +821,262 @@
             this.button_loadBoard.UseVisualStyleBackColor = true;
             this.button_loadBoard.Click += new System.EventHandler(this.button_loadSteps_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox6.Location = new System.Drawing.Point(6, 234);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(331, 114);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Figures areas (Ritmic)";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown_HihatMax, 4, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label15, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown_HihatMin, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label16, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown_SnareMax, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label17, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown_SnareMin, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label18, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label19, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown_kickMin, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label23, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown_KickMax, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label20, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label21, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label22, 0, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(325, 95);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // numericUpDown_HihatMax
+            // 
+            this.numericUpDown_HihatMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_HihatMax.Location = new System.Drawing.Point(263, 65);
+            this.numericUpDown_HihatMax.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_HihatMax.Name = "numericUpDown_HihatMax";
+            this.numericUpDown_HihatMax.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown_HihatMax.TabIndex = 12;
+            this.numericUpDown_HihatMax.Value = new decimal(new int[] {
+            3500,
+            0,
+            0,
+            0});
+            this.numericUpDown_HihatMax.ValueChanged += new System.EventHandler(this.numericUpDown_HihatMax_ValueChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Location = new System.Drawing.Point(198, 62);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(59, 33);
+            this.label15.TabIndex = 11;
+            this.label15.Text = "Max. Area";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_HihatMin
+            // 
+            this.numericUpDown_HihatMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_HihatMin.Location = new System.Drawing.Point(133, 65);
+            this.numericUpDown_HihatMin.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_HihatMin.Name = "numericUpDown_HihatMin";
+            this.numericUpDown_HihatMin.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown_HihatMin.TabIndex = 10;
+            this.numericUpDown_HihatMin.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.numericUpDown_HihatMin.ValueChanged += new System.EventHandler(this.numericUpDown_HihatMin_ValueChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label16.Location = new System.Drawing.Point(68, 62);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(59, 33);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "Min. Area";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_SnareMax
+            // 
+            this.numericUpDown_SnareMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_SnareMax.Location = new System.Drawing.Point(263, 34);
+            this.numericUpDown_SnareMax.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_SnareMax.Name = "numericUpDown_SnareMax";
+            this.numericUpDown_SnareMax.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown_SnareMax.TabIndex = 8;
+            this.numericUpDown_SnareMax.Value = new decimal(new int[] {
+            750,
+            0,
+            0,
+            0});
+            this.numericUpDown_SnareMax.ValueChanged += new System.EventHandler(this.numericUpDown_SnareMax_ValueChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label17.Location = new System.Drawing.Point(198, 31);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(59, 31);
+            this.label17.TabIndex = 7;
+            this.label17.Text = "Max. Area";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_SnareMin
+            // 
+            this.numericUpDown_SnareMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_SnareMin.Location = new System.Drawing.Point(133, 34);
+            this.numericUpDown_SnareMin.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_SnareMin.Name = "numericUpDown_SnareMin";
+            this.numericUpDown_SnareMin.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown_SnareMin.TabIndex = 6;
+            this.numericUpDown_SnareMin.Value = new decimal(new int[] {
+            550,
+            0,
+            0,
+            0});
+            this.numericUpDown_SnareMin.ValueChanged += new System.EventHandler(this.numericUpDown_SnareMin_ValueChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label18.Location = new System.Drawing.Point(68, 31);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(59, 31);
+            this.label18.TabIndex = 5;
+            this.label18.Text = "Min. Area";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label19.Location = new System.Drawing.Point(198, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(59, 31);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Max. Area";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_kickMin
+            // 
+            this.numericUpDown_kickMin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_kickMin.Location = new System.Drawing.Point(133, 3);
+            this.numericUpDown_kickMin.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_kickMin.Name = "numericUpDown_kickMin";
+            this.numericUpDown_kickMin.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown_kickMin.TabIndex = 3;
+            this.numericUpDown_kickMin.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.numericUpDown_kickMin.ValueChanged += new System.EventHandler(this.numericUpDown_kickMin_ValueChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label23.Location = new System.Drawing.Point(68, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(59, 31);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "Min. Area";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_KickMax
+            // 
+            this.numericUpDown_KickMax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_KickMax.Location = new System.Drawing.Point(263, 3);
+            this.numericUpDown_KickMax.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown_KickMax.Name = "numericUpDown_KickMax";
+            this.numericUpDown_KickMax.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown_KickMax.TabIndex = 3;
+            this.numericUpDown_KickMax.Value = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+            this.numericUpDown_KickMax.ValueChanged += new System.EventHandler(this.numericUpDown_KickMax_ValueChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label20.Location = new System.Drawing.Point(3, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(59, 31);
+            this.label20.TabIndex = 13;
+            this.label20.Text = "Kick";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label21.Location = new System.Drawing.Point(3, 31);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(59, 31);
+            this.label21.TabIndex = 14;
+            this.label21.Text = "Snare";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label22.Location = new System.Drawing.Point(3, 62);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(59, 33);
+            this.label22.TabIndex = 14;
+            this.label22.Text = "Hihat";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.tableLayoutPanel_figures);
@@ -803,7 +1085,7 @@
             this.groupBox4.Size = new System.Drawing.Size(331, 114);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Figures areas";
+            this.groupBox4.Text = "Figures areas (Melodic)";
             // 
             // tableLayoutPanel_figures
             // 
@@ -1109,6 +1391,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_HihatMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_HihatMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_SnareMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_SnareMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_kickMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_KickMax)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.tableLayoutPanel_figures.ResumeLayout(false);
             this.tableLayoutPanel_figures.PerformLayout();
@@ -1195,6 +1486,23 @@
         private System.Windows.Forms.TrackBar trackBar_volTrack1;
         private System.Windows.Forms.TrackBar trackBar_volTrack3;
         private System.Windows.Forms.TrackBar trackBar_volTrack2;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.NumericUpDown numericUpDown_HihatMax;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.NumericUpDown numericUpDown_HihatMin;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown numericUpDown_SnareMax;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown numericUpDown_SnareMin;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.NumericUpDown numericUpDown_kickMin;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.NumericUpDown numericUpDown_KickMax;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
     }
 }
 
