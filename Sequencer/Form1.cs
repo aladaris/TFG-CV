@@ -60,6 +60,20 @@ namespace Sequencer {
                 trackBar_volTrack1.Value = 50;
                 trackBar_volTrack2.Value = 50;
                 trackBar_volTrack3.Value = 50;
+
+
+                /*
+                // DEBUG
+                var orig = new Image<Gray, byte>(400, 400, new Gray(127));
+                var overlay = new Image<Gray, byte>(400, 400, new Gray(0));
+                var poly = new Step(new List<Point> { new Point(22, 15), new Point(22, 236), new Point(92, 235), new Point(91, 14) });
+                overlay.Draw(poly, new Gray(255), 0);
+                var result = orig.Copy(overlay); //new Image<Gray, byte>(400, 400, new Gray(0));
+                //CvInvoke.cvCopy(orig.Ptr, result.Ptr, overlay);
+                CvInvoke.cvShowImage("BLACK", result.Ptr);
+                CvInvoke.cvWaitKey(0);
+                // DEBUG
+                */
             }
 
             InitStateMachine();

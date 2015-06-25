@@ -65,7 +65,7 @@ namespace Sequencer {
         }
     }
 
-    class CVFigureBlob /*: IDisposable*/ {
+    class CVFigureBlob {
         //private Rectangle _blob;
         private Point _blobCenter;
         private bool _valid = false;
@@ -92,15 +92,6 @@ namespace Sequencer {
             //_imgBox.Paint += OnPaint;
         }
 
-        ~CVFigureBlob() {
-            //_imgBox.Paint -= OnPaint;
-        }
-        /*
-        public void Dispose() {
-            _imgBox.Paint -= OnPaint;
-        }
-        */
-
         public void Paint() {
             if (_valid) {
                 string figureCharacter = "";
@@ -122,8 +113,7 @@ namespace Sequencer {
         /// <param name="display"></param>
         /// <returns></returns>
         public static List<CVFigureBlob> GetBlobs(Image<Gray, Double> i_img, ImageBox display) {
-            //CvInvoke.cvSmooth(i_img.Ptr, i_img.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_GAUSSIAN, 13, 13, 1.5, 1);
-            var gray = i_img.Convert<Gray, Byte>();//.PyrDown().PyrUp();
+            var gray = i_img.Convert<Gray, Byte>();
             CvInvoke.cvSmooth(gray.Ptr, gray.Ptr, Emgu.CV.CvEnum.SMOOTH_TYPE.CV_BLUR, 13, 13, 1.5, 1);
             Image<Gray, Byte> thresholded = gray.ThresholdBinary(new Gray(1), new Gray(255));
             List<CVFigureBlob> blobs = new List<CVFigureBlob>();
@@ -133,7 +123,6 @@ namespace Sequencer {
                     Figure fig = Figures.GetFigure((int)currContour.Area);
                     if (fig != null) {
                         blobs.Add(new CVFigureBlob(currContour.BoundingRectangle, currContour.Area, fig, display));
-                        //blobs[blobs.Count - 1].Paint();  // DEBUG // VERBOSE
                     }
                 }
             }

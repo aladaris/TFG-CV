@@ -284,12 +284,30 @@ namespace Sequencer {
             }
         }
 
+        /// <summary>
+        /// Generates a image with the content in the specified step.
+        /// Anything outside of the step is blacked out.
+        /// </summary>
+        /// <param name="step_id"></param>
+        /// <returns></returns>
         public Image<Bgr, byte> GetStepROI(int step_id) {  // TODO: Private
             if ((_board != null)&&(_board.Steps.Count > 0)&&(step_id >= 0)&&(_board.StepsCount - 1 >= step_id)) {
                 Step step = _board.Steps[step_id];
-                if (step.VerticesCount == 4) {
-                    return _frame.Copy(step.GetBoundingRectangle());
-                }
+                var bRectangle = step.GetBoundingRectangle();
+                var stepArea = _frame.Copy(bRectangle);  // Recortamos un rectángulo que contanga el paso.
+                
+                CvInvoke.cvShowImage("Step", stepArea.Ptr);  // DEBUG
+                CvInvoke.cvWaitKey(0);  // DEBUG
+
+                var mask = new Image<Gray, byte>(stepArea.Width, stepArea.Height, new Gray(0));
+                mask.Draw(Step.GetDisplacedStep(step, bRectangle.Left, bRectangle.Top), new Gray(255), 0);
+
+                CvInvoke.cvShowImage("Mask", mask.Ptr);  // DEBUG
+                CvInvoke.cvWaitKey(0);  // DEBUG
+                CvInvoke.cvShowImage("Result", stepArea.Copy(mask).Ptr);  // DEBUG
+                CvInvoke.cvWaitKey(0);  // DEBUG
+
+                return stepArea.Copy(mask);
             }
             return null;
         }
@@ -326,7 +344,6 @@ namespace Sequencer {
         /// <param name="i_poly">List of points. Expected from a "PolygonDrawingTool".</param>
         public void SetPerspectiveCalibration(List<Point> i_poly) {
             if (i_poly.Count == 4) {
-                //Size destSize = _display.Size;
                 PointF[] dest_corners = new PointF[4];
                 dest_corners[0] = new PointF(0f, 0f);
                 dest_corners[1] = new PointF(_mainDisplay.Size.Width, 0f);
@@ -470,22 +487,6 @@ namespace Sequencer {
 
         #region Handlers
         /// <summary>
-        /// This event is launched whenever a frame is aviable at the capture (i.e: sender).
-        /// The frame is proccessed to be calibrated and saved into the object atribute '_frame'.
-        /// </summary>
-        /// <param name="sender">A Capture object with an aviable frame to retrieve.</param>
-        private void CalibrateIncomingFrame(Image<Bgr, Byte> i_frame, EventArgs e) {
-            if ((PerspectiveCalibrated) && (!_correctingPerspect)) {
-                _correctingPerspect = true;
-                Image<Bgr, Byte> nframe = i_frame.Resize(_mainDisplay.Size.Width, _mainDisplay.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4);
-                _frame = nframe.WarpPerspective(_calibMatrix, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
-                if (PerspectiveCorrectedFrame != null)
-                    PerspectiveCorrectedFrame(_frame, e);
-                _correctingPerspect = false;
-            }
-        }
-
-        /// <summary>
         /// Draws the board
         /// </summary>
         private void PaintBoard(object sender, PaintEventArgs e) {
@@ -513,7 +514,7 @@ namespace Sequencer {
         }
 
         /// <summary>
-        /// Triggered on every "Elapsed" event of the timer.
+        /// Triggered on every "Elapsed" event of the FPS timer.
         /// Triggers a "RawFrame" event.
         /// </summary>
         private void GetNewFrame(object sender, EventArgs e) {
@@ -524,6 +525,22 @@ namespace Sequencer {
                 if (FlipV)
                     f._Flip(Emgu.CV.CvEnum.FLIP.VERTICAL);
                 RawFrame(f, e);
+            }
+        }
+
+        /// <summary>
+        /// This event is launched whenever a frame is aviable at the capture (i.e: sender).
+        /// The frame is proccessed to be calibrated and saved into the object atribute '_frame'.
+        /// </summary>
+        /// <param name="sender">A Capture object with an aviable frame to retrieve.</param>
+        private void CalibrateIncomingFrame(Image<Bgr, Byte> i_frame, EventArgs e) {
+            if ((PerspectiveCalibrated) && (!_correctingPerspect)) {
+                _correctingPerspect = true;
+                Image<Bgr, Byte> nframe = i_frame.Resize(_mainDisplay.Size.Width, _mainDisplay.Size.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4);
+                _frame = nframe.WarpPerspective(_calibMatrix, Emgu.CV.CvEnum.INTER.CV_INTER_LANCZOS4, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
+                if (PerspectiveCorrectedFrame != null)
+                    PerspectiveCorrectedFrame(_frame, e);
+                _correctingPerspect = false;
             }
         }
 

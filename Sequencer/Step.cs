@@ -73,6 +73,15 @@ namespace Sequencer {
             s._center = i_poly.Center;
             return s;
         }
+
+        public static Step GetDisplacedStep(Step i_step, int displaceX, int displaceY) {
+            Step result = new Step();
+            result._poly = new Point[i_step.Vertices.Count];
+            for (int i = 0; i < result._poly.Length; i++) {
+                result._poly[i] = new Point(i_step._poly[i].X - displaceX, i_step._poly[i].Y - displaceY);
+            }
+            return result;
+        }
         #endregion
     }
 }

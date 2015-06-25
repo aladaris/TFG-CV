@@ -5,9 +5,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
+using Emgu.CV;
+
 namespace Sequencer {
 
-    public class Polygon {
+    public class Polygon : IConvexPolygonF {
         #region Atributes
         protected Point[] _poly;
         protected PointF _center;
@@ -126,7 +128,7 @@ namespace Sequencer {
             return new Rectangle(new Point(minX, minY), new Size(maxX - minX, maxY - minY));
         }
 
-        private int GetMinXValue() {
+        public int GetMinXValue() {
             int min = Int32.MaxValue;
             for (int i = 0; i < _poly.Length; i++) {
                 if (_poly[i].X < min) {
@@ -136,7 +138,7 @@ namespace Sequencer {
             return min;
         }
 
-        private int GetMinYValue() {
+        public int GetMinYValue() {
             int min = Int32.MaxValue;
             for (int i = 0; i < _poly.Length; i++) {
                 if (_poly[i].Y < min) {
@@ -146,7 +148,7 @@ namespace Sequencer {
             return min;
         }
 
-        private int GetMaxXValue() {
+        public int GetMaxXValue() {
             int max = Int32.MinValue;
             for (int i = 0; i < _poly.Length; i++) {
                 if (_poly[i].X > max) {
@@ -156,7 +158,7 @@ namespace Sequencer {
             return max;
         }
 
-        private int GetMaxYValue() {
+        public int GetMaxYValue() {
             int max = Int32.MinValue;
             for (int i = 0; i < _poly.Length; i++) {
                 if (_poly[i].Y > max) {
@@ -164,6 +166,13 @@ namespace Sequencer {
                 }
             }
             return max;
+        }
+
+        public PointF[] GetVertices() {
+            var result = new PointF[_poly.Length];
+            for (int i = 0; i < _poly.Length; i++)
+                result[i] = new PointF(_poly[i].X, _poly[i].Y);
+            return result;
         }
 
         #region Class Methods
