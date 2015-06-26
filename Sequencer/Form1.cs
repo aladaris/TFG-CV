@@ -58,9 +58,13 @@ namespace Sequencer {
                 numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
                 numericUpDown_bpm.Value = 120;
                 trackBar_MainVol.Value = 75;
+                _sequencer.MainVolumen = trackBar_MainVol.Value / 100d;
                 trackBar_volTrack1.Value = 50;
+                _sequencer.GetTrack(1).Volumen = trackBar_volTrack1.Value / 100d;
                 trackBar_volTrack2.Value = 50;
+                _sequencer.GetTrack(2).Volumen = trackBar_volTrack2.Value / 100d;
                 trackBar_volTrack3.Value = 50;
+                _sequencer.GetTrack(3).Volumen = trackBar_volTrack3.Value / 100d;
 
 
                 /*
