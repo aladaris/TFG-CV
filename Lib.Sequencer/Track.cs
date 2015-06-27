@@ -26,6 +26,65 @@ namespace Sequencer {
         public Csound6Table Hihat;
     }
 
+    public class Track {
+        protected ProbabilisticImageFiltering _colorFilter;
+
+        public int Id { get; protected set; }  // TODO: Limitar valores
+        public int CurrentStep { get; set; }  // TODO: Limitar valores
+        public int Length { get; set; }
+        public int MaxSteps { get; protected set; }
+        public ProbabilisticImageFiltering ColorFilter {
+            get {
+                return _colorFilter;
+            }
+        }
+        public System.Drawing.Color SampleMeanColor {
+            get {
+                if ((_colorFilter != null) && (_colorFilter.Sampled)) {
+                    return _colorFilter.SampleMeanColor;
+                }
+                return System.Drawing.Color.Black;
+            }
+        }
+        public bool IsColorSampled { get; protected set; }
+        public double Volumen { get; set; }
+
+
+        /// <summary>
+        /// Constructor de la clase Track.
+        /// </summary>
+        /// <param name="csound">Instancia de Csound activa</param>
+        /// <param name="dur_index">Index de la tabla de duraciones</param>
+        /// <param name="notes_index">Index de la tabla de notas</param>
+        /// <param name="active_index">Index de la tabla de pasos activos</param>
+        public Track(int id, int redux_factor = 2) {
+            Id = id;
+            _colorFilter = new ProbabilisticImageFiltering(redux_factor);
+            CurrentStep = -1;
+            IsColorSampled = false;
+        }
+
+        /// <summary>
+        /// Configures the PerspectiveImageFilter to fit a
+        /// sample (or a collection of samples) from an image.
+        /// </summary>
+        /// <param name="i_sample">An Image object or a List<Image> with a collection of samples.</param>
+        public void SetFilterColor(Object i_sample) {
+            if (i_sample != null) {
+                try {
+                    _colorFilter.SetDistributionValues<Bgr>(i_sample);
+                } catch (ArgumentException e) {
+                    throw e;
+                }
+            } else {
+                throw new NullReferenceException("A sample (or list of samples) is nedded to set the filter color");
+            }
+            IsColorSampled = true;
+        }
+
+        public virtual void ReadStep<C>(int step_index, Image<C, byte> step_roi) where C : struct, IColor { }
+    }
+
     public class RitmicTrack : Track {
         RitmicTables _tables;
 
@@ -141,64 +200,5 @@ namespace Sequencer {
                 }
             }
         }
-    }
-
-    public class Track {
-        protected ProbabilisticImageFiltering _colorFilter;
-
-        public int Id { get; protected set; }  // TODO: Limitar valores
-        public int CurrentStep { get; set; }  // TODO: Limitar valores
-        public int Length { get; set; }
-        public int MaxSteps { get; protected set; }
-        public ProbabilisticImageFiltering ColorFilter {
-            get {
-                return _colorFilter;
-            }
-        }
-        public System.Drawing.Color SampleMeanColor {
-            get {
-                if ((_colorFilter != null) && (_colorFilter.Sampled)) {
-                    return _colorFilter.SampleMeanColor;
-                }
-                return System.Drawing.Color.Black;
-            }
-        }
-        public bool IsColorSampled { get; protected set; }
-        public double Volumen { get; set; }
-
-
-        /// <summary>
-        /// Constructor de la clase Track.
-        /// </summary>
-        /// <param name="csound">Instancia de Csound activa</param>
-        /// <param name="dur_index">Index de la tabla de duraciones</param>
-        /// <param name="notes_index">Index de la tabla de notas</param>
-        /// <param name="active_index">Index de la tabla de pasos activos</param>
-        public Track(int id, int redux_factor = 2) {
-            Id = id;
-            _colorFilter = new ProbabilisticImageFiltering(redux_factor);
-            CurrentStep = -1;
-            IsColorSampled = false;
-        }
-
-        /// <summary>
-        /// Configures the PerspectiveImageFilter to fit a
-        /// sample (or a collection of samples) from an image.
-        /// </summary>
-        /// <param name="i_sample">An Image object or a List<Image> with a collection of samples.</param>
-        public void SetFilterColor(Object i_sample) {
-            if (i_sample != null) {
-                try {
-                    _colorFilter.SetDistributionValues<Bgr>(i_sample);
-                } catch (ArgumentException e) {
-                    throw e;
-                }
-            } else {
-                throw new NullReferenceException("A sample (or list of samples) is nedded to set the filter color");
-            }
-            IsColorSampled = true;
-        }
-
-        public virtual void ReadStep<C>(int step_index, Image<C, byte> step_roi) where C : struct, IColor {}
     }
 }

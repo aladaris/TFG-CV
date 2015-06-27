@@ -12,8 +12,6 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
 
-using Aladaris;
-
 namespace Sequencer {
 
     public class Sequencer : IDisposable {

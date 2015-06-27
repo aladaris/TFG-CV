@@ -46,9 +46,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Stateless">
-      <HintPath>..\packages\Stateless.2.5.11.0\lib\portable-net40+sl50+win+wp80\Stateless.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
@@ -65,16 +62,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="CSNoteHandler.cs" />
-    <Compile Include="CSoundHandler.cs" />
-    <Compile Include="CVFigureBlob.cs" />
-    <Compile Include="DataLogging.cs" />
     <Content Include="Files\score.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="enums.cs" />
-    <Compile Include="Figure.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,13 +77,8 @@
     <Compile Include="GUIHandling.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImageHandling.cs" />
-    <Compile Include="Polygon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sequencer.cs" />
-    <Compile Include="Step.cs" />
-    <Compile Include="Track.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,7 +94,6 @@
     <None Include="Files\sequencer.csd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -135,6 +119,10 @@
     <ProjectReference Include="..\Lib.SelectionRectangle\Lib.SelectionRectangle.csproj">
       <Project>{15c1984e-dcc6-4722-9780-0f217a6b506e}</Project>
       <Name>Lib.SelectionRectangle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib.Sequencer\Lib.Sequencer.csproj">
+      <Project>{80f8b3b8-87a3-427f-ad04-9cb3893f13ea}</Project>
+      <Name>Lib.Sequencer</Name>
     </ProjectReference>
     <ProjectReference Include="..\PolygonTools\VisualTools.csproj">
       <Project>{9b18019d-83a7-4fb5-a52d-9c898113c871}</Project>

@@ -13,7 +13,6 @@ using Emgu.CV.Structure;
 using Emgu.Util;
 using Emgu.CV.UI;
 
-using Stateless;
 using Aladaris;
 using VisualTools;
 
@@ -24,7 +23,7 @@ namespace Sequencer {
         private PolygonDrawingTool _polyDrawTool;
         private SelectionRectangle _selectionRect;
         private Sequencer _sequencer;
-        private StateMachine<State, Trigger> _stmachine = new StateMachine<State, Trigger>(State.Init);
+        //private StateMachine<State, Trigger> _stmachine = new StateMachine<State, Trigger>(State.Init);
         private bool _colorSampled = false;  // Indica si se ha seleccionado la muestra necesaria para el filtrado de color
         //private bool _gettingFigureBlobs = false;  // TODO: Mover a donde se mueva lka lógica de la detección de blobs
         private int _samplingTrackID = -1;  // The track ID of the track wich is sampling a color.
