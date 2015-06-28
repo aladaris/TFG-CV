@@ -143,6 +143,8 @@ namespace Sequencer {
             }
         }
         public double MainVolumen { get; set; }
+        public bool IsPlaying { get; set; }
+        public SEQUENCE_MODE SequenceMode { get; set; }
         #endregion
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace Sequencer {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnCSoundOutputChannel(object sender, csound6netlib.Csound6ChannelEventArgs e) {
-            if ((PerspectiveCalibrated) && (StepCount > 0) && (CSoundRunning)) {
+            //if ((PerspectiveCalibrated) && (StepCount > 0) && (CSoundRunning)) {
                 int index = 0;
                 Image<Bgr, byte> step_img = null;
                 Track track = null;
@@ -229,7 +231,7 @@ namespace Sequencer {
                             rt.ReadStep<Bgr>(index, step_img);
                     }
                 }
-            }
+            //}
         }
 
         /// <summary>
@@ -243,6 +245,14 @@ namespace Sequencer {
             switch (e.Name) {
                 case "bpm": e.SetCsoundValue(CSound, (double)Bpm); break;
                 case "MainVol": e.SetCsoundValue(CSound, MainVolumen); break;
+                case "IsPlaying":
+                    double value = IsPlaying ? 1d : 0d;
+                    e.SetCsoundValue(CSound, value);
+                    break;
+                case "SeqMode":
+                    double mode = SequenceMode == SEQUENCE_MODE.UP ? 0d : 1d;
+                    e.SetCsoundValue(CSound, mode);
+                    break;
                 case "Vol1":
                     track = GetTrack(1);
                     if (track != null)
@@ -257,6 +267,26 @@ namespace Sequencer {
                      track = GetTrack(3);
                     if (track != null)
                         e.SetCsoundValue(CSound, track.Volumen);
+                    break;
+                case "LengthTrack1":
+                    track = GetTrack(1);
+                    if (track != null)
+                        e.SetCsoundValue(CSound, (double)track.Length);
+                    break;
+                case "LengthTrack2":
+                    track = GetTrack(2);
+                    if (track != null)
+                        e.SetCsoundValue(CSound, (double)track.Length);
+                    break;
+                case "LengthTrack3":
+                    track = GetTrack(3);
+                    if (track != null)
+                        e.SetCsoundValue(CSound, (double)track.Length);
+                    break;
+                case "RythmDur1":
+                    var rt = GetTrack(3) as RitmicTrack;
+                    if (rt != null)
+                        e.SetCsoundValue(CSound, (double)rt.StepDuration);
                     break;
             }
         }

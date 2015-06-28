@@ -147,8 +147,8 @@ namespace Sequencer {
         }
 
         private void button_StartInstrument_Click(object sender, EventArgs e) {
-            if ((_sequencer.PerspectiveCalibrated) && (_sequencer.StepCount > 0) && (!_sequencer.CSoundRunning))
-                _sequencer.StartCSound();
+            //if ((_sequencer.PerspectiveCalibrated) && (_sequencer.StepCount > 0) && (!_sequencer.CSoundRunning))
+            //    _sequencer.StartCSound();
         }
 
         // TODO: Eliminar todo este código duplicado del infierno
@@ -242,6 +242,49 @@ namespace Sequencer {
                 tabControl_bottom.SelectedIndex = tb.SelectedIndex;
             }
         }
+        private void checkBox_playPause_CheckedChanged(object sender, EventArgs e) {
+            if (_sequencer != null) {
+                _sequencer.IsPlaying = checkBox_playPause.Checked;
+                checkBox_playPause.Text = _sequencer.IsPlaying ? "Pause" : "Play";
+            }
+        }
+        private void comboBox_stepLengthTrack3_SelectedIndexChanged(object sender, EventArgs e) {
+            if (_sequencer != null) {
+                var cb = sender as ComboBox;
+                if (cb != null){
+                    var rt = _sequencer.GetTrack(3) as RitmicTrack;
+                    switch (cb.SelectedIndex) {
+                        case 0:  // Corchea
+                            if (rt != null) {
+                                rt.StepDuration = 1;
+                            }
+                            break;
+                        case 1:  // Negra
+                            if (rt != null) {
+                                rt.StepDuration = 2;
+                            }
+                            break;
+                        case 2:  // Blanca
+                            if (rt != null) {
+                                rt.StepDuration = 4;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void comboBox_seqMode_SelectedIndexChanged(object sender, EventArgs e) {
+            if (_sequencer != null) {
+                var cb = sender as ComboBox;
+                if (cb != null) {
+                    switch (cb.SelectedIndex) {
+                        case 0: _sequencer.SequenceMode = SEQUENCE_MODE.UP; break;
+                        case 1: _sequencer.SequenceMode = SEQUENCE_MODE.DOWN; break;
+                    }
+                }
+            }
+        }
 
 
         #region Sequencer parameters
@@ -280,7 +323,7 @@ namespace Sequencer {
                             } else {
                                 RitmicTrack rt = track as RitmicTrack;
                                 if (rt != null) {  // Track Rítmica
-                                    // TODO
+                                    // TODO: Nada?
                                 }
                             }
                         }

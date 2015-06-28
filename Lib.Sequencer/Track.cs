@@ -88,7 +88,9 @@ namespace Sequencer {
     public class RitmicTrack : Track {
         RitmicTables _tables;
 
-        public RitmicTrack(int id, Csound6Net csound, int kick_index, int snare_index, int hihat_index)
+        public int StepDuration { get; set; }
+
+        public RitmicTrack(int id, Csound6Net csound, int kick_index, int snare_index, int hihat_index, int step_duration = 2)
             : base(id) {
             if (csound != null) {
                 _tables.Kick = new Csound6Table(kick_index, csound);
@@ -100,6 +102,7 @@ namespace Sequencer {
             if ((_tables.Kick.Length != _tables.Snare.Length) || (_tables.Kick.Length != _tables.Hihat.Length) || (_tables.Snare.Length != _tables.Hihat.Length)) {
                 throw new IndexOutOfRangeException("All the Csound tables should have same length.");
             }
+            StepDuration = step_duration;
             MaxSteps = _tables.Kick.Length;  // Establecemos el largo máximo de la pista a la longitud de las tablas csound.
             Length = MaxSteps;  // Al principio, la pista mide todo lo posible (Todos los pasos activados).
         }

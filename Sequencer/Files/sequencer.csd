@@ -41,26 +41,25 @@
 
     ;; SUBSTRACTIVE 1 (TABLES)
 
-    gi_DurTable1   ftgen 10, 0, 8, -2, 1, 1, 1, 2, 1, 1, 1, 1   ; Duracion de los pasos (1, 2 o 4 == Corchea, Negra o Blanca)
+    gi_DurTable1   ftgen 10, 0, 16, -2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   ; Duracion de los pasos (1, 2 o 4 == Corchea, Negra o Blanca)
 
-    gi_NotesTable1 ftgen 11, 0, 8, -2, 6.05, 6.08, 6.10, 6.08, 7.03, 7.01, 7.03, 7.05  ;; On the run
+    gi_NotesTable1 ftgen 11, 0, 16, -2, 6.05, 6.08, 6.10, 6.08, 7.03, 7.01, 7.03, 7.05, 5.05, 5.08, 5.10, 5.08, 6.03, 6.01, 6.03, 6.05  ;; On the run
 
-    gi_EnabledTable1 ftgen 12, 0, 8, -2, 1, 1, 1, 1, 1, 1, 1, 1  ;  Pasos activos == 1, inactivos == 0
+    gi_EnabledTable1 ftgen 12, 0, 16, -2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1  ;  Pasos activos == 1, inactivos == 0
 
     ;; ADDITIVE 1 (TABLES)
 
-    gi_DurTable2   ftgen 20, 0, 8, -2, 2, 2, 2, 2, 2, 2, 2, 2   ; Duracion de los pasos (1, 2 ó 4 == Corchea, Negra ó Blanca)
+    gi_DurTable2   ftgen 20, 0, 16, -2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2   ; Duracion de los pasos (1, 2 ó 4 == Corchea, Negra ó Blanca)
 
-    gi_NotesTable2 ftgen 21, 0, 8, -2, 5.01, 5.01, 5.03, 5.01, 5.01, 5.01, 5.05, 5.01
+    gi_NotesTable2 ftgen 21, 0, 16, -2, 5.01, 5.01, 5.03, 5.01, 5.01, 5.01, 5.05, 5.01, 6.01, 6.01, 6.03, 6.01, 6.01, 6.01, 6.05, 6.01
 
-    gi_EnabledTable2 ftgen 22, 0, 8, -2, 1, 1, 1, 1, 1, 1, 1, 1   ;  Pasos activos == 1, inactivos == 0
+    gi_EnabledTable2 ftgen 22, 0, 16, -2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   ;  Pasos activos == 1, inactivos == 0
 
     ;; SAMPLER 1 (TABLES)
-
-	gi_RythmDur1 = 2    
-    gi_KickTable ftgen  30, 0, 8, -2,  1, 1, 1, 1, 1, 1, 1, 1
-    gi_SnareTable ftgen 31, 0, 8, -2,  0, 0, 1, 0, 0, 0, 0, 0
-    gi_HihatTable ftgen 32, 0, 8, -2,  0, 0, 0, 0, 0, 0, 1, 0
+   
+    gi_KickTable ftgen  30, 0, 16, -2,  1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1
+    gi_SnareTable ftgen 31, 0, 16, -2,  0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0
+    gi_HihatTable ftgen 32, 0, 16, -2,  0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0
 	
 
   
@@ -69,34 +68,18 @@
 
     ;; SEQUENCER VARIABLES
     
-    ;gk_MainVol init 1.0
-    
-     
-
-    	; Substractive 1
-
+    	; Track 1
     gk_Index1 init -1  ; NOTE: -1 en el init para que el primer trigger lo ponga en la primera posición
-
     gk_DurCount1 init 0 
-    
-    ;gk_Vol1 init 1
-    
 
-    	; Additive 1
-
+    	; Track 2
     gk_Index2 init -1
-
     gk_DurCount2 init 0
     
-    ;gk_Vol2 init 1
-
-    	; Sampler 1
-
+    	; Track 3
     gk_Index3 init -1
-
     gk_DurCount3 init 0
-    
-    ;gk_Vol3 init 1
+
 
     ;; ////////////////////
 
@@ -157,52 +140,66 @@
     ;; ////////////////////
 
     instr 10
-
-    gk_MainVol invalue "MainVol"
-    gk_Vol1 invalue "Vol1"
-    gk_Vol2 invalue "Vol2"
-    gk_Vol3 invalue "Vol3"
-
-	  kbpm invalue "bpm"
+    ; BPM
+    kbpm invalue "bpm"
+	
+	  ; Volumen
+	  gk_MainVol invalue "MainVol"
+	  gk_Vol1 invalue "Vol1"
+	  gk_Vol2 invalue "Vol2"
+	  gk_Vol3 invalue "Vol3"
+    
+    ; Track Length
+    gk_LengthTrack1 invalue "LengthTrack1"
+    gk_LengthTrack2 invalue "LengthTrack2"
+    gk_LengthTrack3 invalue "LengthTrack3"
+    
+    ; RitmicTrack Speed
+    gk_RythmDur1 invalue "RythmDur1"
+    
+    ; Play / Pause
+    gk_IsPlaying invalue "IsPlaying"  ;; 0: False (Paused), 1: True (Playing)
+    
+    ; Mode
+    gk_SeqMode invalue "SeqMode"  ;; 0: Up, 1: Down
+	
+	
+	
     	kidur = (kbpm * 2) / 60 ;; bpm * 2 para cuantificar como corcheas los valores 1 en las tablas de duracion
-
     	
-
-    	kDuration1 init 0
-
-    	kDurAdd1 init 0
-
-    	kDurSmp1 init 0
-
-    	
+    	kDurTrack1 init 0
+    	kDurTrack2 init 0
 
     	ktimer phasor kidur
-
     	ktrg trigger ktimer, .99, 0
 
-    	if (ktrg == 1) then
+	
+
+    	if ((ktrg == 1)  && (gk_IsPlaying == 1)) then
 
     		
 
-    		;; SUBSTRACTIVE 1
+    		;; TRACK 1
 
-    		if (gk_DurCount1 == kDuration1) then
+    		if (gk_DurCount1 == kDurTrack1) then
+    			if (gk_SeqMode == 0) then
+    				gk_Index1 = gk_Index1 + 1
+	    			if gk_Index1 > gk_LengthTrack1 - 1 then
+	    				gk_Index1 = 0
+    				endif
+    			elseif (gk_SeqMode == 1) then
+    				gk_Index1 = gk_Index1 - 1
+	    			if gk_Index1 < 0 then
+	    				gk_Index1 = gk_LengthTrack1 - 1
+    				endif
+   			endif
+          	outvalue  "Index_1", gk_Index1
 
-    			gk_Index1 = gk_Index1 + 1
-
-    			if gk_Index1 > 7 then
-
-    				gk_Index1 = 0
-
-    			endif
-
-          outvalue  "Index_1", gk_Index1
-
-    			kDuration1 table gk_Index1, gi_DurTable1, 0, 0, 1
+    			kDurTrack1 table gk_Index1, gi_DurTable1, 0, 0, 1
 
     			knote 	  table gk_Index1, gi_NotesTable1, 0, 0, 1
 
-                kactive   table gk_Index1, gi_EnabledTable1, 0, 0, 1
+			kactive   table gk_Index1, gi_EnabledTable1, 0, 0, 1
 
     			
 
@@ -210,7 +207,7 @@
 
     			kdur = (1/kidur)
 
-    			kdur = kdur * kDuration1
+    			kdur = kdur * kDurTrack1
 
     			;printk2 kdur ;; DEBUG
 
@@ -224,21 +221,24 @@
 
     		endif
 
-    		;; ADDITIVE 1
+    		;; TRACK 2
 
-    		if (gk_DurCount2 == kDurAdd1) then
-
-    			gk_Index2 = gk_Index2 + 1
-
-    			if gk_Index2 > 7 then
-
-    				gk_Index2 = 0
-
-    			endif
+    		if (gk_DurCount2 == kDurTrack2) then
+    			if (gk_SeqMode == 0) then
+    				gk_Index2 = gk_Index2 + 1
+	    			if gk_Index2 > gk_LengthTrack2 - 1 then
+	    				gk_Index2 = 0
+    				endif
+    			elseif (gk_SeqMode == 1) then
+    				gk_Index2 = gk_Index2 - 1
+	    			if gk_Index2 < 0 then
+	    				gk_Index2 = gk_LengthTrack2 - 1
+    				endif
+   			endif
 
           outvalue  "Index_2", gk_Index2
 
-    			kDurAdd1 table gk_Index2, gi_DurTable2, 0, 0, 1
+    			kDurTrack2 table gk_Index2, gi_DurTable2, 0, 0, 1
 
     			knote 	  table gk_Index2, gi_NotesTable2, 0, 0, 1
 
@@ -246,7 +246,7 @@
 
     			kdur = (1/kidur)
 
-    			kdur = kdur * kDurAdd1
+    			kdur = kdur * kDurTrack2
 
                 if (kactive > 0) then
 
@@ -260,17 +260,20 @@
 
     		
 
-    		;; SAMPLER 1
+    		;; TRACK 3
 
-    		if (gk_DurCount3 == gi_RythmDur1) then
-
-    			gk_Index3 = gk_Index3 + 1
-
-    			if gk_Index3 > 7 then
-
-    				gk_Index3 = 0
-
-    			endif
+    		if (gk_DurCount3 >= gk_RythmDur1) then
+    			if (gk_SeqMode == 0) then
+    				gk_Index3 = gk_Index3 + 1
+	    			if gk_Index3 > gk_LengthTrack3 - 1 then
+	    				gk_Index3 = 0
+    				endif
+    			elseif (gk_SeqMode == 1) then
+    				gk_Index3 = gk_Index3 - 1
+	    			if gk_Index3 < 0 then
+	    				gk_Index3 = gk_LengthTrack3 - 1
+    				endif
+   			endif
 
           outvalue  "Index_3", gk_Index3
                           
@@ -278,7 +281,7 @@
              kSnare_Enabled table gk_Index3, gi_SnareTable , 0, 0, 1
              kHihat_Enabled table gk_Index3, gi_HihatTable , 0, 0, 1
     			kdur = (1/kidur)
-    			kdur = kdur * gi_RythmDur1
+    			kdur = kdur * gk_RythmDur1
 
 			if (kKick_Enabled == 1) then
 				event "i", 40, 0, kdur, $KickSample, gk_Vol3 * gk_MainVol
@@ -470,7 +473,7 @@
 	    	out a1, a1
     endin
 
-    </CsInstruments>
+    </CsInstruments>   
     </CsoundSynthesizer>
 
 

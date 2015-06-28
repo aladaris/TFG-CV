@@ -44,6 +44,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.numericUpDown_LengthTrack3 = new System.Windows.Forms.NumericUpDown();
             this.trackBar_volTrack3 = new System.Windows.Forms.TrackBar();
+            this.label24 = new System.Windows.Forms.Label();
+            this.comboBox_stepLengthTrack3 = new System.Windows.Forms.ComboBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.flowLayout_track2 = new System.Windows.Forms.FlowLayoutPanel();
             this.button_setColor_Track2 = new System.Windows.Forms.Button();
@@ -67,11 +69,13 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabPage_sequencer = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.comboBox_seqMode = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.checkBox_playPause = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
             this.trackBar_MainVol = new System.Windows.Forms.TrackBar();
             this.label13 = new System.Windows.Forms.Label();
             this.numericUpDown_bpm = new System.Windows.Forms.NumericUpDown();
-            this.button_StartInstrument = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button_clearSteps = new System.Windows.Forms.Button();
@@ -168,7 +172,7 @@
             // splitContainer_Base
             // 
             this.splitContainer_Base.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer_Base.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer_Base.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer_Base.IsSplitterFixed = true;
             this.splitContainer_Base.Location = new System.Drawing.Point(0, 0);
             this.splitContainer_Base.Name = "splitContainer_Base";
@@ -369,6 +373,8 @@
             this.flowLayout_track3.Controls.Add(this.label12);
             this.flowLayout_track3.Controls.Add(this.numericUpDown_LengthTrack3);
             this.flowLayout_track3.Controls.Add(this.trackBar_volTrack3);
+            this.flowLayout_track3.Controls.Add(this.label24);
+            this.flowLayout_track3.Controls.Add(this.comboBox_stepLengthTrack3);
             this.flowLayout_track3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayout_track3.Location = new System.Drawing.Point(3, 16);
             this.flowLayout_track3.Margin = new System.Windows.Forms.Padding(0);
@@ -417,7 +423,7 @@
             0,
             0});
             this.numericUpDown_LengthTrack3.Name = "numericUpDown_LengthTrack3";
-            this.numericUpDown_LengthTrack3.Size = new System.Drawing.Size(29, 20);
+            this.numericUpDown_LengthTrack3.Size = new System.Drawing.Size(39, 20);
             this.numericUpDown_LengthTrack3.TabIndex = 14;
             this.numericUpDown_LengthTrack3.Value = new decimal(new int[] {
             1,
@@ -429,13 +435,38 @@
             // trackBar_volTrack3
             // 
             this.trackBar_volTrack3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.trackBar_volTrack3.Location = new System.Drawing.Point(165, 3);
+            this.trackBar_volTrack3.Location = new System.Drawing.Point(175, 3);
             this.trackBar_volTrack3.Maximum = 100;
             this.trackBar_volTrack3.Name = "trackBar_volTrack3";
             this.trackBar_volTrack3.Size = new System.Drawing.Size(55, 45);
             this.trackBar_volTrack3.TabIndex = 2;
             this.trackBar_volTrack3.Value = 50;
             this.trackBar_volTrack3.Scroll += new System.EventHandler(this.TrackVolumenChange);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(236, 0);
+            this.label24.Name = "label24";
+            this.label24.Padding = new System.Windows.Forms.Padding(0, 9, 0, 0);
+            this.label24.Size = new System.Drawing.Size(61, 22);
+            this.label24.TabIndex = 16;
+            this.label24.Text = "Step length";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // comboBox_stepLengthTrack3
+            // 
+            this.comboBox_stepLengthTrack3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_stepLengthTrack3.FormattingEnabled = true;
+            this.comboBox_stepLengthTrack3.Items.AddRange(new object[] {
+            "Corchea",
+            "Negra",
+            "Blanca"});
+            this.comboBox_stepLengthTrack3.Location = new System.Drawing.Point(303, 3);
+            this.comboBox_stepLengthTrack3.Name = "comboBox_stepLengthTrack3";
+            this.comboBox_stepLengthTrack3.Size = new System.Drawing.Size(84, 21);
+            this.comboBox_stepLengthTrack3.TabIndex = 15;
+            this.comboBox_stepLengthTrack3.SelectedIndexChanged += new System.EventHandler(this.comboBox_stepLengthTrack3_SelectedIndexChanged);
             // 
             // groupBox9
             // 
@@ -451,6 +482,7 @@
             // 
             // flowLayout_track2
             // 
+            this.flowLayout_track2.AutoScroll = true;
             this.flowLayout_track2.Controls.Add(this.button_setColor_Track2);
             this.flowLayout_track2.Controls.Add(this.p_colorPreview_Track2);
             this.flowLayout_track2.Controls.Add(this.label11);
@@ -505,7 +537,7 @@
             0,
             0});
             this.numericUpDown_LengthTrack2.Name = "numericUpDown_LengthTrack2";
-            this.numericUpDown_LengthTrack2.Size = new System.Drawing.Size(29, 20);
+            this.numericUpDown_LengthTrack2.Size = new System.Drawing.Size(39, 20);
             this.numericUpDown_LengthTrack2.TabIndex = 14;
             this.numericUpDown_LengthTrack2.Value = new decimal(new int[] {
             1,
@@ -517,7 +549,7 @@
             // trackBar_volTrack2
             // 
             this.trackBar_volTrack2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.trackBar_volTrack2.Location = new System.Drawing.Point(165, 3);
+            this.trackBar_volTrack2.Location = new System.Drawing.Point(175, 3);
             this.trackBar_volTrack2.Maximum = 100;
             this.trackBar_volTrack2.Name = "trackBar_volTrack2";
             this.trackBar_volTrack2.Size = new System.Drawing.Size(55, 45);
@@ -539,6 +571,7 @@
             // 
             // flowLayout_track1
             // 
+            this.flowLayout_track1.AutoScroll = true;
             this.flowLayout_track1.Controls.Add(this.button_setColor_Track1);
             this.flowLayout_track1.Controls.Add(this.p_colorPreview_Track1);
             this.flowLayout_track1.Controls.Add(this.label10);
@@ -592,7 +625,7 @@
             0,
             0});
             this.numericUpDown_LengthTrack1.Name = "numericUpDown_LengthTrack1";
-            this.numericUpDown_LengthTrack1.Size = new System.Drawing.Size(29, 20);
+            this.numericUpDown_LengthTrack1.Size = new System.Drawing.Size(39, 20);
             this.numericUpDown_LengthTrack1.TabIndex = 12;
             this.numericUpDown_LengthTrack1.Value = new decimal(new int[] {
             1,
@@ -604,7 +637,7 @@
             // trackBar_volTrack1
             // 
             this.trackBar_volTrack1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.trackBar_volTrack1.Location = new System.Drawing.Point(165, 3);
+            this.trackBar_volTrack1.Location = new System.Drawing.Point(175, 3);
             this.trackBar_volTrack1.Maximum = 100;
             this.trackBar_volTrack1.Name = "trackBar_volTrack1";
             this.trackBar_volTrack1.Size = new System.Drawing.Size(55, 45);
@@ -686,17 +719,53 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.comboBox_seqMode);
+            this.groupBox8.Controls.Add(this.label25);
+            this.groupBox8.Controls.Add(this.checkBox_playPause);
             this.groupBox8.Controls.Add(this.label14);
             this.groupBox8.Controls.Add(this.trackBar_MainVol);
             this.groupBox8.Controls.Add(this.label13);
             this.groupBox8.Controls.Add(this.numericUpDown_bpm);
-            this.groupBox8.Controls.Add(this.button_StartInstrument);
             this.groupBox8.Location = new System.Drawing.Point(6, 446);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(343, 185);
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Sequencer";
+            // 
+            // comboBox_seqMode
+            // 
+            this.comboBox_seqMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_seqMode.FormattingEnabled = true;
+            this.comboBox_seqMode.Items.AddRange(new object[] {
+            "UP",
+            "DOWN"});
+            this.comboBox_seqMode.Location = new System.Drawing.Point(185, 58);
+            this.comboBox_seqMode.Name = "comboBox_seqMode";
+            this.comboBox_seqMode.Size = new System.Drawing.Size(81, 21);
+            this.comboBox_seqMode.TabIndex = 7;
+            this.comboBox_seqMode.SelectedIndexChanged += new System.EventHandler(this.comboBox_seqMode_SelectedIndexChanged);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(90, 60);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(88, 13);
+            this.label25.TabIndex = 6;
+            this.label25.Text = "Sequencer mode";
+            // 
+            // checkBox_playPause
+            // 
+            this.checkBox_playPause.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox_playPause.AutoSize = true;
+            this.checkBox_playPause.Location = new System.Drawing.Point(15, 28);
+            this.checkBox_playPause.Name = "checkBox_playPause";
+            this.checkBox_playPause.Size = new System.Drawing.Size(37, 23);
+            this.checkBox_playPause.TabIndex = 5;
+            this.checkBox_playPause.Text = "Play";
+            this.checkBox_playPause.UseVisualStyleBackColor = true;
+            this.checkBox_playPause.CheckedChanged += new System.EventHandler(this.checkBox_playPause_CheckedChanged);
             // 
             // label14
             // 
@@ -740,21 +809,11 @@
             this.numericUpDown_bpm.Size = new System.Drawing.Size(43, 20);
             this.numericUpDown_bpm.TabIndex = 1;
             this.numericUpDown_bpm.Value = new decimal(new int[] {
-            1,
+            120,
             0,
             0,
             0});
             this.numericUpDown_bpm.ValueChanged += new System.EventHandler(this.numericUpDown_bpm_ValueChanged);
-            // 
-            // button_StartInstrument
-            // 
-            this.button_StartInstrument.Location = new System.Drawing.Point(9, 19);
-            this.button_StartInstrument.Name = "button_StartInstrument";
-            this.button_StartInstrument.Size = new System.Drawing.Size(75, 35);
-            this.button_StartInstrument.TabIndex = 0;
-            this.button_StartInstrument.Text = "Start instrument";
-            this.button_StartInstrument.UseVisualStyleBackColor = true;
-            this.button_StartInstrument.Click += new System.EventHandler(this.button_StartInstrument_Click);
             // 
             // groupBox3
             // 
@@ -1343,7 +1402,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 660);
             this.Controls.Add(this.splitContainer_Base);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Sequencer";
@@ -1457,7 +1515,6 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Panel p_colorPreview_Track1;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Button button_StartInstrument;
         private System.Windows.Forms.CheckBox cb_FlipH;
         private System.Windows.Forms.CheckBox cb_FlipV;
         private System.Windows.Forms.TabControl tabControl_bottom;
@@ -1503,6 +1560,11 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox comboBox_stepLengthTrack3;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.CheckBox checkBox_playPause;
+        private System.Windows.Forms.ComboBox comboBox_seqMode;
+        private System.Windows.Forms.Label label25;
     }
 }
 

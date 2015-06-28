@@ -39,6 +39,7 @@ namespace Sequencer {
             _sequencer.Tracks[0] = new MelodicTrack(1, _sequencer.CSound, 10, 11, 12);
             _sequencer.Tracks[1] = new MelodicTrack(2, _sequencer.CSound, 20, 21, 22);
             _sequencer.Tracks[2] = new RitmicTrack (3, _sequencer.CSound, 30, 31, 32);
+
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
             numericUpDown_fpsIn.Value = _sequencer.FpsIn;
@@ -52,18 +53,19 @@ namespace Sequencer {
                 numericUpDown_LengthTrack1.Maximum = _sequencer.GetTrack(1).MaxSteps;
                 numericUpDown_LengthTrack2.Maximum = _sequencer.GetTrack(2).MaxSteps;
                 numericUpDown_LengthTrack3.Maximum = _sequencer.GetTrack(3).MaxSteps;
-                numericUpDown_LengthTrack1.Value = _sequencer.GetTrack(1).Length;
-                numericUpDown_LengthTrack2.Value = _sequencer.GetTrack(2).Length;
-                numericUpDown_LengthTrack3.Value = _sequencer.GetTrack(3).Length;
-                numericUpDown_bpm.Value = 120;
-                trackBar_MainVol.Value = 75;
+
+                _sequencer.Bpm = (int)numericUpDown_bpm.Value;
+                numericUpDown_LengthTrack1.Value = 8;
+                numericUpDown_LengthTrack2.Value = 8;
+                numericUpDown_LengthTrack3.Value = 8;
+                _sequencer.GetTrack(1).Length = (int)numericUpDown_LengthTrack1.Value;
+                _sequencer.GetTrack(2).Length = (int)numericUpDown_LengthTrack2.Value;
+                _sequencer.GetTrack(3).Length = (int)numericUpDown_LengthTrack3.Value;
                 _sequencer.MainVolumen = trackBar_MainVol.Value / 100d;
-                trackBar_volTrack1.Value = 50;
                 _sequencer.GetTrack(1).Volumen = trackBar_volTrack1.Value / 100d;
-                trackBar_volTrack2.Value = 50;
                 _sequencer.GetTrack(2).Volumen = trackBar_volTrack2.Value / 100d;
-                trackBar_volTrack3.Value = 50;
                 _sequencer.GetTrack(3).Volumen = trackBar_volTrack3.Value / 100d;
+                _sequencer.StartCSound();
 
 
                 /*
