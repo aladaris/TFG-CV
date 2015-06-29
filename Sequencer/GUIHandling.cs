@@ -44,27 +44,48 @@ namespace Sequencer {
 
     public partial class Form1 : Form {
         #region GUI Handlers
+
+        private void PopulateDevicesCombobox() {
+            List<KeyValuePair<int, string>> listCamerasData = new List<KeyValuePair<int, string>>();
+            //-> Find systems cameras with DirectShow.Net dll 
+            DirectShowLib.DsDevice[] systemCamereas = DirectShowLib.DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice);
+            int devIndex = 0;
+            foreach (DirectShowLib.DsDevice cam in systemCamereas) {
+                listCamerasData.Add(new KeyValuePair<int, string>(devIndex, cam.Name));
+                devIndex++;
+            }
+            comboBox_cameras.DataSource = null;
+            comboBox_cameras.Items.Clear();
+            comboBox_cameras.DataSource = new BindingSource(listCamerasData, null);
+            comboBox_cameras.DisplayMember = "Value";
+            comboBox_cameras.ValueMember = "Key";
+        }
+
         /// <summary>
         /// This method handles the startup and stopping of the capture thread.
         /// </summary>
         private void button_startCamera_Click(object sender, EventArgs e) {
-            if (!_sequencer.Capturing) {
-                _sequencer.StartCapture();
-                if (_sequencer.PerspectiveCalibrated) {
-                    _sequencer.PerspectiveCorrectedFrame += OnPerspectiveCorrectedFrame;
+            if (_sequencer != null) {
+                if (!_sequencer.Capturing) {
+                    _sequencer.StartCapture();
+                    if (_sequencer.Capturing) {
+                        if (_sequencer.PerspectiveCalibrated) {
+                            _sequencer.PerspectiveCorrectedFrame += OnPerspectiveCorrectedFrame;
+                        } else {
+                            _sequencer.RawFrame += OnImageGrabbed;
+                        }
+                        // GUI
+                        button_startCamera.Text = "Stop Camera";
+                    }
                 } else {
-                    _sequencer.RawFrame += OnImageGrabbed;
+                    _sequencer.StopCapture();
+                    _sequencer.RawFrame -= OnImageGrabbed;
+                    if (_sequencer.PerspectiveCalibrated) {
+                        _sequencer.PerspectiveCorrectedFrame -= OnPerspectiveCorrectedFrame;
+                    }
+                    // GUI
+                    button_startCamera.Text = "Start Camera";
                 }
-                // GUI
-                button_startCamera.Text = "Stop Camera";
-            } else {
-                _sequencer.StopCapture();
-                _sequencer.RawFrame -= OnImageGrabbed;
-                if (_sequencer.PerspectiveCalibrated) {
-                    _sequencer.PerspectiveCorrectedFrame -= OnPerspectiveCorrectedFrame;
-                }
-                // GUI
-                button_startCamera.Text = "Start Camera";
             }
         }
 
@@ -228,6 +249,12 @@ namespace Sequencer {
             }
         }
 
+        private void comboBox_cameras_SelectedIndexChanged(object sender, EventArgs e) {
+            if (_sequencer != null) {
+                _sequencer.ChangeCaptureDevice(((KeyValuePair<int, string>)comboBox_cameras.SelectedItem).Key);
+            }
+        }
+
         #endregion
 
         private void tabControl_bottom_SelectedIndexChanged(object sender, EventArgs e) {
@@ -296,7 +323,12 @@ namespace Sequencer {
                 if (trackId > 0) {
                     var track = _sequencer.GetTrack(trackId);
                     if (track != null) {
-                        track.Length = (int)nud.Value;
+                        var length = (int)nud.Value;
+                        if (length > _sequencer.StepCount) {
+                            length = _sequencer.StepCount;
+                            nud.Value = length;
+                        }
+                        track.Length = length;
 
                         // Update del numero de NoteCombobox en la pista
                         Stack<NoteComboBox> cbs = null;
@@ -315,8 +347,11 @@ namespace Sequencer {
 
                                 while (cbs.Count < track.Length) {
                                     var noteCb = new NoteComboBox(trackId, cbs.Count);
-                                    noteCb.ComboBox.SelectedText = CSNoteHandler.GetNoteValue(mt.Notes[cbs.Count]);
                                     noteCb.NoteValueChange += OnNoteComboBoxValueChange;
+                                    noteCb.ComboBox.Font = new Font(FontFamily.GenericMonospace, 8);
+                                    noteCb.ComboBox.Width = 45;
+                                    noteCb.ComboBox.Margin = new Padding(0);
+                                    noteCb.ComboBox.SelectedText = CSNoteHandler.GetNoteValue(mt.Notes[cbs.Count]);
                                     nud.Parent.Controls.Add(noteCb.ComboBox);
                                     cbs.Push(noteCb);
                                 }

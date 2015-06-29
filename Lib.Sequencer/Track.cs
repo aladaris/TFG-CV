@@ -28,10 +28,16 @@ namespace Sequencer {
 
     public class Track {
         protected ProbabilisticImageFiltering _colorFilter;
+        private int _length;
 
         public int Id { get; protected set; }  // TODO: Limitar valores
         public int CurrentStep { get; set; }  // TODO: Limitar valores
-        public int Length { get; set; }
+        public int Length {
+            get { return _length; }
+            set {
+                _length = value <= MaxSteps ? value : MaxSteps;
+            }
+        }
         public int MaxSteps { get; protected set; }
         public ProbabilisticImageFiltering ColorFilter {
             get {

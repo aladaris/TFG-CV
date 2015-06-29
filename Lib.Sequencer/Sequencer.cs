@@ -14,6 +14,8 @@ using Emgu.CV.UI;
 
 namespace Sequencer {
 
+    public delegate void TrackStepChangeHandler(int track_id, int step_id);
+
     public class Sequencer : IDisposable {
         private Board _board;
         // Capture and display
@@ -51,9 +53,9 @@ namespace Sequencer {
         /// </summary>
         public event GeneratedImage<Bgr, Byte> PerspectiveCorrectedFrame;
         /// <summary>
-        /// Triggered on every color filtered frame.
+        /// Triggered each time a traack index is changed
         /// </summary>
-        //public event GeneratedImage<Gray, Double> ColorFilteredFrame;
+        public event TrackStepChangeHandler TrackStepChange; 
 
         #region Properties
         /// <summary>
@@ -155,7 +157,7 @@ namespace Sequencer {
         public Sequencer(ImageBox i_disp, int tracks_count) {
             if ((i_disp != null) && (tracks_count > 0)) {
                 _mainDisplay = i_disp;
-                _camera = new Capture();  // TODO: Selección de cámara
+                //_camera = new Capture();  // TODO: Selección de cámara
                 _fpsTimer = new System.Timers.Timer(1000 / _fps);
                 _fpsTimer.Elapsed += GetNewFrame;
                 _board = new Board();
@@ -231,6 +233,8 @@ namespace Sequencer {
                             rt.ReadStep<Bgr>(index, step_img);
                     }
                 }
+                if (TrackStepChange != null)
+                    TrackStepChange(track.Id, index);
             //}
         }
 
@@ -297,23 +301,14 @@ namespace Sequencer {
         /// </summary>
         /// <param name="step_id"></param>
         /// <returns></returns>
-        public Image<Bgr, byte> GetStepROI(int step_id) {  // TODO: Private
-            if ((_board != null)&&(_board.Steps.Count > 0)&&(step_id >= 0)&&(_board.StepsCount - 1 >= step_id)) {
+        public Image<Bgr, byte> GetStepROI(int step_id) {  // TODO: Private??
+            if ((_board != null)&&(_board.Steps.Count > 0)&&(step_id >= 0)&&(_board.StepsCount - 1 >= step_id)&&(_frame != null)) {
                 Step step = _board.Steps[step_id];
                 var bRectangle = step.GetBoundingRectangle();
                 var stepArea = _frame.Copy(bRectangle);  // Recortamos un rectángulo que contanga el paso.
-                
-                //CvInvoke.cvShowImage("Step", stepArea.Ptr);  // DEBUG
-                //CvInvoke.cvWaitKey(0);  // DEBUG
-
                 var mask = new Image<Gray, byte>(stepArea.Width, stepArea.Height, new Gray(0));
+
                 mask.Draw(Step.GetDisplacedStep(step, bRectangle.Left, bRectangle.Top), new Gray(255), 0);
-
-                //CvInvoke.cvShowImage("Mask", mask.Ptr);  // DEBUG
-                //CvInvoke.cvWaitKey(0);  // DEBUG
-                //CvInvoke.cvShowImage("Result", stepArea.Copy(mask).Ptr);  // DEBUG
-                //CvInvoke.cvWaitKey(0);  // DEBUG
-
                 return stepArea.Copy(mask);
             }
             return null;
@@ -415,6 +410,16 @@ namespace Sequencer {
             return null;
         }
 
+        public void ChangeCaptureDevice(int cam_id) {
+            if (_capturing) {
+                StopCapture();
+            }
+            if (_camera != null) {
+                _camera.Dispose();
+            }
+            _camera = new Capture(cam_id);
+        }
+
             #endregion
 
             #region Board
@@ -424,6 +429,10 @@ namespace Sequencer {
         /// <param name="i_step">The step to be added</param>
         public void AddStep(Step i_step) {
             _board.AddStep(i_step);
+
+            for (int i = 0; i < _tracks.Length; i++) {
+                _tracks[i].Length++;
+            }
         }
 
         /// <summary>
@@ -431,8 +440,7 @@ namespace Sequencer {
         /// </summary>
         /// <param name="i_points">A collection of points representing the step polygon</param>
         public void AddStep(IEnumerable<Point> i_points) {
-            Step s = new Step(i_points);
-            _board.AddStep(s);
+            AddStep(new Step(i_points));
         }
 
         /// <summary>

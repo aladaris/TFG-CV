@@ -39,6 +39,7 @@ namespace Sequencer {
             _sequencer.Tracks[0] = new MelodicTrack(1, _sequencer.CSound, 10, 11, 12);
             _sequencer.Tracks[1] = new MelodicTrack(2, _sequencer.CSound, 20, 21, 22);
             _sequencer.Tracks[2] = new RitmicTrack (3, _sequencer.CSound, 30, 31, 32);
+            //_sequencer.TrackStepChange += OnTrackStepChange;
 
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
@@ -47,6 +48,11 @@ namespace Sequencer {
 
         private void Form1_Load(object sender, EventArgs e) {
             toolStripStatusLabel_state.Text = "State: Init";  // DEBUG ?
+
+
+            PopulateDevicesCombobox();
+
+
             if (_sequencer != null) {
                 cb_FlipH.Checked = _sequencer.FlipH;
                 cb_FlipV.Checked = _sequencer.FlipV;
@@ -66,20 +72,6 @@ namespace Sequencer {
                 _sequencer.GetTrack(2).Volumen = trackBar_volTrack2.Value / 100d;
                 _sequencer.GetTrack(3).Volumen = trackBar_volTrack3.Value / 100d;
                 _sequencer.StartCSound();
-
-
-                /*
-                // DEBUG
-                var orig = new Image<Gray, byte>(400, 400, new Gray(127));
-                var overlay = new Image<Gray, byte>(400, 400, new Gray(0));
-                var poly = new Step(new List<Point> { new Point(22, 15), new Point(22, 236), new Point(92, 235), new Point(91, 14) });
-                overlay.Draw(poly, new Gray(255), 0);
-                var result = orig.Copy(overlay); //new Image<Gray, byte>(400, 400, new Gray(0));
-                //CvInvoke.cvCopy(orig.Ptr, result.Ptr, overlay);
-                CvInvoke.cvShowImage("BLACK", result.Ptr);
-                CvInvoke.cvWaitKey(0);
-                // DEBUG
-                */
             }
 
             //InitStateMachine();
@@ -176,10 +168,8 @@ namespace Sequencer {
                 _sequencer.SetFilterColor(i_samples, _samplingTrackID);
             }
             StopColorSampling();
-            
         }
         #endregion
-
 
         private void StopColorSampling() {
             _selectionRect.Enabled = false;

@@ -29,6 +29,7 @@
             this.imageBox_mainDisplay = new Emgu.CV.UI.ImageBox();
             this.tabControl_bottom = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBox_cameras = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown_fpsIn = new System.Windows.Forms.NumericUpDown();
             this.button_startCamera = new System.Windows.Forms.Button();
@@ -172,7 +173,7 @@
             // splitContainer_Base
             // 
             this.splitContainer_Base.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer_Base.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer_Base.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer_Base.IsSplitterFixed = true;
             this.splitContainer_Base.Location = new System.Drawing.Point(0, 0);
             this.splitContainer_Base.Name = "splitContainer_Base";
@@ -234,6 +235,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBox_cameras);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.numericUpDown_fpsIn);
             this.tabPage1.Controls.Add(this.button_startCamera);
@@ -248,10 +250,19 @@
             this.tabPage1.Text = "Display adjusments";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // comboBox_cameras
+            // 
+            this.comboBox_cameras.FormattingEnabled = true;
+            this.comboBox_cameras.Location = new System.Drawing.Point(11, 15);
+            this.comboBox_cameras.Name = "comboBox_cameras";
+            this.comboBox_cameras.Size = new System.Drawing.Size(141, 21);
+            this.comboBox_cameras.TabIndex = 9;
+            this.comboBox_cameras.SelectedIndexChanged += new System.EventHandler(this.comboBox_cameras_SelectedIndexChanged);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 96);
+            this.label1.Location = new System.Drawing.Point(8, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 8;
@@ -259,7 +270,7 @@
             // 
             // numericUpDown_fpsIn
             // 
-            this.numericUpDown_fpsIn.Location = new System.Drawing.Point(55, 94);
+            this.numericUpDown_fpsIn.Location = new System.Drawing.Point(55, 51);
             this.numericUpDown_fpsIn.Maximum = new decimal(new int[] {
             24,
             0,
@@ -282,7 +293,7 @@
             // 
             // button_startCamera
             // 
-            this.button_startCamera.Location = new System.Drawing.Point(8, 15);
+            this.button_startCamera.Location = new System.Drawing.Point(158, 6);
             this.button_startCamera.Name = "button_startCamera";
             this.button_startCamera.Size = new System.Drawing.Size(75, 60);
             this.button_startCamera.TabIndex = 0;
@@ -292,7 +303,7 @@
             // 
             // button_setPersCalib
             // 
-            this.button_setPersCalib.Location = new System.Drawing.Point(89, 15);
+            this.button_setPersCalib.Location = new System.Drawing.Point(239, 6);
             this.button_setPersCalib.Name = "button_setPersCalib";
             this.button_setPersCalib.Size = new System.Drawing.Size(75, 60);
             this.button_setPersCalib.TabIndex = 4;
@@ -304,7 +315,7 @@
             // 
             this.cb_FlipV.AutoSize = true;
             this.cb_FlipV.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.cb_FlipV.Location = new System.Drawing.Point(264, 15);
+            this.cb_FlipV.Location = new System.Drawing.Point(737, 10);
             this.cb_FlipV.Name = "cb_FlipV";
             this.cb_FlipV.Size = new System.Drawing.Size(64, 31);
             this.cb_FlipV.TabIndex = 5;
@@ -316,7 +327,7 @@
             // 
             this.cb_FlipH.AutoSize = true;
             this.cb_FlipH.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.cb_FlipH.Location = new System.Drawing.Point(183, 15);
+            this.cb_FlipH.Location = new System.Drawing.Point(656, 10);
             this.cb_FlipH.Name = "cb_FlipH";
             this.cb_FlipH.Size = new System.Drawing.Size(75, 31);
             this.cb_FlipH.TabIndex = 5;
@@ -414,11 +425,6 @@
             this.numericUpDown_LengthTrack3.Location = new System.Drawing.Point(130, 3);
             this.numericUpDown_LengthTrack3.Maximum = new decimal(new int[] {
             8,
-            0,
-            0,
-            0});
-            this.numericUpDown_LengthTrack3.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
@@ -531,16 +537,11 @@
             0,
             0,
             0});
-            this.numericUpDown_LengthTrack2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.numericUpDown_LengthTrack2.Name = "numericUpDown_LengthTrack2";
             this.numericUpDown_LengthTrack2.Size = new System.Drawing.Size(39, 20);
             this.numericUpDown_LengthTrack2.TabIndex = 14;
             this.numericUpDown_LengthTrack2.Value = new decimal(new int[] {
-            1,
+            8,
             0,
             0,
             0});
@@ -616,11 +617,6 @@
             this.numericUpDown_LengthTrack1.Location = new System.Drawing.Point(130, 3);
             this.numericUpDown_LengthTrack1.Maximum = new decimal(new int[] {
             8,
-            0,
-            0,
-            0});
-            this.numericUpDown_LengthTrack1.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
@@ -1402,7 +1398,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 660);
             this.Controls.Add(this.splitContainer_Base);
-            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Sequencer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -1565,6 +1560,7 @@
         private System.Windows.Forms.CheckBox checkBox_playPause;
         private System.Windows.Forms.ComboBox comboBox_seqMode;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ComboBox comboBox_cameras;
     }
 }
 
