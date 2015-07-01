@@ -76,6 +76,7 @@
             this.numericUpDown_bpm = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox_boardFile = new System.Windows.Forms.TextBox();
             this.button_clearSteps = new System.Windows.Forms.Button();
             this.button_addSteps = new System.Windows.Forms.Button();
             this.button_saveBoard = new System.Windows.Forms.Button();
@@ -114,7 +115,6 @@
             this.numericUpDown_corcheaMin = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown_corcheaMax = new System.Windows.Forms.NumericUpDown();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -670,7 +670,7 @@
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.44828F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.55172F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 232F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 235F));
             this.tableLayoutPanel4.Controls.Add(this.trackBar_MainVol, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.label14, 1, 1);
             this.tableLayoutPanel4.Controls.Add(this.checkBox_playPause, 0, 0);
@@ -688,11 +688,11 @@
             // 
             this.trackBar_MainVol.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.trackBar_MainVol.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackBar_MainVol.Location = new System.Drawing.Point(65, 3);
+            this.trackBar_MainVol.Location = new System.Drawing.Point(63, 3);
             this.trackBar_MainVol.Maximum = 100;
             this.trackBar_MainVol.Name = "trackBar_MainVol";
             this.trackBar_MainVol.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBar_MainVol.Size = new System.Drawing.Size(48, 115);
+            this.trackBar_MainVol.Size = new System.Drawing.Size(47, 115);
             this.trackBar_MainVol.TabIndex = 3;
             this.trackBar_MainVol.Value = 75;
             this.trackBar_MainVol.Scroll += new System.EventHandler(this.trackBar_MainVol_Scroll);
@@ -700,9 +700,9 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(65, 121);
+            this.label14.Location = new System.Drawing.Point(63, 121);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(48, 13);
+            this.label14.Size = new System.Drawing.Size(42, 26);
             this.label14.TabIndex = 4;
             this.label14.Text = "Volumen";
             // 
@@ -714,7 +714,7 @@
             this.checkBox_playPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox_playPause.Location = new System.Drawing.Point(3, 3);
             this.checkBox_playPause.Name = "checkBox_playPause";
-            this.checkBox_playPause.Size = new System.Drawing.Size(56, 115);
+            this.checkBox_playPause.Size = new System.Drawing.Size(54, 115);
             this.checkBox_playPause.TabIndex = 5;
             this.checkBox_playPause.Text = "▶";
             this.checkBox_playPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -731,12 +731,12 @@
             this.tableLayoutPanel5.Controls.Add(this.label25, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.numericUpDown_bpm, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(119, 3);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(116, 3);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.34783F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.65218F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(227, 115);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(230, 115);
             this.tableLayoutPanel5.TabIndex = 6;
             // 
             // comboBox_seqMode
@@ -747,9 +747,9 @@
             this.comboBox_seqMode.Items.AddRange(new object[] {
             "UP",
             "DOWN"});
-            this.comboBox_seqMode.Location = new System.Drawing.Point(98, 31);
+            this.comboBox_seqMode.Location = new System.Drawing.Point(100, 31);
             this.comboBox_seqMode.Name = "comboBox_seqMode";
-            this.comboBox_seqMode.Size = new System.Drawing.Size(126, 21);
+            this.comboBox_seqMode.Size = new System.Drawing.Size(127, 21);
             this.comboBox_seqMode.TabIndex = 7;
             this.comboBox_seqMode.SelectedIndexChanged += new System.EventHandler(this.comboBox_seqMode_SelectedIndexChanged);
             // 
@@ -759,7 +759,7 @@
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label13.Location = new System.Drawing.Point(3, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(89, 28);
+            this.label13.Size = new System.Drawing.Size(91, 28);
             this.label13.TabIndex = 2;
             this.label13.Text = "BPM";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -770,14 +770,14 @@
             this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label25.Location = new System.Drawing.Point(3, 28);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(89, 87);
+            this.label25.Size = new System.Drawing.Size(91, 87);
             this.label25.TabIndex = 6;
             this.label25.Text = "Sequence mode";
             this.label25.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // numericUpDown_bpm
             // 
-            this.numericUpDown_bpm.Location = new System.Drawing.Point(98, 3);
+            this.numericUpDown_bpm.Location = new System.Drawing.Point(100, 3);
             this.numericUpDown_bpm.Maximum = new decimal(new int[] {
             400,
             0,
@@ -786,11 +786,6 @@
             this.numericUpDown_bpm.Name = "numericUpDown_bpm";
             this.numericUpDown_bpm.Size = new System.Drawing.Size(43, 20);
             this.numericUpDown_bpm.TabIndex = 1;
-            this.numericUpDown_bpm.Value = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
             this.numericUpDown_bpm.ValueChanged += new System.EventHandler(this.numericUpDown_bpm_ValueChanged);
             // 
             // groupBox3
@@ -807,7 +802,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBox_boardFile);
             this.groupBox1.Controls.Add(this.button_clearSteps);
             this.groupBox1.Controls.Add(this.button_addSteps);
             this.groupBox1.Controls.Add(this.button_saveBoard);
@@ -818,6 +813,13 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Board setup";
+            // 
+            // textBox_boardFile
+            // 
+            this.textBox_boardFile.Location = new System.Drawing.Point(6, 60);
+            this.textBox_boardFile.Name = "textBox_boardFile";
+            this.textBox_boardFile.Size = new System.Drawing.Size(156, 20);
+            this.textBox_boardFile.TabIndex = 7;
             // 
             // button_clearSteps
             // 
@@ -915,7 +917,7 @@
             this.numericUpDown_HihatMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_HihatMax.TabIndex = 12;
             this.numericUpDown_HihatMax.Value = new decimal(new int[] {
-            375,
+            9999,
             0,
             0,
             0});
@@ -944,11 +946,6 @@
             this.numericUpDown_HihatMin.Name = "numericUpDown_HihatMin";
             this.numericUpDown_HihatMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_HihatMin.TabIndex = 10;
-            this.numericUpDown_HihatMin.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.numericUpDown_HihatMin.ValueChanged += new System.EventHandler(this.numericUpDown_HihatMin_ValueChanged);
             // 
             // label16
@@ -975,7 +972,7 @@
             this.numericUpDown_SnareMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_SnareMax.TabIndex = 8;
             this.numericUpDown_SnareMax.Value = new decimal(new int[] {
-            700,
+            9999,
             0,
             0,
             0});
@@ -1004,11 +1001,6 @@
             this.numericUpDown_SnareMin.Name = "numericUpDown_SnareMin";
             this.numericUpDown_SnareMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_SnareMin.TabIndex = 6;
-            this.numericUpDown_SnareMin.Value = new decimal(new int[] {
-            400,
-            0,
-            0,
-            0});
             this.numericUpDown_SnareMin.ValueChanged += new System.EventHandler(this.numericUpDown_SnareMin_ValueChanged);
             // 
             // label18
@@ -1045,11 +1037,6 @@
             this.numericUpDown_kickMin.Name = "numericUpDown_kickMin";
             this.numericUpDown_kickMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_kickMin.TabIndex = 3;
-            this.numericUpDown_kickMin.Value = new decimal(new int[] {
-            750,
-            0,
-            0,
-            0});
             this.numericUpDown_kickMin.ValueChanged += new System.EventHandler(this.numericUpDown_kickMin_ValueChanged);
             // 
             // label23
@@ -1076,7 +1063,7 @@
             this.numericUpDown_KickMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_KickMax.TabIndex = 3;
             this.numericUpDown_KickMax.Value = new decimal(new int[] {
-            1500,
+            9999,
             0,
             0,
             0});
@@ -1171,7 +1158,7 @@
             this.numericUpDown_blancaMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_blancaMax.TabIndex = 12;
             this.numericUpDown_blancaMax.Value = new decimal(new int[] {
-            1200,
+            9999,
             0,
             0,
             0});
@@ -1200,11 +1187,6 @@
             this.numericUpDown_blancaMin.Name = "numericUpDown_blancaMin";
             this.numericUpDown_blancaMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_blancaMin.TabIndex = 10;
-            this.numericUpDown_blancaMin.Value = new decimal(new int[] {
-            750,
-            0,
-            0,
-            0});
             this.numericUpDown_blancaMin.ValueChanged += new System.EventHandler(this.numericUpDown_blancaMin_ValueChanged);
             // 
             // label8
@@ -1231,7 +1213,7 @@
             this.numericUpDown_negraMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_negraMax.TabIndex = 8;
             this.numericUpDown_negraMax.Value = new decimal(new int[] {
-            700,
+            9999,
             0,
             0,
             0});
@@ -1260,11 +1242,6 @@
             this.numericUpDown_negraMin.Name = "numericUpDown_negraMin";
             this.numericUpDown_negraMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_negraMin.TabIndex = 6;
-            this.numericUpDown_negraMin.Value = new decimal(new int[] {
-            400,
-            0,
-            0,
-            0});
             this.numericUpDown_negraMin.ValueChanged += new System.EventHandler(this.numericUpDown_negraMin_ValueChanged);
             // 
             // label6
@@ -1338,11 +1315,6 @@
             this.numericUpDown_corcheaMin.Name = "numericUpDown_corcheaMin";
             this.numericUpDown_corcheaMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_corcheaMin.TabIndex = 3;
-            this.numericUpDown_corcheaMin.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.numericUpDown_corcheaMin.ValueChanged += new System.EventHandler(this.numericUpDown_corcheaMin_ValueChanged);
             // 
             // label3
@@ -1369,19 +1341,11 @@
             this.numericUpDown_corcheaMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_corcheaMax.TabIndex = 3;
             this.numericUpDown_corcheaMax.Value = new decimal(new int[] {
-            375,
+            9999,
             0,
             0,
             0});
             this.numericUpDown_corcheaMax.ValueChanged += new System.EventHandler(this.numericUpDown_corcheaMax_ValueChanged);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 60);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(156, 20);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.Text = "tablero_8_rectangular.xml";
             // 
             // Form1
             // 
@@ -1550,7 +1514,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_boardFile;
     }
 }
 

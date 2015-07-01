@@ -322,7 +322,7 @@ namespace Sequencer {
                         switch (trackId) {
                             case 1: cbs = _notesComboBoxesTrack1; break;
                             case 2: cbs = _notesComboBoxesTrack2; break;
-                            case 3: cbs = _notesComboBoxesTrack3; break;
+                            //case 3: cbs = _notesComboBoxesTrack3; break;
                         }
                         if (cbs != null) {
                             MelodicTrack mt = track as MelodicTrack;

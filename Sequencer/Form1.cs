@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -23,13 +24,10 @@ namespace Sequencer {
         private PolygonDrawingTool _polyDrawTool;
         private SelectionRectangle _selectionRect;
         private Sequencer _sequencer;
-        //private StateMachine<State, Trigger> _stmachine = new StateMachine<State, Trigger>(State.Init);
-        private bool _colorSampled = false;  // Indica si se ha seleccionado la muestra necesaria para el filtrado de color
-        //private bool _gettingFigureBlobs = false;  // TODO: Mover a donde se mueva lka lógica de la detección de blobs
         private int _samplingTrackID = -1;  // The track ID of the track wich is sampling a color.
         private Stack<NoteComboBox> _notesComboBoxesTrack1 = new Stack<NoteComboBox>();
         private Stack<NoteComboBox> _notesComboBoxesTrack2 = new Stack<NoteComboBox>();
-        private Stack<NoteComboBox> _notesComboBoxesTrack3 = new Stack<NoteComboBox>();
+        //private Stack<NoteComboBox> _notesComboBoxesTrack3 = new Stack<NoteComboBox>();
         #endregion
 
         #region Form Manage
@@ -43,46 +41,142 @@ namespace Sequencer {
 
             _polyDrawTool = new PolygonDrawingTool(imageBox_mainDisplay);
             _selectionRect = new SelectionRectangle(imageBox_mainDisplay);
-            numericUpDown_fpsIn.Value = _sequencer.FpsIn;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
             PopulateDevicesCombobox();
-            comboBox_seqMode.SelectedIndex = 0;
-            comboBox_stepLengthTrack3.SelectedIndex = 1;
-
+            LoadConfigurationFile();
+            LoadFigureAreaValues();
             if (_sequencer != null) {
-                cb_FlipH.Checked = _sequencer.FlipH;
-                cb_FlipV.Checked = _sequencer.FlipV;
-                numericUpDown_LengthTrack1.Maximum = _sequencer.GetTrack(1).MaxSteps;
-                numericUpDown_LengthTrack2.Maximum = _sequencer.GetTrack(2).MaxSteps;
-                numericUpDown_LengthTrack3.Maximum = _sequencer.GetTrack(3).MaxSteps;
-
+                _sequencer.FlipH = cb_FlipH.Checked;
+                _sequencer.FlipV = cb_FlipV.Checked;
                 _sequencer.Bpm = (int)numericUpDown_bpm.Value;
-                /*
-                numericUpDown_LengthTrack1.Value = 8;
-                numericUpDown_LengthTrack2.Value = 8;
-                numericUpDown_LengthTrack3.Value = 8;
-                _sequencer.GetTrack(1).Length = (int)numericUpDown_LengthTrack1.Value;
-                _sequencer.GetTrack(2).Length = (int)numericUpDown_LengthTrack2.Value;
-                _sequencer.GetTrack(3).Length = (int)numericUpDown_LengthTrack3.Value;
-                */
+                _sequencer.FpsIn = (int)numericUpDown_fpsIn.Value;
                 _sequencer.MainVolumen = trackBar_MainVol.Value / 100d;
                 _sequencer.GetTrack(1).Volumen = trackBar_volTrack1.Value / 100d;
                 _sequencer.GetTrack(2).Volumen = trackBar_volTrack2.Value / 100d;
                 _sequencer.GetTrack(3).Volumen = trackBar_volTrack3.Value / 100d;
                 _sequencer.StartCSound();
+                numericUpDown_LengthTrack1.Maximum = _sequencer.GetTrack(1).MaxSteps;
+                numericUpDown_LengthTrack2.Maximum = _sequencer.GetTrack(2).MaxSteps;
+                numericUpDown_LengthTrack3.Maximum = _sequencer.GetTrack(3).MaxSteps;
+            }
+        }
+
+        private void LoadConfigurationFile() {
+            comboBox_cameras.SelectedIndex = Int32.Parse(ConfigurationManager.AppSettings["webcamIndex"]);
+            numericUpDown_fpsIn.Value = Int32.Parse(ConfigurationManager.AppSettings["webcamFps"]);
+            cb_FlipH.Checked = Boolean.Parse(ConfigurationManager.AppSettings["webcamFlipH"]);
+            cb_FlipV.Checked = Boolean.Parse(ConfigurationManager.AppSettings["webcamFlipV"]);
+
+            numericUpDown_corcheaMax.Value = Int32.Parse(ConfigurationManager.AppSettings["figureCorcheaMax"]);
+            numericUpDown_corcheaMin.Value = Int32.Parse(ConfigurationManager.AppSettings["figureCorcheaMin"]);
+            numericUpDown_negraMax.Value = Int32.Parse(ConfigurationManager.AppSettings["figureNegraMax"]);
+            numericUpDown_negraMin.Value = Int32.Parse(ConfigurationManager.AppSettings["figureNegraMin"]);
+            numericUpDown_blancaMax.Value = Int32.Parse(ConfigurationManager.AppSettings["figureBlancaMax"]);
+            numericUpDown_blancaMin.Value = Int32.Parse(ConfigurationManager.AppSettings["figureBlancaMin"]);
+
+            numericUpDown_KickMax.Value = Int32.Parse(ConfigurationManager.AppSettings["figureKickMax"]);
+            numericUpDown_kickMin.Value = Int32.Parse(ConfigurationManager.AppSettings["figureKickMin"]);
+            numericUpDown_SnareMax.Value = Int32.Parse(ConfigurationManager.AppSettings["figureSnareMax"]);
+            numericUpDown_SnareMin.Value = Int32.Parse(ConfigurationManager.AppSettings["figureSnareMin"]);
+            numericUpDown_HihatMax.Value = Int32.Parse(ConfigurationManager.AppSettings["figureHihatMax"]);
+            numericUpDown_HihatMin.Value = Int32.Parse(ConfigurationManager.AppSettings["figureHihatMin"]);
+
+            numericUpDown_bpm.Value = Int32.Parse(ConfigurationManager.AppSettings["seqBpm"]);
+            comboBox_seqMode.SelectedIndex = Int32.Parse(ConfigurationManager.AppSettings["seqModeIndex"]);
+            trackBar_MainVol.Value = Int32.Parse(ConfigurationManager.AppSettings["seqMainVol"]);
+            textBox_boardFile.Text = ConfigurationManager.AppSettings["seqLastBoardFile"];
+            comboBox_stepLengthTrack3.SelectedIndex = Int32.Parse(ConfigurationManager.AppSettings["seqTrack3StepLengthIndex"]);
+            trackBar_volTrack1.Value = Int32.Parse(ConfigurationManager.AppSettings["seqTrack1Vol"]);
+            trackBar_volTrack2.Value = Int32.Parse(ConfigurationManager.AppSettings["seqTrack2Vol"]);
+            trackBar_volTrack3.Value = Int32.Parse(ConfigurationManager.AppSettings["seqTrack3Vol"]);
+
+            if (_sequencer != null) {
+                var notes = ConfigurationManager.AppSettings["seqTrack1Notes"].Split(',');
+                var track = _sequencer.GetTrack(1) as MelodicTrack;
+                if (notes.Length == track.Notes.Length) {
+                    for (int i = 0; i < notes.Length; i++) {
+                        track.Notes[i] = CSNoteHandler.GetPchValue(notes[i]);
+                    }
+                }
+                notes = ConfigurationManager.AppSettings["seqTrack2Notes"].Split(',');
+                track = _sequencer.GetTrack(2) as MelodicTrack;
+                if (notes.Length == track.Notes.Length) {
+                    for (int i = 0; i < notes.Length; i++) {
+                        track.Notes[i] = CSNoteHandler.GetPchValue(notes[i]);
+                    }
+                }
             }
 
-            //InitStateMachine();
-            LoadFigureAreaValues();
+        }
+
+        private void SaveConfigurationFileValues() {
+
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+
+            config.AppSettings.Settings["webcamIndex"].Value = comboBox_cameras.SelectedIndex.ToString();
+            config.AppSettings.Settings["webcamFps"].Value = numericUpDown_fpsIn.Value.ToString();
+            config.AppSettings.Settings["webcamFlipH"].Value = cb_FlipH.Checked.ToString();
+            config.AppSettings.Settings["webcamFlipV"].Value = cb_FlipV.Checked.ToString();
+
+            config.AppSettings.Settings["figureCorcheaMin"].Value = numericUpDown_corcheaMin.Value.ToString();
+            config.AppSettings.Settings["figureCorcheaMax"].Value = numericUpDown_corcheaMax.Value.ToString();
+            config.AppSettings.Settings["figureNegraMin"].Value = numericUpDown_negraMin.Value.ToString();
+            config.AppSettings.Settings["figureNegraMax"].Value = numericUpDown_negraMax.Value.ToString();
+            config.AppSettings.Settings["figureBlancaMin"].Value = numericUpDown_blancaMin.Value.ToString();
+            config.AppSettings.Settings["figureBlancaMax"].Value = numericUpDown_blancaMax.Value.ToString();
+
+            config.AppSettings.Settings["figureKickMin"].Value = numericUpDown_kickMin.Value.ToString();
+            config.AppSettings.Settings["figureKickMax"].Value = numericUpDown_KickMax.Value.ToString();
+            config.AppSettings.Settings["figureSnareMin"].Value = numericUpDown_SnareMin.Value.ToString();
+            config.AppSettings.Settings["figureSnareMax"].Value = numericUpDown_SnareMax.Value.ToString();
+            config.AppSettings.Settings["figureHihatMin"].Value = numericUpDown_HihatMin.Value.ToString();
+            config.AppSettings.Settings["figureHihatMax"].Value = numericUpDown_HihatMax.Value.ToString();
+
+            config.AppSettings.Settings["seqBpm"].Value = numericUpDown_bpm.Value.ToString();
+            config.AppSettings.Settings["seqModeIndex"].Value = comboBox_seqMode.SelectedIndex.ToString();
+            config.AppSettings.Settings["seqMainVol"].Value = trackBar_MainVol.Value.ToString();
+            config.AppSettings.Settings["seqLastBoardFile"].Value = textBox_boardFile.Text;
+            config.AppSettings.Settings["seqTrack3StepLengthIndex"].Value = comboBox_stepLengthTrack3.SelectedIndex.ToString();
+            config.AppSettings.Settings["seqTrack1Vol"].Value = trackBar_volTrack1.Value.ToString();
+            config.AppSettings.Settings["seqTrack2Vol"].Value = trackBar_volTrack2.Value.ToString();
+            config.AppSettings.Settings["seqTrack3Vol"].Value = trackBar_volTrack3.Value.ToString();
+
+            if (_sequencer != null) {
+                var track = _sequencer.GetTrack(1) as MelodicTrack;
+                string notesStr = "";
+                for (int i = 0; i < track.Notes.Length; i++) {
+                    notesStr += CSNoteHandler.GetNoteValue(track.Notes[i]);
+                    if (i < track.Notes.Length - 1)
+                        notesStr += ",";
+                }
+                config.AppSettings.Settings["seqTrack1Notes"].Value = notesStr;
+                track = _sequencer.GetTrack(2) as MelodicTrack;
+                notesStr = "";
+                for (int i = 0; i < track.Notes.Length; i++) {
+                    notesStr += CSNoteHandler.GetNoteValue(track.Notes[i]);
+                    if (i < track.Notes.Length - 1)
+                        notesStr += ",";
+                }
+                config.AppSettings.Settings["seqTrack2Notes"].Value = notesStr;
+            }
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
             _sequencer.RawFrame -= OnImageGrabbed;
             _sequencer.Dispose();
+            SaveConfigurationFileValues();
         }
 
+        /// <summary>
+        /// Loads into the static Figures clases the initial values on the GUI
+        /// </summary>
         private void LoadFigureAreaValues() {
             MelodicFigures.Corchea.MaxArea = (int)numericUpDown_corcheaMax.Value;
             MelodicFigures.Corchea.MinArea = (int)numericUpDown_corcheaMin.Value;
