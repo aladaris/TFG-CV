@@ -47,11 +47,9 @@ namespace Sequencer {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            toolStripStatusLabel_state.Text = "State: Init";  // DEBUG ?
-
-
             PopulateDevicesCombobox();
-
+            comboBox_seqMode.SelectedIndex = 0;
+            comboBox_stepLengthTrack3.SelectedIndex = 1;
 
             if (_sequencer != null) {
                 cb_FlipH.Checked = _sequencer.FlipH;
@@ -61,12 +59,14 @@ namespace Sequencer {
                 numericUpDown_LengthTrack3.Maximum = _sequencer.GetTrack(3).MaxSteps;
 
                 _sequencer.Bpm = (int)numericUpDown_bpm.Value;
+                /*
                 numericUpDown_LengthTrack1.Value = 8;
                 numericUpDown_LengthTrack2.Value = 8;
                 numericUpDown_LengthTrack3.Value = 8;
                 _sequencer.GetTrack(1).Length = (int)numericUpDown_LengthTrack1.Value;
                 _sequencer.GetTrack(2).Length = (int)numericUpDown_LengthTrack2.Value;
                 _sequencer.GetTrack(3).Length = (int)numericUpDown_LengthTrack3.Value;
+                */
                 _sequencer.MainVolumen = trackBar_MainVol.Value / 100d;
                 _sequencer.GetTrack(1).Volumen = trackBar_volTrack1.Value / 100d;
                 _sequencer.GetTrack(2).Volumen = trackBar_volTrack2.Value / 100d;

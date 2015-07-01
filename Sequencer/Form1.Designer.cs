@@ -27,16 +27,6 @@
             this.splitContainer_Base = new System.Windows.Forms.SplitContainer();
             this.splitContainer_LeftSideBase = new System.Windows.Forms.SplitContainer();
             this.imageBox_mainDisplay = new Emgu.CV.UI.ImageBox();
-            this.tabControl_bottom = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.comboBox_cameras = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown_fpsIn = new System.Windows.Forms.NumericUpDown();
-            this.button_startCamera = new System.Windows.Forms.Button();
-            this.button_setPersCalib = new System.Windows.Forms.Button();
-            this.cb_FlipV = new System.Windows.Forms.CheckBox();
-            this.cb_FlipH = new System.Windows.Forms.CheckBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.flowLayout_track3 = new System.Windows.Forms.FlowLayoutPanel();
@@ -63,19 +53,26 @@
             this.trackBar_volTrack1 = new System.Windows.Forms.TrackBar();
             this.tabControl_Modes = new System.Windows.Forms.TabControl();
             this.tabPage_Calibration = new System.Windows.Forms.TabPage();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel_state = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cb_FlipV = new System.Windows.Forms.CheckBox();
+            this.cb_FlipH = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBox_cameras = new System.Windows.Forms.ComboBox();
+            this.button_startCamera = new System.Windows.Forms.Button();
+            this.button_setPersCalib = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown_fpsIn = new System.Windows.Forms.NumericUpDown();
             this.cameraSettingsControl = new System.Windows.Forms.Integration.ElementHost();
             this.cameraSettingsControl1 = new Aladaris.CameraSettingsControl();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabPage_sequencer = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.comboBox_seqMode = new System.Windows.Forms.ComboBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.checkBox_playPause = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.trackBar_MainVol = new System.Windows.Forms.TrackBar();
+            this.label14 = new System.Windows.Forms.Label();
+            this.checkBox_playPause = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBox_seqMode = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             this.numericUpDown_bpm = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -117,6 +114,7 @@
             this.numericUpDown_corcheaMin = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown_corcheaMax = new System.Windows.Forms.NumericUpDown();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
             this.splitContainer_Base.Panel1.SuspendLayout();
             this.splitContainer_Base.Panel2.SuspendLayout();
@@ -126,10 +124,6 @@
             this.splitContainer_LeftSideBase.Panel2.SuspendLayout();
             this.splitContainer_LeftSideBase.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_mainDisplay)).BeginInit();
-            this.tabControl_bottom.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).BeginInit();
-            this.tabPage2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.flowLayout_track3.SuspendLayout();
@@ -145,10 +139,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_volTrack1)).BeginInit();
             this.tabControl_Modes.SuspendLayout();
             this.tabPage_Calibration.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).BeginInit();
             this.tabPage_sequencer.SuspendLayout();
-            this.groupBox8.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_MainVol)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -204,7 +201,7 @@
             // 
             // splitContainer_LeftSideBase.Panel2
             // 
-            this.splitContainer_LeftSideBase.Panel2.Controls.Add(this.tabControl_bottom);
+            this.splitContainer_LeftSideBase.Panel2.Controls.Add(this.tableLayoutPanel3);
             this.splitContainer_LeftSideBase.Size = new System.Drawing.Size(820, 660);
             this.splitContainer_LeftSideBase.SplitterDistance = 467;
             this.splitContainer_LeftSideBase.TabIndex = 0;
@@ -220,132 +217,6 @@
             this.imageBox_mainDisplay.TabIndex = 2;
             this.imageBox_mainDisplay.TabStop = false;
             // 
-            // tabControl_bottom
-            // 
-            this.tabControl_bottom.Controls.Add(this.tabPage1);
-            this.tabControl_bottom.Controls.Add(this.tabPage2);
-            this.tabControl_bottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl_bottom.Location = new System.Drawing.Point(0, 0);
-            this.tabControl_bottom.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl_bottom.Name = "tabControl_bottom";
-            this.tabControl_bottom.SelectedIndex = 0;
-            this.tabControl_bottom.Size = new System.Drawing.Size(820, 189);
-            this.tabControl_bottom.TabIndex = 0;
-            this.tabControl_bottom.SelectedIndexChanged += new System.EventHandler(this.tabControl_bottom_SelectedIndexChanged);
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.comboBox_cameras);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.numericUpDown_fpsIn);
-            this.tabPage1.Controls.Add(this.button_startCamera);
-            this.tabPage1.Controls.Add(this.button_setPersCalib);
-            this.tabPage1.Controls.Add(this.cb_FlipV);
-            this.tabPage1.Controls.Add(this.cb_FlipH);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(812, 163);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Display adjusments";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // comboBox_cameras
-            // 
-            this.comboBox_cameras.FormattingEnabled = true;
-            this.comboBox_cameras.Location = new System.Drawing.Point(11, 15);
-            this.comboBox_cameras.Name = "comboBox_cameras";
-            this.comboBox_cameras.Size = new System.Drawing.Size(141, 21);
-            this.comboBox_cameras.TabIndex = 9;
-            this.comboBox_cameras.SelectedIndexChanged += new System.EventHandler(this.comboBox_cameras_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "FPS in:";
-            // 
-            // numericUpDown_fpsIn
-            // 
-            this.numericUpDown_fpsIn.Location = new System.Drawing.Point(55, 51);
-            this.numericUpDown_fpsIn.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.numericUpDown_fpsIn.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown_fpsIn.Name = "numericUpDown_fpsIn";
-            this.numericUpDown_fpsIn.Size = new System.Drawing.Size(34, 20);
-            this.numericUpDown_fpsIn.TabIndex = 7;
-            this.numericUpDown_fpsIn.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown_fpsIn.ValueChanged += new System.EventHandler(this.numericUpDown_fpsIn_ValueChanged);
-            // 
-            // button_startCamera
-            // 
-            this.button_startCamera.Location = new System.Drawing.Point(158, 6);
-            this.button_startCamera.Name = "button_startCamera";
-            this.button_startCamera.Size = new System.Drawing.Size(75, 60);
-            this.button_startCamera.TabIndex = 0;
-            this.button_startCamera.Text = "Start Camera";
-            this.button_startCamera.UseVisualStyleBackColor = true;
-            this.button_startCamera.Click += new System.EventHandler(this.button_startCamera_Click);
-            // 
-            // button_setPersCalib
-            // 
-            this.button_setPersCalib.Location = new System.Drawing.Point(239, 6);
-            this.button_setPersCalib.Name = "button_setPersCalib";
-            this.button_setPersCalib.Size = new System.Drawing.Size(75, 60);
-            this.button_setPersCalib.TabIndex = 4;
-            this.button_setPersCalib.Text = "Set perspective correction rectangle";
-            this.button_setPersCalib.UseVisualStyleBackColor = true;
-            this.button_setPersCalib.Click += new System.EventHandler(this.button_setPersCalib_Click);
-            // 
-            // cb_FlipV
-            // 
-            this.cb_FlipV.AutoSize = true;
-            this.cb_FlipV.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.cb_FlipV.Location = new System.Drawing.Point(737, 10);
-            this.cb_FlipV.Name = "cb_FlipV";
-            this.cb_FlipV.Size = new System.Drawing.Size(64, 31);
-            this.cb_FlipV.TabIndex = 5;
-            this.cb_FlipV.Text = "Flip vertical";
-            this.cb_FlipV.UseVisualStyleBackColor = true;
-            this.cb_FlipV.CheckedChanged += new System.EventHandler(this.cb_FlipV_CheckedChanged);
-            // 
-            // cb_FlipH
-            // 
-            this.cb_FlipH.AutoSize = true;
-            this.cb_FlipH.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.cb_FlipH.Location = new System.Drawing.Point(656, 10);
-            this.cb_FlipH.Name = "cb_FlipH";
-            this.cb_FlipH.Size = new System.Drawing.Size(75, 31);
-            this.cb_FlipH.TabIndex = 5;
-            this.cb_FlipH.Text = "Flip horizontal";
-            this.cb_FlipH.UseVisualStyleBackColor = true;
-            this.cb_FlipH.CheckedChanged += new System.EventHandler(this.cb_FlipH_CheckedChanged);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.tableLayoutPanel3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(812, 163);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Sequencer parameters";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
@@ -355,24 +226,24 @@
             this.tableLayoutPanel3.Controls.Add(this.groupBox9, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.groupBox5, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(806, 157);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(820, 189);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.flowLayout_track3);
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox10.Location = new System.Drawing.Point(0, 104);
+            this.groupBox10.Location = new System.Drawing.Point(0, 126);
             this.groupBox10.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(806, 53);
+            this.groupBox10.Size = new System.Drawing.Size(820, 63);
             this.groupBox10.TabIndex = 11;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Track 3";
@@ -390,14 +261,14 @@
             this.flowLayout_track3.Location = new System.Drawing.Point(3, 16);
             this.flowLayout_track3.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayout_track3.Name = "flowLayout_track3";
-            this.flowLayout_track3.Size = new System.Drawing.Size(800, 34);
+            this.flowLayout_track3.Size = new System.Drawing.Size(814, 44);
             this.flowLayout_track3.TabIndex = 0;
             // 
             // button_setColor_Track3
             // 
             this.button_setColor_Track3.Location = new System.Drawing.Point(3, 3);
             this.button_setColor_Track3.Name = "button_setColor_Track3";
-            this.button_setColor_Track3.Size = new System.Drawing.Size(57, 23);
+            this.button_setColor_Track3.Size = new System.Drawing.Size(60, 23);
             this.button_setColor_Track3.TabIndex = 6;
             this.button_setColor_Track3.Text = "Set color";
             this.button_setColor_Track3.UseVisualStyleBackColor = true;
@@ -406,7 +277,7 @@
             // p_colorPreview_Track3
             // 
             this.p_colorPreview_Track3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.p_colorPreview_Track3.Location = new System.Drawing.Point(66, 3);
+            this.p_colorPreview_Track3.Location = new System.Drawing.Point(69, 3);
             this.p_colorPreview_Track3.Name = "p_colorPreview_Track3";
             this.p_colorPreview_Track3.Size = new System.Drawing.Size(12, 23);
             this.p_colorPreview_Track3.TabIndex = 10;
@@ -414,7 +285,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(84, 0);
+            this.label12.Location = new System.Drawing.Point(87, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(40, 13);
             this.label12.TabIndex = 13;
@@ -422,7 +293,7 @@
             // 
             // numericUpDown_LengthTrack3
             // 
-            this.numericUpDown_LengthTrack3.Location = new System.Drawing.Point(130, 3);
+            this.numericUpDown_LengthTrack3.Location = new System.Drawing.Point(133, 3);
             this.numericUpDown_LengthTrack3.Maximum = new decimal(new int[] {
             8,
             0,
@@ -431,17 +302,12 @@
             this.numericUpDown_LengthTrack3.Name = "numericUpDown_LengthTrack3";
             this.numericUpDown_LengthTrack3.Size = new System.Drawing.Size(39, 20);
             this.numericUpDown_LengthTrack3.TabIndex = 14;
-            this.numericUpDown_LengthTrack3.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.numericUpDown_LengthTrack3.ValueChanged += new System.EventHandler(this.TrackLength_ValueChanged);
             // 
             // trackBar_volTrack3
             // 
-            this.trackBar_volTrack3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.trackBar_volTrack3.Location = new System.Drawing.Point(175, 3);
+            this.trackBar_volTrack3.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBar_volTrack3.Location = new System.Drawing.Point(178, 3);
             this.trackBar_volTrack3.Maximum = 100;
             this.trackBar_volTrack3.Name = "trackBar_volTrack3";
             this.trackBar_volTrack3.Size = new System.Drawing.Size(55, 45);
@@ -452,7 +318,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(236, 0);
+            this.label24.Location = new System.Drawing.Point(239, 0);
             this.label24.Name = "label24";
             this.label24.Padding = new System.Windows.Forms.Padding(0, 9, 0, 0);
             this.label24.Size = new System.Drawing.Size(61, 22);
@@ -468,7 +334,7 @@
             "Corchea",
             "Negra",
             "Blanca"});
-            this.comboBox_stepLengthTrack3.Location = new System.Drawing.Point(303, 3);
+            this.comboBox_stepLengthTrack3.Location = new System.Drawing.Point(306, 3);
             this.comboBox_stepLengthTrack3.Name = "comboBox_stepLengthTrack3";
             this.comboBox_stepLengthTrack3.Size = new System.Drawing.Size(84, 21);
             this.comboBox_stepLengthTrack3.TabIndex = 15;
@@ -478,10 +344,10 @@
             // 
             this.groupBox9.Controls.Add(this.flowLayout_track2);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox9.Location = new System.Drawing.Point(0, 52);
+            this.groupBox9.Location = new System.Drawing.Point(0, 63);
             this.groupBox9.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(806, 52);
+            this.groupBox9.Size = new System.Drawing.Size(820, 63);
             this.groupBox9.TabIndex = 10;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Track 2";
@@ -498,14 +364,14 @@
             this.flowLayout_track2.Location = new System.Drawing.Point(3, 16);
             this.flowLayout_track2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayout_track2.Name = "flowLayout_track2";
-            this.flowLayout_track2.Size = new System.Drawing.Size(800, 33);
+            this.flowLayout_track2.Size = new System.Drawing.Size(814, 44);
             this.flowLayout_track2.TabIndex = 0;
             // 
             // button_setColor_Track2
             // 
             this.button_setColor_Track2.Location = new System.Drawing.Point(3, 3);
             this.button_setColor_Track2.Name = "button_setColor_Track2";
-            this.button_setColor_Track2.Size = new System.Drawing.Size(57, 23);
+            this.button_setColor_Track2.Size = new System.Drawing.Size(60, 23);
             this.button_setColor_Track2.TabIndex = 6;
             this.button_setColor_Track2.Text = "Set color";
             this.button_setColor_Track2.UseVisualStyleBackColor = true;
@@ -514,7 +380,7 @@
             // p_colorPreview_Track2
             // 
             this.p_colorPreview_Track2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.p_colorPreview_Track2.Location = new System.Drawing.Point(66, 3);
+            this.p_colorPreview_Track2.Location = new System.Drawing.Point(69, 3);
             this.p_colorPreview_Track2.Name = "p_colorPreview_Track2";
             this.p_colorPreview_Track2.Size = new System.Drawing.Size(12, 23);
             this.p_colorPreview_Track2.TabIndex = 10;
@@ -522,7 +388,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(84, 0);
+            this.label11.Location = new System.Drawing.Point(87, 0);
             this.label11.Name = "label11";
             this.label11.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label11.Size = new System.Drawing.Size(40, 13);
@@ -531,7 +397,7 @@
             // 
             // numericUpDown_LengthTrack2
             // 
-            this.numericUpDown_LengthTrack2.Location = new System.Drawing.Point(130, 3);
+            this.numericUpDown_LengthTrack2.Location = new System.Drawing.Point(133, 3);
             this.numericUpDown_LengthTrack2.Maximum = new decimal(new int[] {
             8,
             0,
@@ -540,17 +406,12 @@
             this.numericUpDown_LengthTrack2.Name = "numericUpDown_LengthTrack2";
             this.numericUpDown_LengthTrack2.Size = new System.Drawing.Size(39, 20);
             this.numericUpDown_LengthTrack2.TabIndex = 14;
-            this.numericUpDown_LengthTrack2.Value = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
             this.numericUpDown_LengthTrack2.ValueChanged += new System.EventHandler(this.TrackLength_ValueChanged);
             // 
             // trackBar_volTrack2
             // 
-            this.trackBar_volTrack2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.trackBar_volTrack2.Location = new System.Drawing.Point(175, 3);
+            this.trackBar_volTrack2.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBar_volTrack2.Location = new System.Drawing.Point(178, 3);
             this.trackBar_volTrack2.Maximum = 100;
             this.trackBar_volTrack2.Name = "trackBar_volTrack2";
             this.trackBar_volTrack2.Size = new System.Drawing.Size(55, 45);
@@ -565,7 +426,7 @@
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(806, 52);
+            this.groupBox5.Size = new System.Drawing.Size(820, 63);
             this.groupBox5.TabIndex = 9;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Track 1";
@@ -582,14 +443,14 @@
             this.flowLayout_track1.Location = new System.Drawing.Point(3, 16);
             this.flowLayout_track1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayout_track1.Name = "flowLayout_track1";
-            this.flowLayout_track1.Size = new System.Drawing.Size(800, 33);
+            this.flowLayout_track1.Size = new System.Drawing.Size(814, 44);
             this.flowLayout_track1.TabIndex = 0;
             // 
             // button_setColor_Track1
             // 
             this.button_setColor_Track1.Location = new System.Drawing.Point(3, 3);
             this.button_setColor_Track1.Name = "button_setColor_Track1";
-            this.button_setColor_Track1.Size = new System.Drawing.Size(57, 23);
+            this.button_setColor_Track1.Size = new System.Drawing.Size(60, 23);
             this.button_setColor_Track1.TabIndex = 6;
             this.button_setColor_Track1.Text = "Set color";
             this.button_setColor_Track1.UseVisualStyleBackColor = true;
@@ -598,7 +459,7 @@
             // p_colorPreview_Track1
             // 
             this.p_colorPreview_Track1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.p_colorPreview_Track1.Location = new System.Drawing.Point(66, 3);
+            this.p_colorPreview_Track1.Location = new System.Drawing.Point(69, 3);
             this.p_colorPreview_Track1.Name = "p_colorPreview_Track1";
             this.p_colorPreview_Track1.Size = new System.Drawing.Size(12, 23);
             this.p_colorPreview_Track1.TabIndex = 10;
@@ -606,7 +467,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(84, 0);
+            this.label10.Location = new System.Drawing.Point(87, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(40, 13);
             this.label10.TabIndex = 11;
@@ -614,7 +475,7 @@
             // 
             // numericUpDown_LengthTrack1
             // 
-            this.numericUpDown_LengthTrack1.Location = new System.Drawing.Point(130, 3);
+            this.numericUpDown_LengthTrack1.Location = new System.Drawing.Point(133, 3);
             this.numericUpDown_LengthTrack1.Maximum = new decimal(new int[] {
             8,
             0,
@@ -623,17 +484,12 @@
             this.numericUpDown_LengthTrack1.Name = "numericUpDown_LengthTrack1";
             this.numericUpDown_LengthTrack1.Size = new System.Drawing.Size(39, 20);
             this.numericUpDown_LengthTrack1.TabIndex = 12;
-            this.numericUpDown_LengthTrack1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.numericUpDown_LengthTrack1.ValueChanged += new System.EventHandler(this.TrackLength_ValueChanged);
             // 
             // trackBar_volTrack1
             // 
-            this.trackBar_volTrack1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.trackBar_volTrack1.Location = new System.Drawing.Point(175, 3);
+            this.trackBar_volTrack1.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBar_volTrack1.Location = new System.Drawing.Point(178, 3);
             this.trackBar_volTrack1.Maximum = 100;
             this.trackBar_volTrack1.Name = "trackBar_volTrack1";
             this.trackBar_volTrack1.Size = new System.Drawing.Size(55, 45);
@@ -651,13 +507,13 @@
             this.tabControl_Modes.SelectedIndex = 0;
             this.tabControl_Modes.Size = new System.Drawing.Size(363, 660);
             this.tabControl_Modes.TabIndex = 0;
-            this.tabControl_Modes.SelectedIndexChanged += new System.EventHandler(this.tabControl_Modes_SelectedIndexChanged);
             // 
             // tabPage_Calibration
             // 
-            this.tabPage_Calibration.Controls.Add(this.statusStrip1);
+            this.tabPage_Calibration.Controls.Add(this.cb_FlipV);
+            this.tabPage_Calibration.Controls.Add(this.cb_FlipH);
+            this.tabPage_Calibration.Controls.Add(this.tableLayoutPanel2);
             this.tabPage_Calibration.Controls.Add(this.cameraSettingsControl);
-            this.tabPage_Calibration.Controls.Add(this.groupBox2);
             this.tabPage_Calibration.Location = new System.Drawing.Point(4, 22);
             this.tabPage_Calibration.Name = "tabPage_Calibration";
             this.tabPage_Calibration.Padding = new System.Windows.Forms.Padding(3);
@@ -666,44 +522,140 @@
             this.tabPage_Calibration.Text = "Calibration";
             this.tabPage_Calibration.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
+            // cb_FlipV
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel_state});
-            this.statusStrip1.Location = new System.Drawing.Point(3, 609);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(349, 22);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            this.cb_FlipV.AutoSize = true;
+            this.cb_FlipV.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cb_FlipV.Location = new System.Drawing.Point(270, 474);
+            this.cb_FlipV.Name = "cb_FlipV";
+            this.cb_FlipV.Size = new System.Drawing.Size(79, 17);
+            this.cb_FlipV.TabIndex = 5;
+            this.cb_FlipV.Text = "Flip vertical";
+            this.cb_FlipV.UseVisualStyleBackColor = true;
+            this.cb_FlipV.CheckedChanged += new System.EventHandler(this.cb_FlipV_CheckedChanged);
             // 
-            // toolStripStatusLabel_state
+            // cb_FlipH
             // 
-            this.toolStripStatusLabel_state.Name = "toolStripStatusLabel_state";
-            this.toolStripStatusLabel_state.Size = new System.Drawing.Size(68, 17);
-            this.toolStripStatusLabel_state.Text = "State: None";
+            this.cb_FlipH.AutoSize = true;
+            this.cb_FlipH.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cb_FlipH.Location = new System.Drawing.Point(259, 451);
+            this.cb_FlipH.Name = "cb_FlipH";
+            this.cb_FlipH.Size = new System.Drawing.Size(90, 17);
+            this.cb_FlipH.TabIndex = 5;
+            this.cb_FlipH.Text = "Flip horizontal";
+            this.cb_FlipH.UseVisualStyleBackColor = true;
+            this.cb_FlipH.CheckedChanged += new System.EventHandler(this.cb_FlipH_CheckedChanged);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.89685F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.10315F));
+            this.tableLayoutPanel2.Controls.Add(this.comboBox_cameras, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.button_startCamera, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.button_setPersCalib, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel1, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 337);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.10126F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.89874F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(349, 108);
+            this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // comboBox_cameras
+            // 
+            this.comboBox_cameras.Dock = System.Windows.Forms.DockStyle.Top;
+            this.comboBox_cameras.FormattingEnabled = true;
+            this.comboBox_cameras.Location = new System.Drawing.Point(3, 13);
+            this.comboBox_cameras.Name = "comboBox_cameras";
+            this.comboBox_cameras.Size = new System.Drawing.Size(217, 21);
+            this.comboBox_cameras.TabIndex = 9;
+            this.comboBox_cameras.SelectedIndexChanged += new System.EventHandler(this.comboBox_cameras_SelectedIndexChanged);
+            // 
+            // button_startCamera
+            // 
+            this.button_startCamera.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_startCamera.Location = new System.Drawing.Point(226, 13);
+            this.button_startCamera.Name = "button_startCamera";
+            this.button_startCamera.Size = new System.Drawing.Size(120, 41);
+            this.button_startCamera.TabIndex = 0;
+            this.button_startCamera.Text = "Start Camera";
+            this.button_startCamera.UseVisualStyleBackColor = true;
+            this.button_startCamera.Click += new System.EventHandler(this.button_startCamera_Click);
+            // 
+            // button_setPersCalib
+            // 
+            this.button_setPersCalib.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_setPersCalib.Location = new System.Drawing.Point(226, 60);
+            this.button_setPersCalib.Name = "button_setPersCalib";
+            this.button_setPersCalib.Size = new System.Drawing.Size(120, 45);
+            this.button_setPersCalib.TabIndex = 4;
+            this.button_setPersCalib.Text = "Set perspective correction rectangle";
+            this.button_setPersCalib.UseVisualStyleBackColor = true;
+            this.button_setPersCalib.Click += new System.EventHandler(this.button_setPersCalib_Click);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.label1);
+            this.flowLayoutPanel1.Controls.Add(this.numericUpDown_fpsIn);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 57);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(223, 51);
+            this.flowLayoutPanel1.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 26);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "     FPS in:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numericUpDown_fpsIn
+            // 
+            this.numericUpDown_fpsIn.Location = new System.Drawing.Point(65, 3);
+            this.numericUpDown_fpsIn.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.numericUpDown_fpsIn.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_fpsIn.Name = "numericUpDown_fpsIn";
+            this.numericUpDown_fpsIn.Size = new System.Drawing.Size(55, 20);
+            this.numericUpDown_fpsIn.TabIndex = 7;
+            this.numericUpDown_fpsIn.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_fpsIn.ValueChanged += new System.EventHandler(this.numericUpDown_fpsIn_ValueChanged);
             // 
             // cameraSettingsControl
             // 
-            this.cameraSettingsControl.Location = new System.Drawing.Point(6, 180);
+            this.cameraSettingsControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cameraSettingsControl.Location = new System.Drawing.Point(3, 3);
             this.cameraSettingsControl.Name = "cameraSettingsControl";
-            this.cameraSettingsControl.Size = new System.Drawing.Size(343, 282);
+            this.cameraSettingsControl.Size = new System.Drawing.Size(349, 334);
             this.cameraSettingsControl.TabIndex = 9;
             this.cameraSettingsControl.Text = "elementHost1";
             this.cameraSettingsControl.Child = this.cameraSettingsControl1;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(341, 168);
-            this.groupBox2.TabIndex = 8;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Visual configuration";
-            // 
             // tabPage_sequencer
             // 
-            this.tabPage_sequencer.Controls.Add(this.groupBox8);
+            this.tabPage_sequencer.Controls.Add(this.tableLayoutPanel4);
             this.tabPage_sequencer.Controls.Add(this.groupBox3);
             this.tabPage_sequencer.Location = new System.Drawing.Point(4, 22);
             this.tabPage_sequencer.Name = "tabPage_sequencer";
@@ -713,89 +665,119 @@
             this.tabPage_sequencer.Text = "Sequencer";
             this.tabPage_sequencer.UseVisualStyleBackColor = true;
             // 
-            // groupBox8
+            // tableLayoutPanel4
             // 
-            this.groupBox8.Controls.Add(this.comboBox_seqMode);
-            this.groupBox8.Controls.Add(this.label25);
-            this.groupBox8.Controls.Add(this.checkBox_playPause);
-            this.groupBox8.Controls.Add(this.label14);
-            this.groupBox8.Controls.Add(this.trackBar_MainVol);
-            this.groupBox8.Controls.Add(this.label13);
-            this.groupBox8.Controls.Add(this.numericUpDown_bpm);
-            this.groupBox8.Location = new System.Drawing.Point(6, 446);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(343, 185);
-            this.groupBox8.TabIndex = 1;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Sequencer";
+            this.tableLayoutPanel4.ColumnCount = 3;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.44828F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.55172F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 232F));
+            this.tableLayoutPanel4.Controls.Add(this.trackBar_MainVol, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label14, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.checkBox_playPause, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 2, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 449);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 67.03297F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.96703F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(349, 182);
+            this.tableLayoutPanel4.TabIndex = 1;
             // 
-            // comboBox_seqMode
+            // trackBar_MainVol
             // 
-            this.comboBox_seqMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_seqMode.FormattingEnabled = true;
-            this.comboBox_seqMode.Items.AddRange(new object[] {
-            "UP",
-            "DOWN"});
-            this.comboBox_seqMode.Location = new System.Drawing.Point(185, 58);
-            this.comboBox_seqMode.Name = "comboBox_seqMode";
-            this.comboBox_seqMode.Size = new System.Drawing.Size(81, 21);
-            this.comboBox_seqMode.TabIndex = 7;
-            this.comboBox_seqMode.SelectedIndexChanged += new System.EventHandler(this.comboBox_seqMode_SelectedIndexChanged);
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(90, 60);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(88, 13);
-            this.label25.TabIndex = 6;
-            this.label25.Text = "Sequencer mode";
-            // 
-            // checkBox_playPause
-            // 
-            this.checkBox_playPause.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox_playPause.AutoSize = true;
-            this.checkBox_playPause.Location = new System.Drawing.Point(15, 28);
-            this.checkBox_playPause.Name = "checkBox_playPause";
-            this.checkBox_playPause.Size = new System.Drawing.Size(37, 23);
-            this.checkBox_playPause.TabIndex = 5;
-            this.checkBox_playPause.Text = "Play";
-            this.checkBox_playPause.UseVisualStyleBackColor = true;
-            this.checkBox_playPause.CheckedChanged += new System.EventHandler(this.checkBox_playPause_CheckedChanged);
+            this.trackBar_MainVol.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.trackBar_MainVol.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackBar_MainVol.Location = new System.Drawing.Point(65, 3);
+            this.trackBar_MainVol.Maximum = 100;
+            this.trackBar_MainVol.Name = "trackBar_MainVol";
+            this.trackBar_MainVol.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBar_MainVol.Size = new System.Drawing.Size(48, 115);
+            this.trackBar_MainVol.TabIndex = 3;
+            this.trackBar_MainVol.Value = 75;
+            this.trackBar_MainVol.Scroll += new System.EventHandler(this.trackBar_MainVol_Scroll);
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 158);
+            this.label14.Location = new System.Drawing.Point(65, 121);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(48, 13);
             this.label14.TabIndex = 4;
             this.label14.Text = "Volumen";
             // 
-            // trackBar_MainVol
+            // checkBox_playPause
             // 
-            this.trackBar_MainVol.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.trackBar_MainVol.Location = new System.Drawing.Point(9, 60);
-            this.trackBar_MainVol.Maximum = 100;
-            this.trackBar_MainVol.Name = "trackBar_MainVol";
-            this.trackBar_MainVol.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBar_MainVol.Size = new System.Drawing.Size(45, 104);
-            this.trackBar_MainVol.TabIndex = 3;
-            this.trackBar_MainVol.Value = 75;
-            this.trackBar_MainVol.Scroll += new System.EventHandler(this.trackBar_MainVol_Scroll);
+            this.checkBox_playPause.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox_playPause.AutoSize = true;
+            this.checkBox_playPause.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkBox_playPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_playPause.Location = new System.Drawing.Point(3, 3);
+            this.checkBox_playPause.Name = "checkBox_playPause";
+            this.checkBox_playPause.Size = new System.Drawing.Size(56, 115);
+            this.checkBox_playPause.TabIndex = 5;
+            this.checkBox_playPause.Text = "▶";
+            this.checkBox_playPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox_playPause.UseVisualStyleBackColor = true;
+            this.checkBox_playPause.CheckedChanged += new System.EventHandler(this.checkBox_playPause_CheckedChanged);
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.29075F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.70925F));
+            this.tableLayoutPanel5.Controls.Add(this.comboBox_seqMode, 1, 1);
+            this.tableLayoutPanel5.Controls.Add(this.label13, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.label25, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.numericUpDown_bpm, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(119, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.34783F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.65218F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(227, 115);
+            this.tableLayoutPanel5.TabIndex = 6;
+            // 
+            // comboBox_seqMode
+            // 
+            this.comboBox_seqMode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBox_seqMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_seqMode.FormattingEnabled = true;
+            this.comboBox_seqMode.Items.AddRange(new object[] {
+            "UP",
+            "DOWN"});
+            this.comboBox_seqMode.Location = new System.Drawing.Point(98, 31);
+            this.comboBox_seqMode.Name = "comboBox_seqMode";
+            this.comboBox_seqMode.Size = new System.Drawing.Size(126, 21);
+            this.comboBox_seqMode.TabIndex = 7;
+            this.comboBox_seqMode.SelectedIndexChanged += new System.EventHandler(this.comboBox_seqMode_SelectedIndexChanged);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(95, 30);
+            this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label13.Location = new System.Drawing.Point(3, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(27, 13);
+            this.label13.Size = new System.Drawing.Size(89, 28);
             this.label13.TabIndex = 2;
-            this.label13.Text = "bpm";
+            this.label13.Text = "BPM";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label25.Location = new System.Drawing.Point(3, 28);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(89, 87);
+            this.label25.TabIndex = 6;
+            this.label25.Text = "Sequence mode";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // numericUpDown_bpm
             // 
-            this.numericUpDown_bpm.Location = new System.Drawing.Point(128, 28);
+            this.numericUpDown_bpm.Location = new System.Drawing.Point(98, 3);
             this.numericUpDown_bpm.Maximum = new decimal(new int[] {
             400,
             0,
@@ -825,11 +807,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.button_clearSteps);
             this.groupBox1.Controls.Add(this.button_addSteps);
             this.groupBox1.Controls.Add(this.button_saveBoard);
             this.groupBox1.Controls.Add(this.button_loadBoard);
-            this.groupBox1.Location = new System.Drawing.Point(6, 19);
+            this.groupBox1.Location = new System.Drawing.Point(6, 29);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(331, 89);
             this.groupBox1.TabIndex = 8;
@@ -879,7 +862,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox6.Location = new System.Drawing.Point(6, 234);
+            this.groupBox6.Location = new System.Drawing.Point(6, 288);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(331, 114);
             this.groupBox6.TabIndex = 1;
@@ -932,7 +915,7 @@
             this.numericUpDown_HihatMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_HihatMax.TabIndex = 12;
             this.numericUpDown_HihatMax.Value = new decimal(new int[] {
-            3500,
+            375,
             0,
             0,
             0});
@@ -962,7 +945,7 @@
             this.numericUpDown_HihatMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_HihatMin.TabIndex = 10;
             this.numericUpDown_HihatMin.Value = new decimal(new int[] {
-            2000,
+            10,
             0,
             0,
             0});
@@ -992,7 +975,7 @@
             this.numericUpDown_SnareMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_SnareMax.TabIndex = 8;
             this.numericUpDown_SnareMax.Value = new decimal(new int[] {
-            750,
+            700,
             0,
             0,
             0});
@@ -1022,7 +1005,7 @@
             this.numericUpDown_SnareMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_SnareMin.TabIndex = 6;
             this.numericUpDown_SnareMin.Value = new decimal(new int[] {
-            550,
+            400,
             0,
             0,
             0});
@@ -1063,7 +1046,7 @@
             this.numericUpDown_kickMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_kickMin.TabIndex = 3;
             this.numericUpDown_kickMin.Value = new decimal(new int[] {
-            250,
+            750,
             0,
             0,
             0});
@@ -1093,7 +1076,7 @@
             this.numericUpDown_KickMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_KickMax.TabIndex = 3;
             this.numericUpDown_KickMax.Value = new decimal(new int[] {
-            400,
+            1500,
             0,
             0,
             0});
@@ -1135,7 +1118,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.tableLayoutPanel_figures);
-            this.groupBox4.Location = new System.Drawing.Point(6, 114);
+            this.groupBox4.Location = new System.Drawing.Point(6, 150);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(331, 114);
             this.groupBox4.TabIndex = 1;
@@ -1188,7 +1171,7 @@
             this.numericUpDown_blancaMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_blancaMax.TabIndex = 12;
             this.numericUpDown_blancaMax.Value = new decimal(new int[] {
-            3500,
+            1200,
             0,
             0,
             0});
@@ -1218,7 +1201,7 @@
             this.numericUpDown_blancaMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_blancaMin.TabIndex = 10;
             this.numericUpDown_blancaMin.Value = new decimal(new int[] {
-            2000,
+            750,
             0,
             0,
             0});
@@ -1248,7 +1231,7 @@
             this.numericUpDown_negraMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_negraMax.TabIndex = 8;
             this.numericUpDown_negraMax.Value = new decimal(new int[] {
-            750,
+            700,
             0,
             0,
             0});
@@ -1278,7 +1261,7 @@
             this.numericUpDown_negraMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_negraMin.TabIndex = 6;
             this.numericUpDown_negraMin.Value = new decimal(new int[] {
-            550,
+            400,
             0,
             0,
             0});
@@ -1356,7 +1339,7 @@
             this.numericUpDown_corcheaMin.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_corcheaMin.TabIndex = 3;
             this.numericUpDown_corcheaMin.Value = new decimal(new int[] {
-            250,
+            10,
             0,
             0,
             0});
@@ -1386,11 +1369,19 @@
             this.numericUpDown_corcheaMax.Size = new System.Drawing.Size(59, 20);
             this.numericUpDown_corcheaMax.TabIndex = 3;
             this.numericUpDown_corcheaMax.Value = new decimal(new int[] {
-            400,
+            375,
             0,
             0,
             0});
             this.numericUpDown_corcheaMax.ValueChanged += new System.EventHandler(this.numericUpDown_corcheaMax_ValueChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 60);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(156, 20);
+            this.textBox1.TabIndex = 7;
+            this.textBox1.Text = "tablero_8_rectangular.xml";
             // 
             // Form1
             // 
@@ -1398,6 +1389,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1187, 660);
             this.Controls.Add(this.splitContainer_Base);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Text = "Sequencer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -1411,11 +1403,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_LeftSideBase)).EndInit();
             this.splitContainer_LeftSideBase.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox_mainDisplay)).EndInit();
-            this.tabControl_bottom.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).EndInit();
-            this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.flowLayout_track3.ResumeLayout(false);
@@ -1435,15 +1422,20 @@
             this.tabControl_Modes.ResumeLayout(false);
             this.tabPage_Calibration.ResumeLayout(false);
             this.tabPage_Calibration.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fpsIn)).EndInit();
             this.tabPage_sequencer.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_MainVol)).EndInit();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_bpm)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -1473,13 +1465,9 @@
         private System.Windows.Forms.TabControl tabControl_Modes;
         private System.Windows.Forms.TabPage tabPage_Calibration;
         private System.Windows.Forms.TabPage tabPage_sequencer;
-        private System.Windows.Forms.Button button_startCamera;
         private Emgu.CV.UI.ImageBox imageBox_mainDisplay;
         private System.Windows.Forms.Button button_setPersCalib;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_state;
         private System.Windows.Forms.Button button_setColor_Track1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Integration.ElementHost cameraSettingsControl;
         private Aladaris.CameraSettingsControl cameraSettingsControl1;
         private System.Windows.Forms.Label label1;
@@ -1509,12 +1497,8 @@
         private System.Windows.Forms.Button button_loadBoard;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Panel p_colorPreview_Track1;
-        private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox cb_FlipH;
         private System.Windows.Forms.CheckBox cb_FlipV;
-        private System.Windows.Forms.TabControl tabControl_bottom;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.FlowLayoutPanel flowLayout_track1;
         private System.Windows.Forms.GroupBox groupBox10;
@@ -1560,7 +1544,13 @@
         private System.Windows.Forms.CheckBox checkBox_playPause;
         private System.Windows.Forms.ComboBox comboBox_seqMode;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ComboBox comboBox_cameras;
+        private System.Windows.Forms.Button button_startCamera;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

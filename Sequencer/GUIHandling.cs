@@ -256,23 +256,10 @@ namespace Sequencer {
         }
 
         #endregion
-
-        private void tabControl_bottom_SelectedIndexChanged(object sender, EventArgs e) {
-            var tb = sender as TabControl;
-            if (tb != null) {
-                tabControl_Modes.SelectedIndex = tb.SelectedIndex;
-            }
-        }
-        private void tabControl_Modes_SelectedIndexChanged(object sender, EventArgs e) {
-            var tb = sender as TabControl;
-            if (tb != null) {
-                tabControl_bottom.SelectedIndex = tb.SelectedIndex;
-            }
-        }
         private void checkBox_playPause_CheckedChanged(object sender, EventArgs e) {
             if (_sequencer != null) {
                 _sequencer.IsPlaying = checkBox_playPause.Checked;
-                checkBox_playPause.Text = _sequencer.IsPlaying ? "Pause" : "Play";
+                checkBox_playPause.Text = _sequencer.IsPlaying ? "l l" : "▶";
             }
         }
         private void comboBox_stepLengthTrack3_SelectedIndexChanged(object sender, EventArgs e) {
