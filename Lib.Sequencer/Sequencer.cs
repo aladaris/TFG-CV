@@ -223,6 +223,7 @@ namespace Sequencer {
                 step_img = GetStepROI(index);
 
                 MelodicTrack mt = track as MelodicTrack;
+                track.CurrentStep = index;
                 if (mt != null) {  // Track melódica
                     if (step_img != null)
                         mt.ReadStep<Bgr>(index, step_img);
@@ -235,6 +236,23 @@ namespace Sequencer {
                 }
                 if (TrackStepChange != null)
                     TrackStepChange(track.Id, index);
+
+
+                if ((index >= 0) && (track != null)) {
+                    var step = _board.GetStep(index);
+                    if (step != null) {
+                        step.PolygonColor = track.SampleMeanColor;
+                        if (SequenceMode == SEQUENCE_MODE.UP) {
+                            index = index - 1 >= 0 ? index - 1 : track.Length - 1;
+                        } else if (SequenceMode == SEQUENCE_MODE.DOWN) {
+                            index = index + 1 >= track.Length ? 0 : index + 1;
+                        }
+                        var prev_step = _board.GetStep(index);
+                        if (prev_step != null)
+                            prev_step.PolygonColor = prev_step.PolygonColorInitial;
+                    }
+                }
+                
             //}
         }
 
@@ -540,11 +558,13 @@ namespace Sequencer {
         private void GetNewFrame(object sender, EventArgs e) {
             if (_capturing && RawFrame != null) {
                 var f = _camera.RetrieveBgrFrame();
-                if (FlipH)
-                    f._Flip(Emgu.CV.CvEnum.FLIP.HORIZONTAL);
-                if (FlipV)
-                    f._Flip(Emgu.CV.CvEnum.FLIP.VERTICAL);
-                RawFrame(f, e);
+                if (f != null) {
+                    if (FlipH)
+                        f._Flip(Emgu.CV.CvEnum.FLIP.HORIZONTAL);
+                    if (FlipV)
+                        f._Flip(Emgu.CV.CvEnum.FLIP.VERTICAL);
+                    RawFrame(f, e);
+                }
             }
         }
 
