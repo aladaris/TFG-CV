@@ -11,6 +11,8 @@ En este trabajo se trata la creación de un prototipo de instrumento musical ele
 
   Por último se expone el resultado obtenido, haciendo una descripción de su implementación, funcionalidades y restricciones. Se trata de una aplicación de escritorio que ofrece las herramientas para configuración, control y ejecución del instrumento (y sus elementos de visión por computador) a través de una interfaz gráfica.
 
+_Acceso a la memoria del proyecto_: http://riull.ull.es/xmlui/handle/915/1216
+
 ***
 
 ##### English
